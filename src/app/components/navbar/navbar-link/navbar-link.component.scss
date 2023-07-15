@@ -1,0 +1,41 @@
+li {
+  
+  a {
+    position: relative;
+    font-size: large;
+    font-weight: bold;
+    transition: all 200ms ease;
+    text-decoration: none;
+    color: unset;
+    text-transform: uppercase;
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      background: darkcyan;
+      width: 0;
+      height: 2px;
+      transition: all 200ms ease;
+    } 
+
+    &:hover:after {
+      width: 100%;
+    }
+  }
+}
+
+.btn-link a {
+  background-color: darkcyan;
+  border-radius: 50px;
+  padding: 12px 50px;
+
+  &:after {
+    all: unset;
+  }
+
+  &:hover {
+    box-shadow: 0 0 12px #1e1e1e;
+  }
+}

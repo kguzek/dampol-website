@@ -1,0 +1,40 @@
+<nav>
+  <ul [class]="'navbar-list ' + (isMenuOpen ? 'open' : 'closed')">
+    <li class="header">
+      <img src="assets/dampol-logo.jpg" alt="Dampol logo" />
+      <div>Dampol</div>
+    </li>
+
+    <app-navbar-link
+      *ngFor="let link of links"
+      [link]="link"
+      [label]="translations.navbar[link]"
+      (click)="closeMenu()"
+      [isButton]="link === 'products'"
+    ></app-navbar-link>
+    <div
+      [class]="
+        'language language-selector ' +
+        (isLanguageSelectorOpen ? 'open' : 'closed')
+      "
+      (click)="isLanguageSelectorOpen = !isLanguageSelectorOpen"
+    >
+      <span [class]="'fi fi-' + selectedLanguage"></span
+      >{{ languageCodes[selectedLanguage] }}<mat-icon>expand_more</mat-icon>
+      <div class="language-list">
+        <div
+          *ngFor="let language of languageCodes | keyvalue"
+          [class]="
+            'language' + (language.key === selectedLanguage ? ' active' : '')
+          "
+          (click)="setSelectedLanguage(language.key)"
+        >
+          <span [class]="'fi fi-' + language.key"></span>{{ language.value }}
+        </div>
+      </div>
+    </div>
+  </ul>
+  <mat-icon class="hamburger-menu" (click)="isMenuOpen = !isMenuOpen">{{
+    isMenuOpen ? "close" : "menu"
+  }}</mat-icon>
+</nav>
