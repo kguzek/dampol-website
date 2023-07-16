@@ -1,8 +1,9 @@
+@import 'variables.scss';
+
 nav {
   position: relative;
   display: flex;
   justify-content: center;
-  width: 100%;
 
   .hamburger-menu {
     visibility: hidden;
@@ -48,7 +49,7 @@ nav {
 
 .language-selector {
   position: relative;
-  width: 120px;
+  min-width: 120px;
   cursor: pointer;
   justify-content: center;
 
@@ -102,7 +103,21 @@ nav {
   
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: $medium-screen-size) {
+  ul {
+    padding: 25px 15px !important;
+  }
+
+  .header {
+    margin-left: 12.1%;
+  }
+}
+
+@media only screen and (max-width: $small-screen-size) {
+  .header {
+    margin-left: 0px;
+  }
+  
   .hamburger-menu {
     visibility: visible !important;
   }
