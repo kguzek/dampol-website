@@ -1,0 +1,30 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #111;
+  border-radius: 20px;
+  padding: 15px;
+  background-color: #555;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: opacity 400ms ease;
+
+  &.visible {
+    opacity: 1;
+  }
+  
+  &.hidden {
+    opacity: 0;
+  }
+
+  mat-icon {
+    display: flex;
+    justify-content: center;
+    color: #222
+  }
+}
