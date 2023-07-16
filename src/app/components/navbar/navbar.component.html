@@ -1,16 +1,19 @@
 <nav>
   <ul [class]="'navbar-list ' + (isMenuOpen ? 'open' : 'closed')">
     <li class="header">
-      <img src="assets/dampol-logo.jpg" alt="Dampol logo" />
+      <img
+        src="assets/images/dampol-logo.jpg"
+        [alt]="translations.alt.dampolLogo"
+      />
       <div>Dampol</div>
     </li>
 
     <app-navbar-link
-      *ngFor="let link of links"
-      [link]="link"
-      [label]="translations.navbar[link]"
-      (click)="closeMenu()"
-      [isButton]="link === 'products'"
+      *ngFor="let link of translations.navbar | keyvalue"
+      [link]="link.key"
+      [label]="link.value"
+      (click)="scrollToSection(link.key)"
+      [isButton]="link.key === 'products'"
     ></app-navbar-link>
     <div
       [class]="
@@ -20,7 +23,7 @@
       (click)="isLanguageSelectorOpen = !isLanguageSelectorOpen"
     >
       <span [class]="'fi fi-' + selectedLanguage"></span
-      >{{ languageCodes[selectedLanguage] }}<mat-icon>expand_more</mat-icon>
+      >{{ translations.languageCode }}<mat-icon>expand_more</mat-icon>
       <div class="language-list">
         <div
           *ngFor="let language of languageCodes | keyvalue"

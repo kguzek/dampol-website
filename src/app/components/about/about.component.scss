@@ -1,0 +1,31 @@
+@import 'variables.scss';
+
+.about {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+
+  section {
+    width: 50%;
+    background-color: #333;
+    padding: 30px 80px;
+    border-radius: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 0px;
+  }
+}
+
+@media only screen and (max-width: $small-screen-size) {
+  .about {
+    padding: 0px 50px;
+    
+    section {
+      width: 100%;
+      border-radius: 0px;
+      padding: 40px 30px;
+    }
+  }
+}

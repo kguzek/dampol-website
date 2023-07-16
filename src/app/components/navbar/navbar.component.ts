@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {
-  LANGUAGE_CODES,
   LanguageCode,
+  TRANSLATIONS,
   Translation,
 } from 'src/app/app.translations';
 
@@ -18,10 +18,17 @@ export class NavbarComponent {
 
   isMenuOpen = false;
   isLanguageSelectorOpen = false;
-  languageCodes = LANGUAGE_CODES;
-  links: (keyof Translation['navbar'])[] = ['about', 'contact', 'products'];
 
-  closeMenu() {
+  // Creates an object with key-value pairs such as { gb: "EN (UK)" }
+  languageCodes = Object.fromEntries(
+    Object.entries(TRANSLATIONS).map(([lang, translations]) => [
+      lang,
+      translations.languageCode,
+    ])
+  );
+
+  scrollToSection(sectionId: string) {
     this.isMenuOpen = false;
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   }
 }

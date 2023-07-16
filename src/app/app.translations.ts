@@ -1,19 +1,15 @@
-export const LANGUAGE_CODES = {
-  gb: 'EN (UK)',
-  dk: 'DK',
-};
-
-export type LanguageCode = keyof typeof LANGUAGE_CODES;
-
 export const TRANSLATIONS = {
-  gb: {
-    alt: { dampolLogo: 'Dampol logo' },
-    navbar: { about: 'About', contact: 'Contact', products: 'Products' },
-  },
   dk: {
+    languageCode: 'DK',
     alt: { dampolLogo: 'Dampol logo' },
     navbar: { about: 'Om os', contact: 'Kontakt', products: 'Produkter' },
   },
+  gb: {
+    languageCode: 'EN (UK)',
+    alt: { dampolLogo: 'Dampol logo' },
+    navbar: { about: 'About', contact: 'Contact', products: 'Products' },
+  },
 };
 
-export type Translation = typeof TRANSLATIONS.gb & typeof TRANSLATIONS.dk;
+export type Translation = typeof TRANSLATIONS.dk & typeof TRANSLATIONS.gb;
+export type LanguageCode = keyof typeof TRANSLATIONS;
