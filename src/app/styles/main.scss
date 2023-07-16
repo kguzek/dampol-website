@@ -2,6 +2,7 @@
 
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import 'variables.scss';
 
 body {
   margin: 0px;
@@ -9,4 +10,39 @@ body {
   font-size: large;
   background-color: #222;
   color: white;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+.section-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+
+  section {
+    width: 50%;
+    background-color: #333;
+    padding: 30px 80px;
+    border-radius: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 0px;
+  }
+}
+
+@media only screen and (max-width: $small-screen-size) {
+  .section-container {
+    padding: 0px 50px;
+    
+    section {
+      width: 100%;
+      border-radius: 0px;
+      padding: 40px 30px;
+    }
+  }
 }

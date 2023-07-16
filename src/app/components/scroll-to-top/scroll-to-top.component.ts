@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
+import { Translation } from 'src/app/app.translations';
 
 @Component({
   selector: 'app-scroll-to-top',
@@ -6,6 +7,8 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./scroll-to-top.component.scss'],
 })
 export class ScrollToTopComponent {
+  @Input() translations!: Translation;
+
   visible = false;
 
   scrollToTop() {

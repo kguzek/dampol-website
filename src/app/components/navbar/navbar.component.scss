@@ -7,7 +7,7 @@ nav {
 
   .hamburger-menu {
     visibility: hidden;
-    position: absolute;
+    position: fixed;
     transform: scale(1.5);
     top: 10px;
     right: 10px;
@@ -120,14 +120,18 @@ nav {
   
   .hamburger-menu {
     visibility: visible !important;
+    top: unset;
   }
 
   .navbar-list {
-    position: absolute;
+    position: fixed;
     flex-direction: column;
     padding: 25px 0px !important;
     gap: 20px;
     transition: transform 500ms ease;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 0 12px #1e1e1e;
 
     &.closed {
       transform: translateY(-100%);

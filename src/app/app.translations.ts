@@ -3,11 +3,23 @@ export const TRANSLATIONS = {
     languageCode: 'DK',
     alt: { dampolLogo: 'Dampol logo' },
     navbar: { about: 'Om os', contact: 'Kontakt', products: 'Produkter' },
+    ui: { scrollToTop: 'Rul til toppen' },
+    contact: {
+      header: 'Kontakt',
+      poland: 'Polen',
+      salesDepartment: 'Salgsafdeling',
+    },
   },
   gb: {
     languageCode: 'EN (UK)',
     alt: { dampolLogo: 'Dampol logo' },
     navbar: { about: 'About', contact: 'Contact', products: 'Products' },
+    ui: { scrollToTop: 'Scroll to top' },
+    contact: {
+      header: 'Contact Us',
+      poland: 'Poland',
+      salesDepartment: 'Sales department',
+    },
   },
 };
 
