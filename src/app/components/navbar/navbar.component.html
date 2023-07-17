@@ -9,7 +9,7 @@
     </li>
 
     <app-navbar-link
-      *ngFor="let link of translations.navbar | keyvalue"
+      *ngFor="let link of translations.navbar | keyvalue : originalOrder"
       [link]="link.key"
       [label]="link.value"
       (click)="scrollToSection(link.key)"

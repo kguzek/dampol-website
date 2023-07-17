@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { originalOrder } from 'src/app/app.component';
 import {
   LanguageCode,
   TRANSLATIONS,
@@ -18,6 +19,8 @@ export class NavbarComponent {
 
   isMenuOpen = false;
   isLanguageSelectorOpen = false;
+
+  originalOrder = originalOrder;
 
   // Creates an object with key-value pairs such as { gb: "EN (UK)" }
   languageCodes = Object.fromEntries(

@@ -2,7 +2,7 @@ export const TRANSLATIONS = {
   dk: {
     languageCode: 'DK',
     alt: { dampolLogo: 'Dampol logo' },
-    navbar: { about: 'Om os', contact: 'Kontakt', products: 'Produkter' },
+    navbar: { products: 'Produkter', about: 'Om os', contact: 'Kontakt' },
     ui: { scrollToTop: 'Rul til toppen' },
     contact: {
       header: 'Kontakt',
@@ -13,7 +13,7 @@ export const TRANSLATIONS = {
   gb: {
     languageCode: 'EN (UK)',
     alt: { dampolLogo: 'Dampol logo' },
-    navbar: { about: 'About', contact: 'Contact', products: 'Products' },
+    navbar: { products: 'Products', about: 'About', contact: 'Contact' },
     ui: { scrollToTop: 'Scroll to top' },
     contact: {
       header: 'Contact Us',

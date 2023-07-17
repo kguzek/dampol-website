@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { LanguageCode, TRANSLATIONS } from './app.translations';
+import { KeyValue } from '@angular/common';
+
+// Preserve original property order
+export const originalOrder = (
+  a: KeyValue<string, string>,
+  b: KeyValue<string, string>
+): number => 0;
 
 @Component({
   selector: 'app-root',
