@@ -53,6 +53,9 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "github-pages": {
+              "baseHref": "/dampol-website/"
             }
           },
           "defaultConfiguration": "production"
