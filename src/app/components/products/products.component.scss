@@ -1,0 +1,15 @@
+@import "variables.scss";
+
+.models {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+@media only screen and (min-width: $small-screen-size) {
+  section {
+    width: unset;
+    min-width: 60%;
+  }
+}

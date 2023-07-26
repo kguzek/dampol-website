@@ -1,1 +1,59 @@
-<p>model works!</p>
+<div class="model">
+  <h2>Model {{ modelNumber }} – {{ modelDescription }}</h2>
+  <div class="image-carousel">
+    <button
+      class="btn-image-scroller"
+      *ngIf="innerWidth > smallScreenSize"
+      (click)="previousImage()"
+      [title]="translations.products.prev + ' ' + translations.products.image"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <img
+      [src]="
+        'assets/images/models/' +
+        modelNumber +
+        '/model-' +
+        modelNumber +
+        '-image-' +
+        selectedImage +
+        '.jpg'
+      "
+      [alt]="modelDescription + ' preview'"
+    />
+    <button
+      class="btn-image-scroller"
+      *ngIf="innerWidth > smallScreenSize"
+      (click)="nextImage()"
+      [title]="translations.products.next + ' ' + translations.products.image"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+  <div class="selection-indicators">
+    <button
+      class="btn-image-scroller"
+      *ngIf="innerWidth <= smallScreenSize"
+      (click)="previousImage()"
+      [title]="translations.products.prev + ' ' + translations.products.image"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button
+      *ngFor="let _ of [].constructor(model.numImages); index as i"
+      [class]="'indicator' + (i + 1 === selectedImage ? ' active' : '')"
+      (click)="selectedImage = i + 1"
+      [title]="translations.products.image + ' ' + (i + 1)"
+    >
+      <mat-icon>fiber_manual_record</mat-icon>
+    </button>
+    <button
+      class="btn-image-scroller"
+      *ngIf="innerWidth <= smallScreenSize"
+      (click)="nextImage()"
+      [title]="translations.products.next + ' ' + translations.products.image"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>

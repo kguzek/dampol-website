@@ -1,0 +1,82 @@
+@import "variables.scss";
+
+.model {
+  background-color: #888;
+  padding: 25px;
+  border-radius: 15px;
+  width: 700px;
+}
+
+button {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: unset;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.image-carousel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    height: 300px;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.btn-image-scroller {
+  border-radius: 100%;
+  padding: 15px;
+
+  mat-icon {
+    transform: scale(2);
+  }
+
+  &:hover {
+    background-color: #bbb;
+    color: #666;
+  }
+}
+
+.selection-indicators {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  .indicator {
+    transition: opacity 200ms ease;
+    opacity: 0.5;
+
+    mat-icon {
+      transform: scale(0.75);
+      transition: transform 400ms ease;
+    }
+
+    &.active {
+      opacity: 1;
+
+      mat-icon {
+        transform: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-screen-size) {
+  .model {
+    padding: 20px 10px;
+    width: 60vw;
+  }
+}
+
+@media only screen and (max-width: $small-screen-size) {
+  .image-carousel {
+    justify-content: center;
+  }
+}

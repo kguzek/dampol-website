@@ -1,6 +1,11 @@
-<div class="section-container">
-  <section>
-    <h1 id="products">Our Offer</h1>
-    <app-model></app-model>
-  </section>
-</div>
+<section>
+  <h1 id="products">{{ translations.products.header }}</h1>
+  <div class="models">
+    <app-model
+      *ngFor="let model of models; index as i"
+      [modelNumber]="i + 1"
+      [model]="model"
+      [translations]="translations"
+    ></app-model>
+  </div>
+</section>

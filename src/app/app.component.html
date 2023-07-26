@@ -4,6 +4,8 @@
   [translations]="translations"
 ></app-navbar>
 <app-scroll-to-top [translations]="translations"></app-scroll-to-top>
-<app-products></app-products>
-<app-about></app-about>
+<div class="section-container">
+  <app-products [translations]="translations"></app-products>
+  <app-about [translations]="translations"></app-about>
+</div>
 <app-contact [translations]="translations"></app-contact>

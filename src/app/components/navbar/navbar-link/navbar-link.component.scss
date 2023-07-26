@@ -1,11 +1,10 @@
 li {
-  
   a {
     position: relative;
-    font-size: large;
     font-weight: bold;
     transition: all 200ms ease;
     text-transform: uppercase;
+    white-space: nowrap;
 
     &:after {
       content: "";
@@ -16,7 +15,7 @@ li {
       width: 0;
       height: 2px;
       transition: all 200ms ease;
-    } 
+    }
 
     &:hover:after {
       width: 100%;
