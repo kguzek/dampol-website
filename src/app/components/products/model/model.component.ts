@@ -1,10 +1,11 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Model } from './model.data';
 import { Translation } from 'src/app/app.translations';
-
-const LARGE_SCREEN_SIZE_PX = 1600;
-const MEDIUM_SCREEN_SIZE_PX = 1140;
-const SMALL_SCREEN_SIZE_PX = 860;
+import {
+  LARGE_SCREEN_SIZE_PX,
+  MEDIUM_SCREEN_SIZE_PX,
+  SMALL_SCREEN_SIZE_PX,
+} from 'src/app/app.constants';
 
 @Component({
   selector: 'app-model',
@@ -20,7 +21,7 @@ export class ModelComponent implements OnInit {
   selectedImage = 1;
   useMobileLayout = false;
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   checkIfShouldUseMobileLayout() {
     this.useMobileLayout =
       (window.innerWidth <= LARGE_SCREEN_SIZE_PX &&

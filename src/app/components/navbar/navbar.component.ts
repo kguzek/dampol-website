@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { originalOrder } from 'src/app/app.component';
-import {
-  LanguageCode,
-  TRANSLATIONS,
-  Translation,
-} from 'src/app/app.translations';
+import { LanguageCode, Translation } from 'src/app/app.translations';
 
 @Component({
   selector: 'app-navbar',
@@ -19,17 +15,8 @@ export class NavbarComponent {
   @Input() onSecondPage!: boolean;
 
   isMenuOpen = false;
-  isLanguageSelectorOpen = false;
 
   originalOrder = originalOrder;
-
-  // Creates an object with key-value pairs such as { gb: "EN (UK)" }
-  languageCodes = Object.fromEntries(
-    Object.entries(TRANSLATIONS).map(([lang, translations]) => [
-      lang,
-      translations.languageCode,
-    ])
-  );
 
   scrollToSection(sectionId: string) {
     this.isMenuOpen = false;

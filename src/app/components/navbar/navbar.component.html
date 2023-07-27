@@ -7,7 +7,6 @@
       />
       <h1>Dampol</h1>
     </li>
-
     <app-navbar-link
       *ngFor="let link of translations.navbar | keyvalue : originalOrder"
       [link]="link.key"
@@ -15,27 +14,11 @@
       (click)="scrollToSection(link.key)"
       [isButton]="link.key === 'products'"
     ></app-navbar-link>
-    <div
-      [class]="
-        'language language-selector ' +
-        (isLanguageSelectorOpen ? 'open' : 'closed')
-      "
-      (click)="isLanguageSelectorOpen = !isLanguageSelectorOpen"
-    >
-      <span [class]="'fi fi-' + selectedLanguage"></span
-      >{{ translations.languageCode }}<mat-icon>expand_more</mat-icon>
-      <div class="language-list">
-        <div
-          *ngFor="let language of languageCodes | keyvalue"
-          [class]="
-            'language' + (language.key === selectedLanguage ? ' active' : '')
-          "
-          (click)="setSelectedLanguage(language.key)"
-        >
-          <span [class]="'fi fi-' + language.key"></span>{{ language.value }}
-        </div>
-      </div>
-    </div>
+    <app-language-select
+      [translations]="translations"
+      [selectedLanguage]="selectedLanguage"
+      [setSelectedLanguage]="setSelectedLanguage"
+    ></app-language-select>
   </ul>
   <mat-icon
     [class]="'hamburger-menu' + (onSecondPage ? ' dark' : '')"

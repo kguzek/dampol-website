@@ -1,13 +1,19 @@
 @import "variables.scss";
 
 .background {
-  background: url("/assets/images/background.png") no-repeat 50% 50%;
-  background-size: cover;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+  }
 }
 
 h1 {
@@ -38,7 +44,6 @@ h1 {
 
 @media only screen and (max-width: $tiny-screen-size) {
   .background {
-    background-image: url("/assets/images/models/12/model-12-image-1.jpg");
     gap: 20px;
   }
 

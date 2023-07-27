@@ -1,0 +1,20 @@
+<div
+  [class]="
+    'language language-selector ' + (isLanguageSelectorOpen ? 'open' : 'closed')
+  "
+  (click)="isLanguageSelectorOpen = !isLanguageSelectorOpen"
+>
+  <span [class]="'fi fi-' + selectedLanguage"></span
+  >{{ translations.languageCode }}<mat-icon>expand_more</mat-icon>
+  <div class="language-list">
+    <div
+      *ngFor="let language of languageCodes | keyvalue"
+      [class]="
+        'language' + (language.key === selectedLanguage ? ' active' : '')
+      "
+      (click)="setSelectedLanguage(language.key)"
+    >
+      <span [class]="'fi fi-' + language.key"></span>{{ language.value }}
+    </div>
+  </div>
+</div>
