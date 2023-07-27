@@ -21,7 +21,7 @@
     ></app-language-select>
   </ul>
   <mat-icon
-    [class]="'hamburger-menu' + (onSecondPage ? ' dark' : '')"
+    [class]="'hamburger-menu' + (showDarkHamburger ? ' dark' : '')"
     (click)="isMenuOpen = !isMenuOpen"
     >{{ isMenuOpen ? "close" : "menu" }}</mat-icon
   >

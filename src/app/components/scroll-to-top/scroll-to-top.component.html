@@ -1,5 +1,5 @@
 <div
-  [class]="'scroll-to-top ' + (onSecondPage ? 'visible' : 'hidden')"
+  [class]="'scroll-to-top ' + (pagesScrolled >= 1 ? 'visible' : 'hidden')"
   (click)="scrollToTop()"
   [title]="translations.ui.scrollToTop"
 >

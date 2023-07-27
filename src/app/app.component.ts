@@ -18,7 +18,8 @@ export class AppComponent {
   selectedLanguage: LanguageCode = (localStorage.getItem('language') ||
     'gb') as LanguageCode;
   translations = TRANSLATIONS[this.selectedLanguage];
-  onSecondPage = false;
+  pagesScrolled = 0;
+  scrollProgress = 0;
 
   setSelectedLanguage(language: string) {
     this.selectedLanguage = language as LanguageCode;
@@ -28,7 +29,9 @@ export class AppComponent {
   }
 
   @HostListener('window:scroll')
+  @HostListener('window:resize')
   checkHamburgerColor() {
-    this.onSecondPage = window.scrollY > window.innerHeight;
+    this.pagesScrolled = window.scrollY / window.innerHeight;
+    this.scrollProgress = window.scrollY / document.body.scrollHeight;
   }
 }

@@ -8,7 +8,7 @@ import { Translation } from 'src/app/app.translations';
 })
 export class ScrollToTopComponent {
   @Input() translations!: Translation;
-  @Input() onSecondPage!: boolean;
+  @Input() pagesScrolled!: number;
 
   scrollToTop() {
     console.log('aaa');

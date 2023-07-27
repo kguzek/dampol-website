@@ -2,11 +2,11 @@
   [translations]="translations"
   [setSelectedLanguage]="setSelectedLanguage"
   [selectedLanguage]="selectedLanguage"
-  [onSecondPage]="onSecondPage"
+  [showDarkHamburger]="pagesScrolled >= 1 && scrollProgress < 0.9"
 ></app-navbar>
 <app-scroll-to-top
   [translations]="translations"
-  [onSecondPage]="onSecondPage"
+  [pagesScrolled]="pagesScrolled"
 ></app-scroll-to-top>
 <app-header [translations]="translations"></app-header>
 <app-products [translations]="translations"></app-products>
