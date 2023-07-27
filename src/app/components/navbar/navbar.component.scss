@@ -56,6 +56,10 @@ nav {
   display: flex;
   gap: 5px;
   align-items: center;
+
+  > span {
+    margin-bottom: 3px;
+  }
 }
 
 .language-selector {
@@ -87,7 +91,8 @@ nav {
     transition: all 250ms ease;
     flex-direction: column;
     position: absolute;
-    background-color: grey;
+    background-color: #3d3f50cc;
+    backdrop-filter: blur(4px);
     padding: 10px;
     gap: 5px;
     border-radius: 10px;
@@ -101,13 +106,15 @@ nav {
       transition: inherit;
 
       &:hover {
-        background-color: #444;
+        color: #2f2f5a;
+        background-color: #eaeaeacc;
       }
 
       &.active {
+        color: #48487e;
         transition: all 550ms ease-in;
-        background-color: darkcyan;
-        border-color: teal;
+        background-color: #f0f0f0fc;
+        border-color: #fff;
       }
     }
   }
@@ -126,22 +133,22 @@ nav {
 
 @media only screen and (max-width: $small-screen-size) {
   .navbar-list {
-    gap: 5vw !important;
+    gap: 3% !important;
   }
 
   .header {
-    margin-left: 5%;
+    margin-left: 2%;
   }
 }
 
 @media only screen and (max-width: $tiny-screen-size) {
-  .header {
-    margin: 0 !important;
-  }
-
   .hamburger-menu {
     visibility: visible !important;
     top: unset;
+  }
+
+  .header {
+    margin-right: 0;
   }
 
   .navbar-list {
