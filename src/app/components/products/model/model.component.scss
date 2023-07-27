@@ -1,24 +1,25 @@
 @import "variables.scss";
 
 .model {
-  box-shadow: 0 8px 32px 0 #555a;
+  box-shadow: 0 8px 16px 0 #555a;
   background-color: #e5ebec;
   backdrop-filter: blur(4px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 1.5rem;
   max-width: 700px;
+  opacity: 0.7;
+  transition: all 200ms ease;
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-10px);
+    box-shadow: 0 16px 24px 0 #555e;
+  }
 }
 
-button {
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  color: unset;
-  cursor: pointer;
-  transition: opacity 200ms ease;
+.model-content {
+  display: inline-block;
+  padding: 1.5rem;
 }
 
 .image-carousel {
@@ -33,24 +34,23 @@ button {
   }
 }
 
-.btn-image-scroller {
-  border-radius: 100%;
-  padding: 15px;
-  opacity: 0.5;
-
-  mat-icon {
-    transform: scale(2);
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.selection-indicators {
-  margin-top: 20px;
+.image-scroller {
+  padding: 1.5rem 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: #d0d5d6;
+  border-radius: 0 0 10px 10px;
+
+  .btn-image-scroller {
+    opacity: 0.5;
+    margin: 0 0.5rem;
+
+    mat-icon {
+      transform: scale(2);
+    }
+  }
 
   .indicator {
     transition: opacity 200ms ease;
@@ -61,12 +61,26 @@ button {
       transition: transform 400ms ease;
     }
 
+    &.active mat-icon {
+      transform: none;
+    }
+  }
+
+  button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    padding: 0;
+    background: none;
+    color: unset;
+    cursor: pointer;
+    transition: opacity 200ms ease;
+
+    &:hover,
     &.active {
       opacity: 1;
-
-      mat-icon {
-        transform: none;
-      }
     }
   }
 }
@@ -86,7 +100,11 @@ h3 {
 }
 
 @media only screen and (max-width: $small-screen-size) {
-  .image-carousel {
-    justify-content: center;
+  .model {
+    opacity: 1;
+
+    &:hover {
+      transform: none;
+    }
   }
 }

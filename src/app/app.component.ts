@@ -1,4 +1,10 @@
-import { Component, HostListener } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { LanguageCode, TRANSLATIONS } from './app.translations';
 import { KeyValue } from '@angular/common';
 
@@ -13,13 +19,15 @@ export const originalOrder = (
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'dampol-website';
   selectedLanguage: LanguageCode = (localStorage.getItem('language') ||
     'gb') as LanguageCode;
   translations = TRANSLATIONS[this.selectedLanguage];
   pagesScrolled = 0;
-  scrollProgress = 0;
+  passedAboutPage = false;
+
+  aboutElem: Element | null = null;
 
   setSelectedLanguage(language: string) {
     this.selectedLanguage = language as LanguageCode;
@@ -28,10 +36,15 @@ export class AppComponent {
     window.location.reload();
   }
 
+  ngOnInit() {
+    this.aboutElem = document.querySelector('#about');
+  }
+
   @HostListener('window:scroll')
   @HostListener('window:resize')
-  checkHamburgerColor() {
+  updateWindowScroll() {
     this.pagesScrolled = window.scrollY / window.innerHeight;
-    this.scrollProgress = window.scrollY / document.body.scrollHeight;
+    const aboutOffset = this.aboutElem?.getBoundingClientRect()?.top ?? 0;
+    this.passedAboutPage = aboutOffset <= 100;
   }
 }

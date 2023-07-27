@@ -15,20 +15,13 @@ export const TRANSLATIONS = {
       image: 'Billede',
       customise: 'Tilpas',
       temporaryModelDescription:
-        'Denne containerpavillon er designet til at fremvise bæredygtig og miljøvenlig praksis. Den er fremstillet udelukkende af genbrugscontainere og har grønne tage, solpaneler, regnvandsopsamlingssystemer og en lodret have. Besøgende kan lære om vedvarende energi, affaldsreduktion og grøn livsstil i et fordybende og lærerigt miljø.',
+        'Denne containerpavillon er designet til at fremvise bæredygtig og miljøvenlig praksis.',
       modelDescriptions: [],
     },
     about: {
       header: 'Om',
       companyDescription: 'et polsk firma',
-      paragraphs: [
-        'Velkommen til Dampol, din førende destination for alsidige og praktiske containerløsninger designet til kontorer, boliger, butiksfacader og meget mere. Hos Dampol forstår vi de skiftende behov hos virksomheder og enkeltpersoner, der søger fleksible og tilpasningsdygtige rum. Uanset om du ønsker at skabe et funktionelt kontormiljø, komfortable boliger eller en attraktiv butiksfacade, er vores udvalg af højkvalitetscontainere designet til at opfylde dine specifikke krav.',
-        'Med mange års ekspertise i branchen har Dampol etableret sig som en betroet leverandør af containerløsninger. Vi er stolte af at levere holdbare og tilpasselige muligheder, der er både æstetisk tiltalende og praktiske. Vores containere er bygget til at modstå forskellige vejrforhold og er konstrueret af materialer af højeste kvalitet, hvilket sikrer lang levetid og ro i sindet.',
-        'Vores forpligtelse til kundetilfredshed er kernen i alt, hvad vi gør. Vi samarbejder tæt med vores kunder for at forstå deres unikke behov og præferencer, og tilbyder ekspertrådgivning og skræddersyede løsninger til at omdanne deres vision til virkelighed. Uanset om du er en lille virksomhedsejer, en projektleder eller en person, der leder efter en alsidig rumløsning, er Dampol her for at guide dig gennem hele processen, fra den første konsultation til den endelige installation.',
-        'Det, der adskiller Dampol, er vores dedikation til innovation og bæredygtighed. Vi udforsker løbende nye teknikker og teknologier for at forbedre funktionaliteten og miljøvenligheden af ​​vores containere. Fra energieffektive funktioner til miljøbevidste materialer stræber vi efter at minimere vores miljømæssige fodaftryk, mens vi leverer banebrydende løsninger til vores kunder.',
-        'Gennemse vores mangfoldige udvalg af containermuligheder på vores hjemmeside, hvor du finder detaljerede produktoplysninger, brugerdefinerbare funktioner og inspirerende casestudier. Oplev alsidigheden og bekvemmeligheden af ​​vores containere, designet til at tilpasse sig problemfrit til dine unikke behov og præferencer.',
-        'Slut dig til utallige tilfredse kunder, der har valgt Dampol som deres betroede partner for containerløsninger. Kontakt vores kyndige team i dag, og lad os hjælpe dig med at frigøre dit rums fulde potentiale med vores enestående containere, der er skræddersyet til dine nøjagtige specifikationer. Velkommen til Dampol, hvor innovativt design møder praktisk og bæredygtighed.',
-      ],
+      paragraphs: [],
     },
     contact: {
       header: 'Kontakt',
@@ -52,17 +45,8 @@ export const TRANSLATIONS = {
       image: 'Image',
       customise: 'Customise',
       temporaryModelDescription:
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.',
-      modelDescriptions: [
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.',
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.' +
-          'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.',
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.' +
-          'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.' +
-          'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.',
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs, solar panels, rainwater harvesting systems, and a vertical garden. Visitors can learn about renewable energy, waste reduction, and green living in an immersive and educational environment.',
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices. Made entirely from recycled shipping containers, it features green roofs and solar panels.',
-      ],
+        'This container pavilion is designed to showcase sustainable and eco-friendly practices.',
+      modelDescriptions: [],
     },
     about: {
       header: 'About',

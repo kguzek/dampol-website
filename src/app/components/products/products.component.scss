@@ -1,17 +1,11 @@
 @import "variables.scss";
 
-.columns {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  margin-bottom: 50px;
-  padding: 0 100px;
-}
-
 .models {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 50px;
+  margin-bottom: 50px;
+  padding: 0 15vw;
 }
 
 section {
@@ -19,14 +13,15 @@ section {
 }
 
 @media only screen and (max-width: $medium-screen-size) {
-  .columns {
-    flex-direction: column;
-    align-items: center;
+  .models {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 10vw;
   }
 }
 
 @media only screen and (max-width: $small-screen-size) {
-  .columns {
+  .models {
+    grid-template-columns: 1fr;
     padding: 0 5%;
   }
 }

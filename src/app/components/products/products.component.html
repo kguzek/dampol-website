@@ -1,13 +1,11 @@
 <section>
   <h2 id="products">{{ translations.products.header }}</h2>
-  <div class="columns">
-    <div *ngFor="let column of models; index as columnIdx" class="models">
-      <app-model
-        *ngFor="let model of column; index as rowIdx"
-        [modelNumber]="rowIdx + columnIdx * midpoint + 1"
-        [model]="model"
-        [translations]="translations"
-      ></app-model>
-    </div>
+  <div class="models">
+    <app-model
+      *ngFor="let model of models; index as i"
+      [modelNumber]="i + 1"
+      [model]="model"
+      [translations]="translations"
+    ></app-model>
   </div>
 </section>

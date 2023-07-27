@@ -1,11 +1,6 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Model } from './model.data';
 import { Translation } from 'src/app/app.translations';
-import {
-  LARGE_SCREEN_SIZE_PX,
-  MEDIUM_SCREEN_SIZE_PX,
-  SMALL_SCREEN_SIZE_PX,
-} from 'src/app/app.constants';
 
 @Component({
   selector: 'app-model',
@@ -16,21 +11,12 @@ export class ModelComponent implements OnInit {
   @Input() modelNumber!: number;
   @Input() model!: Model;
   @Input() translations!: Translation;
+  @ViewChild('imageScroller') imageScroller!: ElementRef;
 
   modelDescription!: string;
   selectedImage = 1;
-  useMobileLayout = false;
-
-  @HostListener('window:resize')
-  checkIfShouldUseMobileLayout() {
-    this.useMobileLayout =
-      (window.innerWidth <= LARGE_SCREEN_SIZE_PX &&
-        window.innerWidth > MEDIUM_SCREEN_SIZE_PX) ||
-      window.innerWidth <= SMALL_SCREEN_SIZE_PX;
-  }
 
   ngOnInit() {
-    this.checkIfShouldUseMobileLayout();
     this.modelDescription =
       this.translations.products.modelDescriptions[this.modelNumber - 1] ??
       this.translations.products.temporaryModelDescription;
@@ -50,5 +36,11 @@ export class ModelComponent implements OnInit {
     } else {
       this.selectedImage -= 1;
     }
+  }
+
+  navigate(event: MouseEvent) {
+    const elem = this.imageScroller.nativeElement as Element;
+    if (elem.contains(event.target as Node)) return;
+    console.log('clicked');
   }
 }

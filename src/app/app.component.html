@@ -2,7 +2,7 @@
   [translations]="translations"
   [setSelectedLanguage]="setSelectedLanguage"
   [selectedLanguage]="selectedLanguage"
-  [showDarkHamburger]="pagesScrolled >= 1 && scrollProgress < 0.9"
+  [showDarkHamburger]="pagesScrolled >= 1 && !passedAboutPage"
 ></app-navbar>
 <app-scroll-to-top
   [translations]="translations"
