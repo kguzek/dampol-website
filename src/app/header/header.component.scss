@@ -1,0 +1,53 @@
+@import "variables.scss";
+
+.background {
+  background: url("/assets/images/background.png") no-repeat 50% 50%;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  position: absolute;
+  top: 18vh;
+  margin: 0;
+  width: 100%;
+  font-size: 5rem;
+  font-family: "Cinzel", serif;
+  color: #201c30;
+}
+
+.get-started {
+  margin-top: 200px;
+  box-shadow: 0 0 12px #1e1e1e;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    mat-icon {
+      margin-bottom: 5px;
+      transform: scale(2);
+    }
+  }
+}
+
+@media only screen and (max-width: $tiny-screen-size) {
+  .background {
+    background-image: url("/assets/images/models/12/model-12-image-1.jpg");
+    gap: 20px;
+  }
+
+  h1 {
+    position: unset;
+    color: unset;
+  }
+
+  .get-started {
+    margin-top: 0;
+  }
+}

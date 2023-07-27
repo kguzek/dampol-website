@@ -1,10 +1,13 @@
 @import "variables.scss";
 
 .model {
-  background-color: #888;
-  padding: 25px;
-  border-radius: 15px;
-  width: 700px;
+  box-shadow: 0 8px 32px 0 #555a;
+  background-color: #e5ebec;
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 1.5rem;
+  max-width: 700px;
 }
 
 button {
@@ -15,7 +18,7 @@ button {
   background: none;
   color: unset;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: opacity 200ms ease;
 }
 
 .image-carousel {
@@ -33,14 +36,14 @@ button {
 .btn-image-scroller {
   border-radius: 100%;
   padding: 15px;
+  opacity: 0.5;
 
   mat-icon {
     transform: scale(2);
   }
 
   &:hover {
-    background-color: #bbb;
-    color: #666;
+    opacity: 1;
   }
 }
 
@@ -68,10 +71,17 @@ button {
   }
 }
 
-@media only screen and (max-width: $medium-screen-size) {
-  .model {
-    padding: 20px 10px;
-    width: 60vw;
+h3 {
+  font-weight: normal;
+  font-size: 1.5rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+
+  .btn {
+    color: #eee;
   }
 }
 

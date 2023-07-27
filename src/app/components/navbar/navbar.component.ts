@@ -16,6 +16,7 @@ export class NavbarComponent {
   @Input() setSelectedLanguage!: (language: string) => void;
   @Input() selectedLanguage!: LanguageCode;
   @Input() translations!: Translation;
+  @Input() onSecondPage!: boolean;
 
   isMenuOpen = false;
   isLanguageSelectorOpen = false;

@@ -1,11 +1,15 @@
 <app-navbar
+  [translations]="translations"
   [setSelectedLanguage]="setSelectedLanguage"
   [selectedLanguage]="selectedLanguage"
-  [translations]="translations"
+  [onSecondPage]="onSecondPage"
 ></app-navbar>
-<app-scroll-to-top [translations]="translations"></app-scroll-to-top>
-<div class="section-container">
-  <app-products [translations]="translations"></app-products>
-  <app-about [translations]="translations"></app-about>
-</div>
+<app-scroll-to-top
+  [translations]="translations"
+  [onSecondPage]="onSecondPage"
+></app-scroll-to-top>
+<app-header [translations]="translations"></app-header>
+<app-products [translations]="translations"></app-products>
+<hr />
+<app-about [translations]="translations"></app-about>
 <app-contact [translations]="translations"></app-contact>

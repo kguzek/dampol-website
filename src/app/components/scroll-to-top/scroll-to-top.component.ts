@@ -8,16 +8,10 @@ import { Translation } from 'src/app/app.translations';
 })
 export class ScrollToTopComponent {
   @Input() translations!: Translation;
-
-  visible = false;
+  @Input() onSecondPage!: boolean;
 
   scrollToTop() {
     console.log('aaa');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  @HostListener('window:scroll')
-  checkVisibility() {
-    this.visible = window.scrollY > 200;
   }
 }

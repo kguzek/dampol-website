@@ -1,5 +1,5 @@
-<nav>
-  <ul [class]="'navbar-list ' + (isMenuOpen ? 'open' : 'closed')">
+<nav [class]="isMenuOpen ? 'open' : 'closed'">
+  <ul [class]="'navbar-list'">
     <li class="header">
       <img
         src="assets/images/dampol-logo.jpg"
@@ -37,7 +37,9 @@
       </div>
     </div>
   </ul>
-  <mat-icon class="hamburger-menu" (click)="isMenuOpen = !isMenuOpen">{{
-    isMenuOpen ? "close" : "menu"
-  }}</mat-icon>
+  <mat-icon
+    [class]="'hamburger-menu' + (onSecondPage ? ' dark' : '')"
+    (click)="isMenuOpen = !isMenuOpen"
+    >{{ isMenuOpen ? "close" : "menu" }}</mat-icon
+  >
 </nav>

@@ -10,5 +10,7 @@ import { Translation } from 'src/app/app.translations';
 export class ProductsComponent {
   @Input() translations!: Translation;
 
-  models = MODELS;
+  midpoint = MODELS.length / 2;
+
+  models = [MODELS.slice(0, this.midpoint), MODELS.slice(this.midpoint)];
 }

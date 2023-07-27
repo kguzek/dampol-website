@@ -1,7 +1,8 @@
 @import "variables.scss";
 
 nav {
-  position: relative;
+  position: absolute;
+  width: 100%;
   display: flex;
   justify-content: center;
 
@@ -12,6 +13,11 @@ nav {
     top: 10px;
     right: 10px;
     z-index: 2;
+    transition: color 500ms ease;
+
+    &.dark {
+      color: #444;
+    }
   }
 
   .navbar-list {
@@ -21,9 +27,9 @@ nav {
     justify-content: flex-end;
     align-items: center;
     margin: 0px;
-    padding: 25px 150px;
+    padding: 10px 130px;
     width: 100%;
-    background-color: #444;
+    background: linear-gradient(45deg, #191a22ed, #36384dda);
     box-shadow: 0 0 10px #111;
     z-index: 1;
 
@@ -40,6 +46,10 @@ nav {
       }
     }
   }
+
+  &.open .hamburger-menu {
+    color: unset;
+  }
 }
 
 .language {
@@ -50,9 +60,10 @@ nav {
 
 .language-selector {
   position: relative;
-  min-width: 120px;
+  width: 125px;
   cursor: pointer;
   justify-content: center;
+  white-space: nowrap;
 
   mat-icon {
     transition: transform 200ms ease;
@@ -91,7 +102,6 @@ nav {
 
       &:hover {
         background-color: #444;
-        color: white;
       }
 
       &.active {
@@ -105,16 +115,26 @@ nav {
 
 @media only screen and (max-width: $medium-screen-size) {
   .navbar-list {
-    padding: 25px 15px !important;
-    gap: 2.5em !important;
+    padding: 10px 15px !important;
+    gap: 2em !important;
   }
 
   .header {
-    margin-left: 12.1%;
+    margin-left: 10.5%;
   }
 }
 
 @media only screen and (max-width: $small-screen-size) {
+  .navbar-list {
+    gap: 5vw !important;
+  }
+
+  .header {
+    margin-left: 5%;
+  }
+}
+
+@media only screen and (max-width: $tiny-screen-size) {
   .header {
     margin: 0 !important;
   }
@@ -131,10 +151,10 @@ nav {
     transition: all 500ms ease;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    font-size: medium;
     gap: 10px !important;
+    background: linear-gradient(45deg, #191a22fc, #36384dfa);
 
-    &.closed {
+    .closed & {
       transform: translateY(-100%);
       box-shadow: none !important;
     }

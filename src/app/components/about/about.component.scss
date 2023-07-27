@@ -1,1 +1,24 @@
 @import "variables.scss";
+
+.section-container {
+  display: flex;
+  justify-content: center;
+  border-bottom: 5px dotted #444;
+  padding-bottom: 50px;
+
+  section {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: $medium-screen-size) {
+  .section-container section {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: $small-screen-size) {
+  .section-container section {
+    width: 90%;
+  }
+}

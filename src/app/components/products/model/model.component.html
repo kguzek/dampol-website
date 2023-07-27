@@ -1,9 +1,14 @@
-<div class="model">
-  <h2>Model {{ modelNumber }} – {{ modelDescription }}</h2>
+<div
+  class="model"
+  (keydown.ArrowRight)="nextImage()"
+  (keydown.ArrowLeft)="previousImage()"
+>
+  <h3>Model {{ modelNumber }}</h3>
+  <p>{{ modelDescription }}</p>
   <div class="image-carousel">
     <button
       class="btn-image-scroller"
-      *ngIf="innerWidth > smallScreenSize"
+      *ngIf="!useMobileLayout"
       (click)="previousImage()"
       [title]="translations.products.prev + ' ' + translations.products.image"
     >
@@ -23,7 +28,7 @@
     />
     <button
       class="btn-image-scroller"
-      *ngIf="innerWidth > smallScreenSize"
+      *ngIf="!useMobileLayout"
       (click)="nextImage()"
       [title]="translations.products.next + ' ' + translations.products.image"
     >
@@ -33,7 +38,7 @@
   <div class="selection-indicators">
     <button
       class="btn-image-scroller"
-      *ngIf="innerWidth <= smallScreenSize"
+      *ngIf="useMobileLayout"
       (click)="previousImage()"
       [title]="translations.products.prev + ' ' + translations.products.image"
     >
@@ -49,11 +54,18 @@
     </button>
     <button
       class="btn-image-scroller"
-      *ngIf="innerWidth <= smallScreenSize"
+      *ngIf="useMobileLayout"
       (click)="nextImage()"
       [title]="translations.products.next + ' ' + translations.products.image"
     >
       <mat-icon>chevron_right</mat-icon>
     </button>
+  </div>
+  <div class="button-container">
+    <h3 class="btn">
+      <a [routerLink]="'/products/' + modelNumber">{{
+        translations.products.customise
+      }}</a>
+    </h3>
   </div>
 </div>

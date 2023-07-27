@@ -12,6 +12,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { ModelComponent } from './components/products/model/model.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProductsComponent,
     ModelComponent,
     ContactComponent,
+    HeaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, HttpClientModule],
   exports: [MatIconModule],

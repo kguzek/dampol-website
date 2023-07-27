@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { LanguageCode, TRANSLATIONS } from './app.translations';
 import { KeyValue } from '@angular/common';
 
 // Preserve original property order
 export const originalOrder = (
-  a: KeyValue<string, string>,
-  b: KeyValue<string, string>
+  _a: KeyValue<string, string>,
+  _b: KeyValue<string, string>
 ): number => 0;
 
 @Component({
@@ -18,10 +18,17 @@ export class AppComponent {
   selectedLanguage: LanguageCode = (localStorage.getItem('language') ||
     'gb') as LanguageCode;
   translations = TRANSLATIONS[this.selectedLanguage];
+  onSecondPage = false;
 
   setSelectedLanguage(language: string) {
     this.selectedLanguage = language as LanguageCode;
     this.translations = TRANSLATIONS[this.selectedLanguage];
     localStorage.setItem('language', language);
+    window.location.reload();
+  }
+
+  @HostListener('window:scroll')
+  checkHamburgerColor() {
+    this.onSecondPage = window.scrollY > window.innerHeight;
   }
 }

@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 li {
   a {
     position: relative;
@@ -23,16 +25,12 @@ li {
   }
 }
 
-.btn-link a {
-  background-color: darkcyan;
-  border-radius: 50px;
-  padding: 12px 50px;
+.btn a:after {
+  all: unset;
+}
 
-  &:after {
-    all: unset;
-  }
-
-  &:hover {
-    box-shadow: 0 0 12px #1e1e1e;
+@media only screen and (max-width: $small-screen-size) and (min-width: calc($tiny-screen-size + 1px)) {
+  .btn {
+    display: none;
   }
 }
