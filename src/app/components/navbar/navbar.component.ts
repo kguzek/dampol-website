@@ -1,6 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Input,
+} from '@angular/core';
 import { originalOrder } from 'src/app/app.component';
-import { LanguageCode, Translation } from 'src/app/app.translations';
+import {
+  SMALL_SCREEN_SIZE_PX,
+  TINY_SCREEN_SIZE_PX,
+} from 'src/app/app.constants';
+import { TranslationService } from 'src/app/translation.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,17 +18,24 @@ import { LanguageCode, Translation } from 'src/app/app.translations';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  @Input() setSelectedLanguage!: (language: string) => void;
-  @Input() selectedLanguage!: LanguageCode;
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
+
   @Input() showDarkHamburger!: boolean;
 
   isMenuOpen = false;
+  showProductsLink = this.shouldShowProductsLink();
 
   originalOrder = originalOrder;
 
-  scrollToSection(sectionId: string) {
-    this.isMenuOpen = false;
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  shouldShowProductsLink() {
+    return (
+      window.innerWidth <= TINY_SCREEN_SIZE_PX ||
+      window.innerWidth > SMALL_SCREEN_SIZE_PX
+    );
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.showProductsLink = this.shouldShowProductsLink();
   }
 }

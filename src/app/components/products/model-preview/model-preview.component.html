@@ -2,9 +2,8 @@
   class="model"
   (keydown.ArrowRight)="nextImage()"
   (keydown.ArrowLeft)="previousImage()"
-  (click)="navigate($event)"
 >
-  <a class="model-content" [routerLink]="'/products/' + modelNumber">
+  <a class="model-content" [routerLink]="'/model/' + modelNumber">
     <h3>Model {{ modelNumber }}</h3>
     <p>{{ modelDescription }}</p>
     <div class="image-carousel">
@@ -26,7 +25,11 @@
     <button
       class="btn-image-scroller"
       (click)="previousImage()"
-      [title]="translations.products.prev + ' ' + translations.products.image"
+      [title]="
+        translationService.translations.products.prev +
+        ' ' +
+        translationService.translations.products.image
+      "
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -34,14 +37,18 @@
       *ngFor="let _ of [].constructor(model.numImages); index as i"
       [class]="'indicator' + (i + 1 === selectedImage ? ' active' : '')"
       (click)="selectedImage = i + 1"
-      [title]="translations.products.image + ' ' + (i + 1)"
+      [title]="translationService.translations.products.image + ' ' + (i + 1)"
     >
       <mat-icon>fiber_manual_record</mat-icon>
     </button>
     <button
       class="btn-image-scroller"
       (click)="nextImage()"
-      [title]="translations.products.next + ' ' + translations.products.image"
+      [title]="
+        translationService.translations.products.next +
+        ' ' +
+        translationService.translations.products.image
+      "
     >
       <mat-icon>chevron_right</mat-icon>
     </button>

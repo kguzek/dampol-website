@@ -1,0 +1,15 @@
+@import "variables.scss";
+
+section {
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 150px 10vw;
+}
+
+@media only screen and (max-width: $tiny-screen-size) {
+  section {
+    margin: 50px 5vw;
+  }
+}

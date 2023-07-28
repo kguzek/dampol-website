@@ -1,15 +1,6 @@
 <app-navbar
-  [translations]="translations"
-  [setSelectedLanguage]="setSelectedLanguage"
-  [selectedLanguage]="selectedLanguage"
   [showDarkHamburger]="pagesScrolled >= 1 && !passedAboutPage"
 ></app-navbar>
-<app-scroll-to-top
-  [translations]="translations"
-  [pagesScrolled]="pagesScrolled"
-></app-scroll-to-top>
-<app-header [translations]="translations"></app-header>
-<app-products [translations]="translations"></app-products>
-<hr />
-<app-about [translations]="translations"></app-about>
-<app-contact [translations]="translations"></app-contact>
+<app-scroll-to-top [pagesScrolled]="pagesScrolled"></app-scroll-to-top>
+<router-outlet></router-outlet>
+<app-contact></app-contact>

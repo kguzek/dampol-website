@@ -1,24 +1,29 @@
 <nav [class]="isMenuOpen ? 'open' : 'closed'">
   <ul [class]="'navbar-list'">
     <li class="header">
-      <img
-        src="assets/images/dampol-logo.jpg"
-        [alt]="translations.alt.dampolLogo"
-      />
-      <h1>Dampol</h1>
+      <a routerLink="/"
+        ><img
+          src="assets/images/dampol-logo.jpg"
+          [alt]="translationService.translations.alt.dampolLogo"
+        />
+        <h1>Dampol</h1></a
+      >
     </li>
-    <app-navbar-link
-      *ngFor="let link of translations.navbar | keyvalue : originalOrder"
-      [link]="link.key"
-      [label]="link.value"
-      (click)="scrollToSection(link.key)"
-      [isButton]="link.key === 'products'"
-    ></app-navbar-link>
-    <app-language-select
-      [translations]="translations"
-      [selectedLanguage]="selectedLanguage"
-      [setSelectedLanguage]="setSelectedLanguage"
-    ></app-language-select>
+    <ng-container
+      *ngFor="
+        let link of translationService.translations.navbar
+          | keyvalue : originalOrder
+      "
+    >
+      <app-navbar-link
+        *ngIf="link.key !== 'products' || showProductsLink"
+        [link]="link.key"
+        [label]="link.value"
+        (click)="isMenuOpen = false"
+        [isButton]="link.key === 'products'"
+      ></app-navbar-link>
+    </ng-container>
+    <app-language-select></app-language-select>
   </ul>
   <mat-icon
     [class]="'hamburger-menu' + (showDarkHamburger ? ' dark' : '')"

@@ -1,14 +1,17 @@
 @import "variables.scss";
 
-li {
-  a {
-    position: relative;
-    font-weight: bold;
-    transition: all 200ms ease;
-    text-transform: uppercase;
-    white-space: nowrap;
+li a {
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
-    &:after {
+:not(.btn) a {
+  transition: all 200ms ease;
+
+  h3 {
+    position: relative;
+
+    &::after {
       content: "";
       position: absolute;
       left: 0;
@@ -19,18 +22,26 @@ li {
       transition: all 200ms ease;
     }
 
-    &:hover:after {
+    &:hover::after {
       width: 100%;
     }
   }
 }
 
-.btn a:after {
-  all: unset;
+@media only screen and (max-width: $medium-screen-size) {
+  li {
+    font-size: medium;
+  }
 }
 
-@media only screen and (max-width: $small-screen-size) and (min-width: calc($tiny-screen-size + 1px)) {
-  .btn {
-    display: none;
+@media only screen and (max-width: $small-screen-size) {
+  li {
+    font-size: small;
+  }
+}
+
+@media only screen and (max-width: $tiny-screen-size) {
+  li {
+    font-size: large;
   }
 }

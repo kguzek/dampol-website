@@ -1,7 +1,7 @@
-<div
+<a
+  routerLink="/"
   [class]="'scroll-to-top ' + (pagesScrolled >= 1 ? 'visible' : 'hidden')"
-  (click)="scrollToTop()"
-  [title]="translations.ui.scrollToTop"
+  [title]="translationService.translations.ui.scrollToTop"
 >
   <mat-icon>north</mat-icon>
-</div>
+</a>

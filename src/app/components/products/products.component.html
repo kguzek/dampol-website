@@ -1,11 +1,10 @@
 <section>
-  <h2 id="products">{{ translations.products.header }}</h2>
+  <h2 id="products">{{ translationService.translations.products.header }}</h2>
   <div class="models">
-    <app-model
+    <app-model-preview
       *ngFor="let model of models; index as i"
       [modelNumber]="i + 1"
       [model]="model"
-      [translations]="translations"
-    ></app-model>
+    ></app-model-preview>
   </div>
 </section>

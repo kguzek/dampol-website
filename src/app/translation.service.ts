@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 export const TRANSLATIONS = {
   dk: {
     languageCode: 'DK',
@@ -21,12 +23,23 @@ export const TRANSLATIONS = {
     about: {
       header: 'Om',
       companyDescription: 'et polsk firma',
-      paragraphs: [],
+      paragraphs: [
+        'Velkommen til Dampol, din førende destination for alsidige og praktiske containerløsninger designet til kontorer, boliger, butiksfacader og meget mere. Hos Dampol forstår vi de skiftende behov hos virksomheder og enkeltpersoner, der søger fleksible og tilpasningsdygtige rum. Uanset om du ønsker at skabe et funktionelt kontormiljø, komfortable boliger eller en attraktiv butiksfacade, er vores udvalg af højkvalitetscontainere designet til at opfylde dine specifikke krav.',
+        'Med mange års ekspertise i branchen har Dampol etableret sig som en betroet leverandør af containerløsninger. Vi er stolte af at levere holdbare og tilpasselige muligheder, der er både æstetisk tiltalende og praktiske. Vores containere er bygget til at modstå forskellige vejrforhold og er konstrueret af materialer af højeste kvalitet, hvilket sikrer lang levetid og ro i sindet.',
+        'Vores forpligtelse til kundetilfredshed er kernen i alt, hvad vi gør. Vi samarbejder tæt med vores kunder for at forstå deres unikke behov og præferencer, og tilbyder ekspertrådgivning og skræddersyede løsninger til at omdanne deres vision til virkelighed. Uanset om du er en lille virksomhedsejer, en projektleder eller en person, der leder efter en alsidig rumløsning, er Dampol her for at guide dig gennem hele processen, fra den første konsultation til den endelige installation.',
+        'Det, der adskiller Dampol, er vores dedikation til innovation og bæredygtighed. Vi udforsker løbende nye teknikker og teknologier for at forbedre funktionaliteten og miljøvenligheden af ​​vores containere. Fra energieffektive funktioner til miljøbevidste materialer stræber vi efter at minimere vores miljømæssige fodaftryk, mens vi leverer banebrydende løsninger til vores kunder.',
+        'Gennemse vores mangfoldige udvalg af containermuligheder på vores hjemmeside, hvor du finder detaljerede produktoplysninger, brugerdefinerbare funktioner og inspirerende casestudier. Oplev alsidigheden og bekvemmeligheden af ​​vores containere, designet til at tilpasse sig problemfrit til dine unikke behov og præferencer.',
+        'Slut dig til utallige tilfredse kunder, der har valgt Dampol som deres betroede partner for containerløsninger. Kontakt vores kyndige team i dag, og lad os hjælpe dig med at frigøre dit rums fulde potentiale med vores enestående containere, der er skræddersyet til dine nøjagtige specifikationer. Velkommen til Dampol, hvor innovativt design møder praktisk og bæredygtighed.',
+      ],
     },
     contact: {
       header: 'Kontakt',
       poland: 'Polen',
       salesDepartment: 'Salgsafdeling',
+    },
+    notFound: {
+      thePage: 'Siden',
+      wasNotFound: 'blev ikke fundet.',
     },
   },
   gb: {
@@ -65,8 +78,27 @@ export const TRANSLATIONS = {
       poland: 'Poland',
       salesDepartment: 'Sales department',
     },
+    notFound: {
+      thePage: 'The page',
+      wasNotFound: 'was not found.',
+    },
   },
 };
 
 export type LanguageCode = keyof typeof TRANSLATIONS;
 export type Translation = (typeof TRANSLATIONS)[LanguageCode];
+
+@Injectable()
+export class TranslationService {
+  selectedLanguage: LanguageCode = (localStorage.getItem('language') ||
+    'gb') as LanguageCode;
+
+  get translations() {
+    return TRANSLATIONS[this.selectedLanguage];
+  }
+
+  setSelectedLanguage(language: string) {
+    this.selectedLanguage = language as LanguageCode;
+    localStorage.setItem('language', language);
+  }
+}

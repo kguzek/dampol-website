@@ -1,16 +1,16 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Model } from './model.data';
-import { Translation } from 'src/app/app.translations';
+import { Model } from '../model.data';
+import { TranslationService } from 'src/app/translation.service';
 
 @Component({
-  selector: 'app-model',
-  templateUrl: './model.component.html',
-  styleUrls: ['./model.component.scss'],
+  selector: 'app-model-preview',
+  templateUrl: './model-preview.component.html',
+  styleUrls: ['./model-preview.component.scss'],
 })
-export class ModelComponent implements OnInit {
+export class ModelPreviewComponent implements OnInit {
   @Input() modelNumber!: number;
   @Input() model!: Model;
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
   @ViewChild('imageScroller') imageScroller!: ElementRef;
 
   modelDescription!: string;
@@ -18,8 +18,10 @@ export class ModelComponent implements OnInit {
 
   ngOnInit() {
     this.modelDescription =
-      this.translations.products.modelDescriptions[this.modelNumber - 1] ??
-      this.translations.products.temporaryModelDescription;
+      this.translationService.translations.products.modelDescriptions[
+        this.modelNumber - 1
+      ] ??
+      this.translationService.translations.products.temporaryModelDescription;
   }
 
   nextImage() {
@@ -36,11 +38,5 @@ export class ModelComponent implements OnInit {
     } else {
       this.selectedImage -= 1;
     }
-  }
-
-  navigate(event: MouseEvent) {
-    const elem = this.imageScroller.nativeElement as Element;
-    if (elem.contains(event.target as Node)) return;
-    console.log('clicked');
   }
 }

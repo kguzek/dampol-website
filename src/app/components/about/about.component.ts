@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Translation } from 'src/app/app.translations';
+import { Component } from '@angular/core';
+import { TranslationService } from 'src/app/translation.service';
 
 @Component({
   selector: 'app-about',
@@ -7,5 +7,5 @@ import { Translation } from 'src/app/app.translations';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent {
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
 }

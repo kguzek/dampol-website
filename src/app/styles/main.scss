@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
-@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Martel+Sans&family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Martel+Sans&display=swap");
 @import "variables.scss";
 
 html {
@@ -12,7 +12,13 @@ html {
 body {
   margin: 0px;
   color: #eee;
-  background: linear-gradient(#f4fdfd, #222);
+
+  app-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
 }
 
 a {
@@ -26,11 +32,16 @@ h3 {
   text-align: center;
 }
 
+h1 {
+  font-family: "Cinzel", serif;
+}
+
 h2 {
-  padding: 30px;
+  padding: 150px 0 30px;
 }
 
 .btn {
+  display: inline-block;
   background-color: teal;
   border-radius: 50px;
   padding: 12px 50px;
@@ -55,5 +66,9 @@ h2 {
 @media only screen and (max-width: $tiny-screen-size) {
   html {
     font-size: small;
+  }
+
+  h2 {
+    padding-top: 30px;
   }
 }

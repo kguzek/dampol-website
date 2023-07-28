@@ -1,9 +1,5 @@
-import { Component, Input } from '@angular/core';
-import {
-  LanguageCode,
-  TRANSLATIONS,
-  Translation,
-} from 'src/app/app.translations';
+import { Component } from '@angular/core';
+import { TRANSLATIONS, TranslationService } from 'src/app/translation.service';
 
 @Component({
   selector: 'app-language-select',
@@ -11,9 +7,7 @@ import {
   styleUrls: ['./language-select.component.scss'],
 })
 export class LanguageSelectComponent {
-  @Input() setSelectedLanguage!: (language: string) => void;
-  @Input() selectedLanguage!: LanguageCode;
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
 
   isLanguageSelectorOpen = false;
 

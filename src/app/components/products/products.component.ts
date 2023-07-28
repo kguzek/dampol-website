@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { MODELS } from './model/model.data';
-import { Translation } from 'src/app/app.translations';
+import { Component } from '@angular/core';
+import { MODELS } from './model.data';
+import { TranslationService } from 'src/app/translation.service';
 
 @Component({
   selector: 'app-products',
@@ -8,7 +8,7 @@ import { Translation } from 'src/app/app.translations';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent {
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
 
   models = MODELS;
 }

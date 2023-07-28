@@ -3,8 +3,9 @@
 #contact {
   display: flex;
   background-color: #191919;
-  box-shadow: 0px 0px 10px black;
   position: relative;
+  outline: 2px dashed #444;
+  border-top: 2px dashed #444;
 
   footer {
     margin: 30px 25%;
@@ -43,15 +44,11 @@
 }
 
 @media only screen and (max-width: $small-screen-size) {
-  .contact {
-    box-shadow: none;
+  #contact footer {
+    margin: 30px 0px;
 
-    section {
-      margin: 30px 0px;
-
-      address .address {
-        width: unset;
-      }
+    address .address {
+      width: unset;
     }
   }
 }

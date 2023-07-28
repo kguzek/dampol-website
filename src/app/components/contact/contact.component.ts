@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Translation } from 'src/app/app.translations';
+import { Component } from '@angular/core';
+import { TranslationService } from 'src/app/translation.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,5 +7,5 @@ import { Translation } from 'src/app/app.translations';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent {
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
 }

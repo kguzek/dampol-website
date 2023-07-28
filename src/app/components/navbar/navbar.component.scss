@@ -1,14 +1,16 @@
 @import "variables.scss";
 
 nav {
-  position: absolute;
+  position: fixed;
+  top: 0;
   width: 100%;
   display: flex;
   justify-content: center;
+  z-index: 1;
 
   .hamburger-menu {
     visibility: hidden;
-    position: fixed;
+    position: inherit;
     transform: scale(1.5);
     top: 10px;
     right: 10px;
@@ -31,18 +33,19 @@ nav {
     width: 100%;
     background: linear-gradient(45deg, #191a22ed, #36384dda);
     box-shadow: 0 0 10px #111;
-    z-index: 1;
 
     .header {
-      font-family: "Pacifico", cursive;
-      display: flex;
-      align-items: center;
-      gap: 10px;
       margin-right: auto;
 
-      img {
-        width: 35px;
-        height: 30px;
+      a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        img {
+          width: 35px;
+          height: 30px;
+        }
       }
     }
   }
@@ -84,7 +87,7 @@ nav {
   }
 
   .navbar-list {
-    position: fixed;
+    position: inherit;
     flex-direction: column;
     padding: 25px 0px !important;
     transition: all 500ms ease;

@@ -1,11 +1,9 @@
-<div class="section-container">
-  <section>
-    <h2 id="about">
-      {{ translations.about.header }} <i>Dampol</i>,
-      {{ translations.about.companyDescription }}
-    </h2>
-    <p *ngFor="let paragraph of translations.about.paragraphs">
-      {{ paragraph }}
-    </p>
-  </section>
-</div>
+<section>
+  <h2 id="about">
+    {{ translationService.translations.about.header }} <i>Dampol</i>,
+    {{ translationService.translations.about.companyDescription }}
+  </h2>
+  <p *ngFor="let paragraph of translationService.translations.about.paragraphs">
+    {{ paragraph }}
+  </p>
+</section>

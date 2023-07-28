@@ -1,5 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Translation } from 'src/app/app.translations';
+import { TranslationService } from 'src/app/translation.service';
+
+export function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 @Component({
   selector: 'app-scroll-to-top',
@@ -7,11 +11,9 @@ import { Translation } from 'src/app/app.translations';
   styleUrls: ['./scroll-to-top.component.scss'],
 })
 export class ScrollToTopComponent {
-  @Input() translations!: Translation;
+  constructor(protected translationService: TranslationService) {}
+
   @Input() pagesScrolled!: number;
 
-  scrollToTop() {
-    console.log('aaa');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  scrollToTop = scrollToTop;
 }
