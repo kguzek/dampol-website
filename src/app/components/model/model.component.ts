@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MODELS } from '../products/model.data';
+// import { MODELS } from '../products/model.data';
 
 const PATH_REGEXP = /\/model\/(?<modelNumber>\d{1,2})(?:#.+)?/;
 
@@ -11,9 +12,10 @@ const PATH_REGEXP = /\/model\/(?<modelNumber>\d{1,2})(?:#.+)?/;
 })
 export class ModelComponent {
   constructor(private router: Router) {}
+  form!: NgForm;
 
   modelNumber = +(
     PATH_REGEXP.exec(this.router.url)?.groups?.['modelNumber'] ?? 1
   );
-  model = MODELS[this.modelNumber - 1];
+  // model = MODELS[this.modelNumber - 1];
 }

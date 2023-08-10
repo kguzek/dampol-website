@@ -6,6 +6,18 @@ section {
   flex-direction: column;
   align-items: center;
   margin: 150px 10vw;
+  gap: 50px;
+}
+
+.model-body {
+  margin: 1.5rem;
+}
+
+form {
+  label {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: $tiny-screen-size) {

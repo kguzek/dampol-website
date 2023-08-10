@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Model } from '../model.data';
+import { MODELS, Model } from '../model.data';
 import { TranslationService } from 'src/app/translation.service';
 
 @Component({
@@ -8,20 +8,22 @@ import { TranslationService } from 'src/app/translation.service';
   styleUrls: ['./model-preview.component.scss'],
 })
 export class ModelPreviewComponent implements OnInit {
-  @Input() modelNumber!: number;
-  @Input() model!: Model;
   constructor(protected translationService: TranslationService) {}
+
+  @Input() modelNumber!: number;
   @ViewChild('imageScroller') imageScroller!: ElementRef;
 
   modelDescription!: string;
   selectedImage = 1;
+  model!: Model;
 
   ngOnInit() {
+    const modelIdx = this.modelNumber - 1;
+    this.model = MODELS[modelIdx];
+    const productText = this.translationService.translations.products;
     this.modelDescription =
-      this.translationService.translations.products.modelDescriptions[
-        this.modelNumber - 1
-      ] ??
-      this.translationService.translations.products.temporaryModelDescription;
+      productText.modelDescriptions[modelIdx] ??
+      productText.temporaryModelDescription;
   }
 
   nextImage() {

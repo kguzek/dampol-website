@@ -57,6 +57,31 @@ h2 {
   }
 }
 
+.model {
+  box-shadow: 0 8px 16px 0 #555a;
+  background-color: #e5ebec;
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  max-width: 700px;
+  opacity: 0.7;
+  transition: all 200ms ease;
+
+  &:hover,
+  &.active {
+    opacity: 1;
+    transform: translateY(-10px);
+    box-shadow: 0 16px 24px 0 #555e;
+  }
+
+  &.active {
+    transform: none;
+
+    .image-scroller {
+      border-radius: 0;
+    }
+  }
+}
+
 @media only screen and (max-width: $small-screen-size) {
   html {
     font-size: medium;

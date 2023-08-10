@@ -1,6 +1,17 @@
 <section>
-  <app-model-preview
-    [modelNumber]="modelNumber"
-    [model]="model"
-  ></app-model-preview>
+  <div class="model active">
+    <app-model-preview [modelNumber]="modelNumber"></app-model-preview>
+    <div class="model-body">
+      <form #form="ngForm">
+        <label>
+          Length{{ form.value.length && ": " + form.value.length + " m" }}
+          <input ngModel name="length" type="range" min="3" max="9" step="1" />
+        </label>
+        <label>
+          Width{{ form.value.width && ": " + form.value.width + " m" }}
+          <input ngModel name="width" type="range" min="3" max="6" step="1" />
+        </label>
+      </form>
+    </div>
+  </div>
 </section>

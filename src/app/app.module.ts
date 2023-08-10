@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +14,6 @@ import { ProductsComponent } from './components/products/products.component';
 import { ModelPreviewComponent } from './components/products/model-preview/model-preview.component';
 import { ModelComponent } from './components/model/model.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/landing-page/landing-page.component';
 import { LanguageSelectComponent } from './components/navbar/language-select/language-select.component';
 import { HomeComponent } from './components/home/home.component';
@@ -35,7 +36,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HomeComponent,
     NotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MatIconModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatIconModule,
+    HttpClientModule,
+    FormsModule,
+  ],
   exports: [MatIconModule],
   providers: [TranslationService],
   bootstrap: [AppComponent],
