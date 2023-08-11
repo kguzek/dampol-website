@@ -1,11 +1,10 @@
 @import "variables.scss";
 
 li a {
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
-:not(.btn) a {
+.link {
   transition: all 200ms ease;
 
   h3 {

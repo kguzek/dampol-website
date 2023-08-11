@@ -73,15 +73,6 @@ h3 {
   font-size: 1.5rem;
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-
-  .btn {
-    color: #eee;
-  }
-}
-
 @media only screen and (max-width: $small-screen-size) {
   .model {
     opacity: 1;

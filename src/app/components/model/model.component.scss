@@ -1,7 +1,6 @@
 @import "variables.scss";
 
 section {
-  color: #222;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,11 +12,100 @@ section {
   margin: 1.5rem;
 }
 
-form {
-  label {
-    display: flex;
-    flex-direction: column;
+@mixin radiobutton-checkbox-label() {
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.5rem;
+
+  input {
+    margin-top: 0;
   }
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  &:has(input[type="checkbox"]) {
+    @include radiobutton-checkbox-label();
+  }
+}
+
+legend {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+fieldset,
+select {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+select {
+  padding: 5px;
+}
+
+ol {
+  list-style-position: outside;
+  padding-left: 1.5rem;
+
+  li {
+    padding-left: 0.5rem;
+    margin-bottom: 30px;
+  }
+}
+
+.disabled {
+  color: #999;
+}
+
+.layered-input {
+  padding-right: 0.5rem;
+
+  .btn {
+    float: right;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 1rem;
+    opacity: 0;
+  }
+
+  &:hover .btn {
+    opacity: 1;
+  }
+
+  > :last-child {
+    margin-left: 1.5rem;
+  }
+}
+
+.btn-del {
+  background-color: salmon;
+
+  &:hover {
+    background-color: indianred;
+  }
+}
+
+.radios {
+  display: flex;
+  gap: 1.5rem;
+
+  label {
+    @include radiobutton-checkbox-label();
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
 }
 
 @media only screen and (max-width: $tiny-screen-size) {

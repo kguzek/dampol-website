@@ -1,11 +1,16 @@
 @import "variables.scss";
 
+h2 {
+  padding-top: 0;
+}
+
 #contact {
   display: flex;
   background-color: #191919;
   position: relative;
   outline: 2px dashed #444;
   border-top: 2px dashed #444;
+  color: $color-text-secondary;
 
   footer {
     margin: 30px 25%;

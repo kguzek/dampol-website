@@ -3,14 +3,195 @@
     <app-model-preview [modelNumber]="modelNumber"></app-model-preview>
     <div class="model-body">
       <form #form="ngForm">
-        <label>
-          Length{{ form.value.length && ": " + form.value.length + " m" }}
-          <input ngModel name="length" type="range" min="3" max="9" step="1" />
-        </label>
-        <label>
-          Width{{ form.value.width && ": " + form.value.width + " m" }}
-          <input ngModel name="width" type="range" min="3" max="6" step="1" />
-        </label>
+        <h3>Customise your container</h3>
+        <ol>
+          <li>
+            <fieldset ngModelGroup="dimensions">
+              <legend>Dimensions</legend>
+              <label>
+                Length: {{ form.value.dimensions?.length || "?" }} m
+                <input ngModel name="length" type="range" min="3" max="9" />
+              </label>
+              <label>
+                Width: {{ form.value.dimensions?.width || "?" }} m
+                <input ngModel name="width" type="range" min="3" max="6" />
+              </label>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset ngModelGroup="features">
+              <legend>Features</legend>
+              <label>
+                Bathroom (Toilet, sink, cupboard, water heater)
+                <input ngModel name="bathroom" type="checkbox" />
+              </label>
+              <label>
+                Shower
+                <input ngModel name="shower" type="checkbox" />
+              </label>
+              <div class="layered-input">
+                <label>
+                  Kitchen
+                  <input ngModel name="kitchen" type="checkbox" />
+                </label>
+                <label
+                  [class]="form.value.features?.kitchen ? '' : ' disabled'"
+                >
+                  Separation wall
+                  <input
+                    ngModel
+                    name="walledOffKitchen"
+                    type="checkbox"
+                    [disabled]="!form.value.features?.kitchen"
+                  />
+                </label>
+              </div>
+              <label>
+                Partition wall door
+                <input ngModel name="partitionWallDoor" type="checkbox" />
+              </label>
+              <div class="layered-input">
+                <label>
+                  Additional door
+                  <input ngModel name="additionalDoor" type="checkbox" />
+                </label>
+                <button class="btn btn-add" (click)="addAdditionalDoor = true">
+                  +
+                </button>
+                <div
+                  [class]="
+                    form.value.features?.additionalDoor ? '' : 'disabled'
+                  "
+                >
+                  <div class="radios">
+                    <label>
+                      Aluminium
+                      <input
+                        ngModel
+                        name="additionalDoorMaterial"
+                        type="radio"
+                        value="aluminium"
+                        required
+                        [disabled]="!form.value.features?.additionalDoor"
+                      />
+                    </label>
+                    <label>
+                      Steel
+                      <input
+                        ngModel
+                        name="additionalDoorMaterial"
+                        type="radio"
+                        value="steel"
+                        required
+                        [disabled]="!form.value.features?.additionalDoor"
+                      />
+                    </label>
+                  </div>
+                  <div *ngIf="addAdditionalDoor">
+                    <button
+                      class="btn btn-del"
+                      (click)="addAdditionalDoor = false"
+                    >
+                      −
+                    </button>
+                    <div class="radios">
+                      <label>
+                        Aluminium
+                        <input
+                          ngModel
+                          name="additionalDoor2Material"
+                          type="radio"
+                          value="aluminium"
+                          required
+                          [disabled]="!form.value.features?.additionalDoor"
+                        />
+                      </label>
+                      <label>
+                        Steel
+                        <input
+                          ngModel
+                          name="additionalDoor2Material"
+                          type="radio"
+                          value="steel"
+                          required
+                          [disabled]="!form.value.features?.additionalDoor"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset ngModelGroup="windows">
+              <legend>Windows</legend>
+              <label
+                >Dimensions
+                <select name="dimensions">
+                  <option
+                    *ngFor="let option of windowDimensions; index as i"
+                    value="i"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
+              </label>
+              Material
+              <div class="radios">
+                <label>
+                  PCV
+                  <input
+                    ngModel
+                    name="material"
+                    type="radio"
+                    value="pcv"
+                    required
+                  />
+                </label>
+                <label>
+                  Aluminium
+                  <input
+                    ngModel
+                    name="material"
+                    type="radio"
+                    value="aluminium"
+                    required
+                  />
+                </label>
+              </div>
+              Glazure
+              <div class="radios">
+                <label>
+                  Double glazed
+                  <input
+                    ngModel
+                    name="windowGlaze"
+                    type="radio"
+                    value="double"
+                    required
+                  />
+                </label>
+                <label>
+                  Triple glazed
+                  <input
+                    ngModel
+                    name="windowGlaze"
+                    type="radio"
+                    value="triple"
+                    required
+                  />
+                </label>
+              </div>
+            </fieldset>
+          </li>
+        </ol>
+        <h3 style="font-weight: normal">
+          Total: <strong>{{ formatCurrency(price) }}</strong>
+        </h3>
+        <div class="btn-container">
+          <button class="btn" (click)="submit()"><h3>Order</h3></button>
+        </div>
       </form>
     </div>
   </div>

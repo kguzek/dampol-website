@@ -29,15 +29,9 @@ h1 {
   box-shadow: 0 0 12px #1e1e1e;
   z-index: 0;
 
-  a {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-
-    mat-icon {
-      margin-bottom: 5px;
-      transform: scale(2);
-    }
+  mat-icon {
+    transform: scale(1.5);
+    margin: 0 -1rem 5px 0;
   }
 }
 
@@ -53,5 +47,9 @@ h1 {
 
   .get-started {
     margin-top: 0;
+
+    mat-icon {
+      transform: none;
+    }
   }
 }

@@ -11,7 +11,7 @@ html {
 
 body {
   margin: 0px;
-  color: #eee;
+  color: $color-text-primary;
 
   app-root {
     display: flex;
@@ -41,15 +41,23 @@ h2 {
 }
 
 .btn {
-  display: inline-block;
-  background-color: teal;
+  color: $color-text-secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: $color-accent-faded;
+  border: none;
   border-radius: 50px;
   padding: 12px 50px;
-  transition: background-color 200ms ease;
+  transition: all 200ms ease;
+  text-transform: uppercase;
+  font-size: unset;
+  font-family: unset;
   cursor: pointer;
 
   &:hover {
-    background-color: darkcyan;
+    background-color: $color-accent;
   }
 
   h3 {

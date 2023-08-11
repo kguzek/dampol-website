@@ -1,16 +1,9 @@
-import { AfterViewInit, Component, HostListener } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { scrollToTop } from './components/scroll-to-top/scroll-to-top.component';
-import {
-  ActivatedRoute,
-  EventType,
-  NavigationStart,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, EventType, Router } from '@angular/router';
 
 const FRAGMENTS = ['products', 'about', 'contact'];
-
-const FRAGMENT_REGEXP = /\/(\w+\/)*(?:#(?<fragment>\w+))?/;
 
 // Preserve original property order
 export const originalOrder = (
