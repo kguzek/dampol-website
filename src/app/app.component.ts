@@ -41,8 +41,7 @@ export class AppComponent {
       if (event.type !== EventType.Scroll) return;
       if (this.changingFragment) return void (this.changingFragment = false);
       if (this.fragment === null) {
-        // TODO: uncomment
-        // scrollToTop();
+        scrollToTop();
       } else {
         const element = document.getElementById(this.fragment) as Element;
         element.scrollIntoView({ behavior: 'smooth' });

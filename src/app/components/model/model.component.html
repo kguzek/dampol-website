@@ -33,44 +33,30 @@
           <li>
             <fieldset formGroupName="features">
               <legend>Features</legend>
-              <div class="layered-input">
-                <label>
-                  Toilet (WC, sink, cupboard, water heater)
-                  <input formControlName="bathroom" type="checkbox" />
-                </label>
-                <label>
-                  Shower
-                  <input formControlName="shower" type="checkbox" />
-                </label>
-              </div>
-              <div class="layered-input">
-                <label>
-                  Kitchen annexe
-                  <input formControlName="kitchen" type="checkbox" />
-                </label>
-                <label
-                  [class]="form.value.features?.kitchen ? '' : ' disabled'"
-                >
-                  Separation wall
-                  <input formControlName="walledOffKitchen" type="checkbox" />
-                </label>
-              </div>
-              <div class="layered-input">
-                <label>
-                  Partition wall
-                  <input formControlName="partitionWallDoor" type="checkbox" />
-                </label>
-                <label>
-                  Partition wall internal door
-                  <input formControlName="partitionWallDoor" type="checkbox" />
-                </label>
-              </div>
+              <app-input-layered
+                formControlName="toilet"
+                outerLabel="Toilet (WC, sink, cupboard, water heater)"
+                innerLabel="Shower"
+              >
+              </app-input-layered>
+              <app-input-layered
+                formControlName="kitchen"
+                outerLabel="Kitchen annexe"
+                innerLabel="Separation wall"
+              >
+              </app-input-layered>
+              <app-input-layered
+                formControlName="partitionWall"
+                outerLabel="Partition wall"
+                innerLabel="Internal door"
+              >
+              </app-input-layered>
             </fieldset>
           </li>
           <li>
             <fieldset class="windows array-container">
               <legend>Additional doors</legend>
-              <label
+              <label class="checkbox-label"
                 >Additional doors<input
                   type="checkbox"
                   formControlName="additionalDoors"
@@ -116,17 +102,20 @@
                     <button
                       class="btn btn-add"
                       role="button"
-                      (click)="windows.insert(i + 1, createWindow())"
+                      (click)="doors.insert(i + 1, createDoor())"
                     >
-                      Add window
+                      Add door
                     </button>
                     <button
                       class="btn btn-del"
                       role="button"
-                      (click)="windows.removeAt(i)"
-                      [disabled]="windows.length < 2"
+                      (click)="
+                        doors.length > 1
+                          ? doors.removeAt(i)
+                          : form.controls.additionalDoors.setValue(false)
+                      "
                     >
-                      Remove window
+                      Remove door
                     </button>
                   </div>
                 </li>

@@ -1,0 +1,23 @@
+<div class="input-layered">
+  <label>
+    {{ outerLabel }}
+    <input
+      type="checkbox"
+      [required]="true"
+      [ngModel]="outerValue"
+      [checked]="outerValue"
+      (click)="outerValue = !outerValue; onChange()"
+    />
+  </label>
+  <label [class]="outerValue ? '' : 'disabled'">
+    + {{ innerLabel }}
+    <input
+      type="checkbox"
+      [required]="true"
+      [ngModel]="innerValue"
+      [checked]="innerValue"
+      (click)="innerValue = !innerValue; onChange()"
+      [disabled]="!outerValue"
+    />
+  </label>
+</div>

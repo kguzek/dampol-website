@@ -13,3 +13,13 @@ $color-background: #f4fdfd;
 
 $color-contrast-light: #2f2f5a;
 $color-contrast-dark: #48487e;
+
+@mixin radiobutton-checkbox-label() {
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.5rem;
+
+  input {
+    margin-top: 0;
+  }
+}

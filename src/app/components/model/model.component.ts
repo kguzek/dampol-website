@@ -24,12 +24,17 @@ const CURRENCY_FORMAT = Intl.NumberFormat('en-GB', {
   currency: 'EUR',
 });
 
+const DROPDOWN_INPUT = [
+  0,
+  [(control: FormControl) => (+control.value === 0 ? { error: '' } : null)],
+];
+
 @Component({
   selector: 'app-model',
   templateUrl: './model.component.html',
   styleUrls: ['./model.component.scss'],
 })
-export class ModelComponent implements OnInit {
+export class ModelComponent {
   constructor(private router: Router, private formBuilder: FormBuilder) {}
 
   doorLocations = [SELECT_FIRST_OPTION, ...DOOR_LOCATIONS];
@@ -42,13 +47,13 @@ export class ModelComponent implements OnInit {
 
   createDoor = () =>
     this.formBuilder.group({
-      location: [0],
+      location: DROPDOWN_INPUT,
       material: [''],
     });
 
   createWindow = () =>
     this.formBuilder.group({
-      dimensions: [0],
+      dimensions: DROPDOWN_INPUT,
       material: [''],
       windowGlaze: [''],
     });
@@ -59,11 +64,9 @@ export class ModelComponent implements OnInit {
       width: [2],
     }),
     features: this.formBuilder.group({
-      bathroom: [false],
-      shower: [false],
-      kitchen: [false],
-      walledOffKitchen: [false],
-      partitionWallDoor: [false],
+      toilet: [{ base: false, extra: false }],
+      kitchen: [{ base: false, extra: false }],
+      partitionWall: [{ base: false, extra: false }],
     }),
     additionalDoors: [false],
     doors: this.formBuilder.array([this.createDoor()]),
@@ -73,23 +76,6 @@ export class ModelComponent implements OnInit {
   doors = this.form.controls.doors;
   windows = this.form.controls.windows;
 
-  ngOnInit() {
-    const walledOffKitchen = this.form.controls.features.get(
-      'walledOffKitchen'
-    ) as FormControl;
-    walledOffKitchen.disable();
-
-    this.form.valueChanges.subscribe((value) => {
-      if (value.features?.kitchen === walledOffKitchen.disabled) {
-        if (value.features?.kitchen) {
-          walledOffKitchen.enable();
-        } else {
-          walledOffKitchen.disable();
-        }
-      }
-    });
-  }
-
   formatCurrency = (value: number) => CURRENCY_FORMAT.format(value);
 
   /** Returns '?' if the value is `undefined`, else formats it to one decimal place and adds 'm' unit. */
@@ -98,7 +84,10 @@ export class ModelComponent implements OnInit {
 
   submit() {
     if (!this.form.valid) {
-      this.price = 0;
+      document
+        .querySelector('.image-scroller')
+        ?.scrollIntoView({ behavior: 'smooth' });
+      this.form.markAllAsTouched();
       return;
     }
   }

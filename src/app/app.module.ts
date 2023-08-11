@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { LanguageSelectComponent } from './components/navbar/language-select/lan
 import { HomeComponent } from './components/home/home.component';
 import { TranslationService } from './translation.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { InputLayeredComponent } from './components/model/input-layered/input-layered.component';
 
 @NgModule({
   declarations: [
@@ -35,12 +36,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     LanguageSelectComponent,
     HomeComponent,
     NotFoundComponent,
+    InputLayeredComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   exports: [MatIconModule],

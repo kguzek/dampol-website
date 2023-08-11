@@ -12,29 +12,10 @@ section {
   margin: 1.5rem;
 }
 
-@mixin radiobutton-checkbox-label() {
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 0.5rem;
-
-  input {
-    margin-top: 0;
-  }
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-
-  &:has(input[type="checkbox"]) {
-    @include radiobutton-checkbox-label();
-  }
-}
-
 legend {
   text-transform: uppercase;
   font-size: 0.8rem;
+  margin-left: 1rem;
 }
 
 fieldset,
@@ -44,6 +25,7 @@ select {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding: 0.5rem !important;
 }
 
 select {
@@ -60,31 +42,12 @@ select {
   }
 }
 
-.disabled {
-  color: #999;
-}
-
-.layered-input {
-  padding-right: 0.5rem;
-
-  > :last-child {
-    margin-left: 1.5rem;
-  }
-}
-
-.btn-del {
-  background-color: $color-error;
-
-  &:hover {
-    background-color: $color-error-active;
-  }
-}
-
 .array-container {
-  .btn[disabled] {
-    background-color: $color-text-secondary;
-    color: #999;
-    cursor: not-allowed;
+  padding-left: 1.5rem;
+  margin: 0;
+
+  li {
+    margin-top: 10px;
   }
 }
 
@@ -106,16 +69,12 @@ select {
 .windows {
   .buttons {
     display: flex;
-    margin: 15px 0;
+    margin: 15px 0 10px -2rem;
   }
 
   .btn {
-    padding: 10px 15px;
+    padding: 0.5rem 0.7rem;
     margin: 0 auto;
-  }
-
-  li {
-    margin-top: 10px;
   }
 }
 
@@ -126,6 +85,10 @@ select {
   label {
     @include radiobutton-checkbox-label();
   }
+}
+
+.checkbox-label {
+  @include radiobutton-checkbox-label();
 }
 
 .price {

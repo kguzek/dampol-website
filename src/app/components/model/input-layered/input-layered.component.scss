@@ -1,0 +1,17 @@
+@import "variables.scss";
+
+.input-layered {
+  padding-right: 0.5rem;
+
+  > :last-child {
+    margin-left: 1.5rem;
+  }
+
+  label {
+    @include radiobutton-checkbox-label();
+  }
+}
+
+.disabled {
+  color: #999;
+}

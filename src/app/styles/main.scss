@@ -54,15 +54,36 @@ h2 {
   text-transform: uppercase;
   font-size: unset;
   font-family: unset;
+  white-space: nowrap;
   cursor: pointer;
 
-  &:hover {
+  &.btn-del {
+    background-color: $color-error;
+  }
+
+  &:hover:not([disabled]) {
     background-color: $color-accent;
+
+    &.btn-del {
+      background-color: $color-error-active;
+    }
   }
 
   h3 {
     margin: 0;
   }
+
+  &[disabled] {
+    background-color: $color-text-secondary;
+    color: #999;
+    cursor: not-allowed;
+  }
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 }
 
 .model {
@@ -87,6 +108,13 @@ h2 {
     .image-scroller {
       border-radius: 0;
     }
+  }
+}
+
+.ng-touched.ng-invalid {
+  &input,
+  &select {
+    outline: 5px solid $color-error !important;
   }
 }
 
