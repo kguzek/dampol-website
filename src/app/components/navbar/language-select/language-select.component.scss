@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 .language {
   display: flex;
   gap: 5px;
@@ -52,12 +54,12 @@
       transition: inherit;
 
       &:hover {
-        color: #2f2f5a;
+        color: $color-contrast-light;
         background-color: #eaeaeacc;
       }
 
       &.active {
-        color: #48487e;
+        color: $color-contrast-dark;
         transition: all 550ms ease-in;
         background-color: #f0f0f0fc;
         border-color: white;

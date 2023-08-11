@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 main {
-  background: linear-gradient(#f4fdfd, #222);
+  background: linear-gradient($color-background, $color-text-primary);
 }

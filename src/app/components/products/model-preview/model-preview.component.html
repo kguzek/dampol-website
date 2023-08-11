@@ -2,21 +2,17 @@
   (keydown.ArrowRight)="nextImage()"
   (keydown.ArrowLeft)="previousImage()"
 >
-  <a class="model-content" [routerLink]="'/model/' + modelNumber">
+  <a class="model-content" routerLink="/model/{{ modelNumber }}">
     <h3>Model {{ modelNumber }}</h3>
     <p>{{ modelDescription }}</p>
     <div class="image-carousel">
       <img
-        [src]="
-          'assets/images/models/' +
-          modelNumber +
-          '/model-' +
-          modelNumber +
-          '-image-' +
-          selectedImage +
-          '.jpg'
+        src="
+          assets/images/models/{{ modelNumber }}/model-{{
+          modelNumber
+        }}-image-{{ selectedImage }}.jpg
         "
-        [alt]="'model ' + modelNumber + ' preview'"
+        alt="model {{ modelNumber }} preview"
       />
     </div>
   </a>
@@ -24,30 +20,26 @@
     <button
       class="btn-image-scroller"
       (click)="previousImage()"
-      [title]="
-        translationService.translations.products.prev +
-        ' ' +
+      title="{{ translationService.translations.products.prev }} {{
         translationService.translations.products.image
-      "
+      }}"
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
     <button
       *ngFor="let _ of [].constructor(model.numImages); index as i"
-      [class]="'indicator' + (i + 1 === selectedImage ? ' active' : '')"
+      class="indicator{{ i + 1 === selectedImage ? ' active' : '' }}"
       (click)="selectedImage = i + 1"
-      [title]="translationService.translations.products.image + ' ' + (i + 1)"
+      title="{{ translationService.translations.products.image }} {{ i + 1 }}"
     >
       <mat-icon>fiber_manual_record</mat-icon>
     </button>
     <button
       class="btn-image-scroller"
       (click)="nextImage()"
-      [title]="
-        translationService.translations.products.next +
-        ' ' +
+      title="{{ translationService.translations.products.next }} {{
         translationService.translations.products.image
-      "
+      }}"
     >
       <mat-icon>chevron_right</mat-icon>
     </button>

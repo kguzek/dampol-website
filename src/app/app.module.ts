@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,10 +41,10 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     AppRoutingModule,
     MatIconModule,
     HttpClientModule,
-    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [MatIconModule],
-  providers: [TranslationService],
+  providers: [TranslationService, FormBuilder],
   bootstrap: [AppComponent],
 })
 export class AppModule {
