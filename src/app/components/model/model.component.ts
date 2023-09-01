@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-
-const SELECT_FIRST_OPTION = '—— Select ——';
-
-const DOOR_LOCATIONS = ['Front', 'Rear', 'Left', 'Right'];
+import { TranslationService } from 'src/app/translation.service';
 
 const WINDOW_DIMENSIONS = [
   [50, 50],
@@ -35,15 +32,28 @@ const DROPDOWN_INPUT = [
   styleUrls: ['./model.component.scss'],
 })
 export class ModelComponent {
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    public translationService: TranslationService
+  ) {}
 
-  doorLocations = [SELECT_FIRST_OPTION, ...DOOR_LOCATIONS];
-  windowDimensions = [SELECT_FIRST_OPTION, ...WINDOW_DIMENSIONS];
   price = 52938;
 
   modelNumber = +(
     PATH_REGEXP.exec(this.router.url)?.groups?.['modelNumber'] ?? 1
   );
+
+  getDropdownOptions(menu: 'windows' | 'doors') {
+    const options =
+      menu === 'windows'
+        ? WINDOW_DIMENSIONS
+        : this.translationService.translations.model.doorLocations;
+    return [
+      `—— ${this.translationService.translations.model.select} ——`,
+      ...options,
+    ];
+  }
 
   createDoor = () =>
     this.formBuilder.group({

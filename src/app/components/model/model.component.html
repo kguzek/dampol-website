@@ -3,23 +3,28 @@
     <app-model-preview [modelNumber]="modelNumber"></app-model-preview>
     <div class="model-body">
       <form [formGroup]="form">
-        <h3>Customise your container</h3>
+        <h3>{{ translationService.translations.model.header }}</h3>
         <ol class="form-sections">
           <li>
             <fieldset formGroupName="dimensions">
-              <legend>Dimensions</legend>
+              <legend>
+                {{ translationService.translations.model.dimensions }}
+              </legend>
               <label>
-                Length: {{ formatDimension(form.value.dimensions?.length) }}
+                {{ translationService.translations.model.length }}:
+                {{ formatDimension(form.value.dimensions?.length) }}
                 <input
                   formControlName="length"
                   type="range"
                   min="2"
                   max="12"
                   step="0.5"
+                  required
                 />
               </label>
               <label>
-                Width: {{ formatDimension(form.value.dimensions?.width) }}
+                {{ translationService.translations.model.width }}:
+                {{ formatDimension(form.value.dimensions?.width) }}
                 <input
                   formControlName="width"
                   type="range"
@@ -32,34 +37,45 @@
           </li>
           <li>
             <fieldset formGroupName="features">
-              <legend>Features</legend>
+              <legend>
+                {{ translationService.translations.model.features }}
+              </legend>
               <app-input-layered
                 formControlName="toilet"
-                outerLabel="Toilet (WC, sink, cupboard, water heater)"
-                innerLabel="Shower"
+                [outerLabel]="translationService.translations.model.toiletLabel"
+                [innerLabel]="translationService.translations.model.shower"
               >
               </app-input-layered>
               <app-input-layered
                 formControlName="kitchen"
-                outerLabel="Kitchen annexe"
-                innerLabel="Separation wall"
+                [outerLabel]="
+                  translationService.translations.model.kitchenAnnexe
+                "
+                [innerLabel]="
+                  translationService.translations.model.separationWall
+                "
               >
               </app-input-layered>
               <app-input-layered
                 formControlName="partitionWall"
-                outerLabel="Partition wall"
-                innerLabel="Internal door"
+                [outerLabel]="
+                  translationService.translations.model.partitionWall
+                "
+                [innerLabel]="
+                  translationService.translations.model.internalDoor
+                "
               >
               </app-input-layered>
             </fieldset>
           </li>
           <li>
             <fieldset class="windows array-container">
-              <legend>Additional doors</legend>
+              <legend>
+                {{ translationService.translations.model.additionalDoors }}
+              </legend>
               <label class="checkbox-label"
-                >Additional doors<input
-                  type="checkbox"
-                  formControlName="additionalDoors"
+                >{{ translationService.translations.model.additionalDoors
+                }}<input type="checkbox" formControlName="additionalDoors"
               /></label>
               <ol *ngIf="form.value.additionalDoors" formArrayName="doors">
                 <li
@@ -67,20 +83,23 @@
                   [formGroupName]="i"
                 >
                   <label
-                    >Location
+                    >{{ translationService.translations.model.location }}
                     <select formControlName="location">
                       <option
-                        *ngFor="let option of doorLocations; index as key"
+                        *ngFor="
+                          let option of getDropdownOptions('doors');
+                          index as key
+                        "
                         [value]="key"
                       >
                         {{ option }}
                       </option>
                     </select>
                   </label>
-                  Material
+                  {{ translationService.translations.model.material }}
                   <div class="radios">
                     <label>
-                      Steel
+                      {{ translationService.translations.model.steel }}
                       <input
                         formControlName="material"
                         type="radio"
@@ -89,7 +108,7 @@
                       />
                     </label>
                     <label>
-                      Aluminium
+                      {{ translationService.translations.model.aluminium }}
                       <input
                         formControlName="material"
                         type="radio"
@@ -104,7 +123,7 @@
                       role="button"
                       (click)="doors.insert(i + 1, createDoor())"
                     >
-                      Add door
+                      {{ translationService.translations.model.addDoor }}
                     </button>
                     <button
                       class="btn btn-del"
@@ -115,7 +134,7 @@
                           : form.controls.additionalDoors.setValue(false)
                       "
                     >
-                      Remove door
+                      {{ translationService.translations.model.removeDoor }}
                     </button>
                   </div>
                 </li>
@@ -124,27 +143,32 @@
           </li>
           <li>
             <fieldset class="windows array-container">
-              <legend>Windows</legend>
+              <legend>
+                {{ translationService.translations.model.windows }}
+              </legend>
               <ol formArrayName="windows">
                 <li
                   *ngFor="let window of windows.controls; index as i"
                   [formGroupName]="i"
                 >
                   <label
-                    >Dimensions
+                    >{{ translationService.translations.model.dimensions }}
                     <select formControlName="dimensions">
                       <option
-                        *ngFor="let option of windowDimensions; index as key"
+                        *ngFor="
+                          let option of getDropdownOptions('windows');
+                          index as key
+                        "
                         [value]="key"
                       >
                         {{ option }}
                       </option>
                     </select>
                   </label>
-                  Material
+                  {{ translationService.translations.model.material }}
                   <div class="radios">
                     <label>
-                      PCV
+                      {{ translationService.translations.model.pcv }}
                       <input
                         formControlName="material"
                         type="radio"
@@ -153,7 +177,7 @@
                       />
                     </label>
                     <label>
-                      Aluminium
+                      {{ translationService.translations.model.aluminium }}
                       <input
                         formControlName="material"
                         type="radio"
@@ -162,10 +186,10 @@
                       />
                     </label>
                   </div>
-                  Glazure
+                  {{ translationService.translations.model.glazure }}
                   <div class="radios">
                     <label>
-                      Double glazed
+                      {{ translationService.translations.model.doubleGlazed }}
                       <input
                         formControlName="windowGlaze"
                         type="radio"
@@ -174,7 +198,7 @@
                       />
                     </label>
                     <label>
-                      Triple glazed
+                      {{ translationService.translations.model.tripleGlazed }}
                       <input
                         formControlName="windowGlaze"
                         type="radio"
@@ -189,7 +213,7 @@
                       role="button"
                       (click)="windows.insert(i + 1, createWindow())"
                     >
-                      Add window
+                      {{ translationService.translations.model.addWindow }}
                     </button>
                     <button
                       class="btn btn-del"
@@ -197,7 +221,7 @@
                       (click)="windows.removeAt(i)"
                       [disabled]="windows.length < 2"
                     >
-                      Remove window
+                      {{ translationService.translations.model.removeWindow }}
                     </button>
                   </div>
                 </li>
@@ -206,10 +230,13 @@
           </li>
         </ol>
         <h3 class="price">
-          Total: <strong>{{ formatCurrency(price) }}</strong>
+          {{ translationService.translations.model.total }}:
+          <strong>{{ formatCurrency(price) }}</strong>
         </h3>
         <div class="btn-container">
-          <button class="btn" (click)="submit()"><h3>Order</h3></button>
+          <button class="btn" (click)="submit()">
+            <h3>{{ translationService.translations.model.order }}</h3>
+          </button>
         </div>
       </form>
     </div>

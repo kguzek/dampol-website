@@ -4,7 +4,13 @@
 >
   <a class="model-content" routerLink="/model/{{ modelNumber }}">
     <h3>Model {{ modelNumber }}</h3>
-    <p>{{ modelDescription }}</p>
+    <p>
+      {{
+        translationService.translations.products.modelDescriptions[
+          this.modelNumber - 1
+        ] || translationService.translations.products.temporaryModelDescription
+      }}
+    </p>
     <div class="image-carousel">
       <img
         src="

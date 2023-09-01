@@ -18,12 +18,7 @@ export class ModelPreviewComponent implements OnInit {
   model!: Model;
 
   ngOnInit() {
-    const modelIdx = this.modelNumber - 1;
-    this.model = MODELS[modelIdx];
-    const productText = this.translationService.translations.products;
-    this.modelDescription =
-      productText.modelDescriptions[modelIdx] ??
-      productText.temporaryModelDescription;
+    this.model = MODELS[this.modelNumber - 1];
   }
 
   nextImage() {
