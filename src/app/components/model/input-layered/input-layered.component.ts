@@ -1,9 +1,16 @@
 import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Price, MODEL_COMPONENT_PRICES } from 'src/app/app.constants';
+import { TranslationService } from 'src/app/translation.service';
 
-interface LayeredInput {
+const isPrice = (price: number | Price): price is Price => {
+  return (price as any).approximate !== undefined;
+};
+
+export interface LayeredInput {
   base: boolean;
   extra: boolean;
+  price: Price;
 }
 
 @Component({
@@ -18,7 +25,9 @@ interface LayeredInput {
     },
   ],
 })
-export class InputLayeredComponent implements ControlValueAccessor {
+export class InputLayeredComponent implements ControlValueAccessor, OnInit {
+  constructor(public translationService: TranslationService) {}
+
   @Input({ required: true }) formControlName!: string;
   @Input({ required: true }) outerLabel!: string;
   @Input({ required: true }) innerLabel!: string;
@@ -28,10 +37,22 @@ export class InputLayeredComponent implements ControlValueAccessor {
 
   outerValue: boolean = false;
   innerValue: boolean = false;
+  private prices!: (number | Price)[];
+
+  ngOnInit(): void {
+    this.prices =
+      MODEL_COMPONENT_PRICES[
+        this.formControlName as keyof typeof MODEL_COMPONENT_PRICES
+      ];
+  }
 
   registerOnChange(fn: (value: LayeredInput) => void): void {
     this.onChange = () => {
-      fn({ base: this.outerValue, extra: this.innerValue });
+      fn({
+        base: this.outerValue,
+        extra: this.innerValue,
+        price: this.getPrice(),
+      });
     };
   }
 
@@ -42,5 +63,26 @@ export class InputLayeredComponent implements ControlValueAccessor {
   writeValue(value: LayeredInput): void {
     this.outerValue = value.base;
     this.innerValue = value.extra;
+  }
+
+  getPrice() {
+    let price = 0;
+    let approximate = false;
+    for (const value of this.prices) {
+      if (!this.outerValue) break;
+      if (isPrice(value)) {
+        price += value.price;
+        approximate = true;
+      } else {
+        price += value;
+      }
+      if (!this.innerValue) break;
+    }
+    return { price, approximate } as Price;
+  }
+
+  formatPrice(value: Price) {
+    const formattedPrice = this.translationService.formatPrice(value.price);
+    return `${value.approximate ? '⨤' : '+'} ${formattedPrice}`;
   }
 }

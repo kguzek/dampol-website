@@ -78,12 +78,40 @@ select {
   }
 }
 
+.radios-container h4 {
+  margin: 10px 0 0;
+  font-weight: normal;
+}
+
 .radios {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
+  row-gap: 0;
 
   label {
     @include radiobutton-checkbox-label();
+    white-space: nowrap;
+  }
+
+  input {
+    /* remove standard appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* create custom appearance */
+    min-width: 1rem;
+    height: 1rem;
+    padding: 2px;
+    border: 2px solid $color-text-primary;
+
+    background-clip: content-box;
+    background-color: transparent;
+    border-radius: 50%;
+
+    &:checked {
+      background-color: $color-accent;
+    }
   }
 }
 
@@ -98,6 +126,13 @@ select {
 .btn-container {
   display: flex;
   justify-content: center;
+}
+
+select,
+input {
+  &.ng-touched.ng-invalid {
+    outline: 3px solid $color-error !important;
+  }
 }
 
 @media only screen and (max-width: $tiny-screen-size) {

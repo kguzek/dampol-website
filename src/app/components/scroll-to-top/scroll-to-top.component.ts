@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
 
 export function scrollToTop() {
@@ -11,9 +12,18 @@ export function scrollToTop() {
   styleUrls: ['./scroll-to-top.component.scss'],
 })
 export class ScrollToTopComponent {
-  constructor(protected translationService: TranslationService) {}
+  constructor(
+    protected translationService: TranslationService,
+    private router: Router
+  ) {}
 
   @Input() pagesScrolled!: number;
 
   scrollToTop = scrollToTop;
+
+  getRouterLink() {
+    // Remove the last query fragment
+    const routeFragments = this.router.url.split('#').slice(0, -1);
+    return routeFragments.join('#');
+  }
 }

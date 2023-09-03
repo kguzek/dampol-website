@@ -111,13 +111,6 @@ label {
   }
 }
 
-.ng-touched.ng-invalid {
-  &input,
-  &select {
-    outline: 5px solid $color-error !important;
-  }
-}
-
 @media only screen and (max-width: $small-screen-size) {
   html {
     font-size: medium;

@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
+import { LayeredInput } from './input-layered/input-layered.component';
+
+const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
+  base: false,
+  extra: false,
+  price: { price: 0, approximate: false },
+};
 
 const WINDOW_DIMENSIONS = [
   [50, 50],
@@ -14,12 +21,7 @@ const WINDOW_DIMENSIONS = [
   dimensions.map((dimension) => `${dimension} cm`).join(' × ')
 );
 
-const PATH_REGEXP = /\/model\/(?<modelNumber>\d{1,2})(?:#.+)?/;
-
-const CURRENCY_FORMAT = Intl.NumberFormat('en-GB', {
-  style: 'currency',
-  currency: 'EUR',
-});
+const PATH_REGEXP = /\/model\/(?<modelNumber>\d+)(?:#.+)?/;
 
 const DROPDOWN_INPUT = [
   0,
@@ -38,22 +40,9 @@ export class ModelComponent {
     public translationService: TranslationService
   ) {}
 
-  price = 52938;
-
   modelNumber = +(
     PATH_REGEXP.exec(this.router.url)?.groups?.['modelNumber'] ?? 1
   );
-
-  getDropdownOptions(menu: 'windows' | 'doors') {
-    const options =
-      menu === 'windows'
-        ? WINDOW_DIMENSIONS
-        : this.translationService.translations.model.doorLocations;
-    return [
-      `—— ${this.translationService.translations.model.select} ——`,
-      ...options,
-    ];
-  }
 
   createDoor = () =>
     this.formBuilder.group({
@@ -74,11 +63,10 @@ export class ModelComponent {
       width: [2],
     }),
     features: this.formBuilder.group({
-      toilet: [{ base: false, extra: false }],
-      kitchen: [{ base: false, extra: false }],
-      partitionWall: [{ base: false, extra: false }],
+      toilet: [DEFAULT_LAYERED_INPUT_VALUE],
+      kitchen: [DEFAULT_LAYERED_INPUT_VALUE],
+      partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
     }),
-    additionalDoors: [false],
     doors: this.formBuilder.array([this.createDoor()]),
     windows: this.formBuilder.array([this.createWindow()]),
   });
@@ -86,11 +74,29 @@ export class ModelComponent {
   doors = this.form.controls.doors;
   windows = this.form.controls.windows;
 
-  formatCurrency = (value: number) => CURRENCY_FORMAT.format(value);
+  getDropdownOptions(menu: 'windows' | 'doors') {
+    const options =
+      menu === 'windows'
+        ? WINDOW_DIMENSIONS
+        : this.translationService.translations.model.doorLocations;
+    return [
+      `—— ${this.translationService.translations.model.select} ——`,
+      ...options,
+    ];
+  }
 
   /** Returns '?' if the value is `undefined`, else formats it to one decimal place and adds 'm' unit. */
   formatDimension = (value?: number | null) =>
     value == null ? '?' : value.toFixed(1) + ' m';
+
+  getContainerPrice() {
+    let price = 0;
+    for (const feature in this.form.value.features) {
+      const control = this.form.controls.features.get(feature);
+      price += control?.value.price.price;
+    }
+    return price;
+  }
 
   submit() {
     if (!this.form.valid) {

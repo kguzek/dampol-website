@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 export const TRANSLATIONS = {
   dk: {
     languageCode: 'DK',
+    iso639Locale: 'da-DK',
     alt: { dampolLogo: 'Dampol logo' },
     navbar: { products: 'Produkter', about: 'Om os', contact: 'Kontakt' },
     ui: { scrollToTop: 'Rul til toppen' },
@@ -50,13 +51,16 @@ export const TRANSLATIONS = {
       separationWall: 'Køkken skillevæg',
       partitionWall: 'Skillevæg',
       internalDoor: 'Indvendig dør',
-      additionalDoors: 'Ekstra døre',
+      doors: 'Døre',
       location: 'Beliggenhed',
       doorLocations: ['Foran', 'Bag', 'Venstre', 'Højre'],
       material: 'Materiale',
       steel: 'Stål',
       aluminium: 'Aluminium',
+      withGlass: 'med glas',
+      double: '(dobbelte)',
       pcv: 'PCV',
+      fixed: 'fast',
       addDoor: 'Tilføj dør',
       removeDoor: 'Fjern døren',
       windows: 'Vinduer',
@@ -72,9 +76,16 @@ export const TRANSLATIONS = {
       thePage: 'Siden',
       wasNotFound: 'blev ikke fundet.',
     },
+    utils: {
+      priceFormat: Intl.NumberFormat('da-DK', {
+        style: 'currency',
+        currency: 'EUR',
+      }),
+    },
   },
   gb: {
     languageCode: 'EN (UK)',
+    iso639Locale: 'en-GB',
     alt: { dampolLogo: 'Dampol logo' },
     navbar: { products: 'Products', about: 'About', contact: 'Contact' },
     ui: { scrollToTop: 'Scroll to top' },
@@ -122,13 +133,16 @@ export const TRANSLATIONS = {
       separationWall: 'Separation wall',
       partitionWall: 'Partition wall',
       internalDoor: 'Internal door',
-      additionalDoors: 'Additional doors',
+      doors: 'Doors',
       location: 'Location',
       doorLocations: ['Front', 'Rear', 'Left', 'Right'],
       material: 'Material',
       steel: 'Steel',
       aluminium: 'Aluminium',
+      withGlass: '(glassed)',
+      double: 'double door',
       pcv: 'PCV',
+      fixed: 'fixed',
       addDoor: 'Add door',
       removeDoor: 'Remove door',
       windows: 'Windows',
@@ -162,5 +176,15 @@ export class TranslationService {
   setSelectedLanguage(language: string) {
     this.selectedLanguage = language as LanguageCode;
     localStorage.setItem('language', language);
+  }
+
+  /** Formats the given numeric value as a price according to the selected locale. */
+  formatPrice(value: number) {
+    const locale = this.translations.iso639Locale;
+    const formatter = Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: 'EUR',
+    });
+    return formatter.format(value);
   }
 }
