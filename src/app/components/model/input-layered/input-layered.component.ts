@@ -40,10 +40,9 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
   private prices!: (number | Price)[];
 
   ngOnInit(): void {
-    this.prices =
-      MODEL_COMPONENT_PRICES[
-        this.formControlName as keyof typeof MODEL_COMPONENT_PRICES
-      ];
+    const feature = this
+      .formControlName as keyof typeof MODEL_COMPONENT_PRICES.features;
+    this.prices = MODEL_COMPONENT_PRICES.features[feature];
   }
 
   registerOnChange(fn: (value: LayeredInput) => void): void {

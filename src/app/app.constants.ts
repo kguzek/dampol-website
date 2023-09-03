@@ -9,7 +9,31 @@ export interface Price {
 }
 
 export const MODEL_COMPONENT_PRICES = {
-  toilet: [1000, 600],
-  kitchen: [750, 450],
-  partitionWall: [{ price: 300, approximate: true } as Price, 200],
+  dimensions: {
+    lengthUnitPrice: 1000,
+    lengthCutoff: 6,
+    lengthMultiplierUnderCutoff: 0.5,
+    additionalContainerWidthPrice: 2500,
+    widthUnitPrice: 500,
+  },
+  features: {
+    toilet: [1000, 600],
+    kitchen: [750, 450],
+    partitionWall: [{ price: 300, approximate: true } as Price, 200],
+  },
+  doors: {
+    aluminium: 900,
+    aluminiumGlass: 700,
+    aluminiumDouble: 1200,
+    steel: 500,
+  },
+  windows: {
+    dimensionPrices: [150, 250, 350, 500, 500, 1000],
+    materialMultipliers: {
+      pcv: 1,
+      aluminium: 1.5,
+      fixed: 0.5,
+    },
+    tripleGlazedMultiplier: 1, //TODO: Update
+  },
 };

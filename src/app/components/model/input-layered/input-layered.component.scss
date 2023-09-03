@@ -9,13 +9,11 @@
 
   label {
     @include radiobutton-checkbox-label();
-
-    > div {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-    }
   }
+}
+
+.price {
+  white-space: nowrap;
 }
 
 .disabled {

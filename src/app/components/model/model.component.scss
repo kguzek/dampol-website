@@ -51,6 +51,10 @@ select {
   }
 }
 
+.dimensions-price {
+  text-align: center;
+}
+
 .doors {
   .btn {
     width: 30px;
@@ -78,16 +82,32 @@ select {
   }
 }
 
-.radios-container h4 {
-  margin: 10px 0 0;
+.radios-container {
+  margin-top: 15px;
+
+  h4 {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  .radios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+h4 {
+  margin: 0;
   font-weight: normal;
 }
 
 .radios {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  row-gap: 0;
+  // flex-wrap: wrap;
+  // gap: 1.5rem;
+  // row-gap: 0;
+  flex-direction: column;
 
   label {
     @include radiobutton-checkbox-label();

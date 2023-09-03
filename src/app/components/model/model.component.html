@@ -33,6 +33,9 @@
                   step="0.5"
                 />
               </label>
+              <span class="dimensions-price">{{
+                translationService.formatPrice(dimensionsPrice)
+              }}</span>
             </fieldset>
           </li>
           <li>
@@ -93,10 +96,32 @@
                     </select>
                   </label>
                   <div class="radios-container">
-                    <h4>
-                      {{ translationService.translations.model.material }}
-                    </h4>
+                    <div class="radios-header">
+                      <h4>
+                        {{ translationService.translations.model.material }}
+                      </h4>
+                      {{ translationService.formatPrice(getDoorPrice(i)) }}
+                    </div>
                     <div class="radios">
+                      <label>
+                        {{ translationService.translations.model.steel }}
+                        <input
+                          formControlName="material"
+                          type="radio"
+                          value="steel"
+                          required
+                        />
+                      </label>
+                      <label>
+                        {{ translationService.translations.model.aluminium }}
+                        {{ translationService.translations.model.withGlass }}
+                        <input
+                          formControlName="material"
+                          type="radio"
+                          value="aluminiumGlass"
+                          required
+                        />
+                      </label>
                       <label>
                         {{ translationService.translations.model.aluminium }}
                         <input
@@ -108,30 +133,11 @@
                       </label>
                       <label>
                         {{ translationService.translations.model.aluminium }}
-                        {{ translationService.translations.model.withGlass }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="aluminium-glass"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.aluminium }}
                         {{ translationService.translations.model.double }}
                         <input
                           formControlName="material"
                           type="radio"
-                          value="aluminium-double"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.steel }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="steel"
+                          value="aluminiumDouble"
                           required
                         />
                       </label>
@@ -168,8 +174,17 @@
                   *ngFor="let window of windows.controls; index as i"
                   [formGroupName]="i"
                 >
-                  <label
-                    >{{ translationService.translations.model.dimensions }}
+                  <label>
+                    <div>
+                      {{ translationService.translations.model.dimensions }}
+                      <span>
+                        {{
+                          translationService.formatPrice(
+                            getWindowDimensionsPrice(getWindow(i))
+                          )
+                        }}
+                      </span>
+                    </div>
                     <select formControlName="dimensions">
                       <option
                         *ngFor="
@@ -183,9 +198,16 @@
                     </select>
                   </label>
                   <div class="radios-container">
-                    <h4>
-                      {{ translationService.translations.model.material }}
-                    </h4>
+                    <div class="radios-header">
+                      <h4>
+                        {{ translationService.translations.model.material }}
+                      </h4>
+                      {{
+                        formatMultiplier(
+                          getWindowMaterialMultiplier(getWindow(i))
+                        )
+                      }}
+                    </div>
                     <div class="radios">
                       <label>
                         {{ translationService.translations.model.aluminium }}
@@ -205,6 +227,15 @@
                           required
                         />
                       </label>
+                      <label>
+                        {{ translationService.translations.model.fixed }}
+                        <input
+                          formControlName="material"
+                          type="radio"
+                          value="fixed"
+                          required
+                        />
+                      </label>
                     </div>
                   </div>
                   <div class="radios-container">
@@ -215,26 +246,16 @@
                       <label>
                         {{ translationService.translations.model.doubleGlazed }}
                         <input
-                          formControlName="windowGlaze"
+                          formControlName="glazure"
                           type="radio"
                           value="double"
                           required
                         />
                       </label>
                       <label>
-                        {{ translationService.translations.model.doubleGlazed }}
-                        {{ translationService.translations.model.fixed }}
-                        <input
-                          formControlName="windowGlaze"
-                          type="radio"
-                          value="fixed"
-                          required
-                        />
-                      </label>
-                      <label>
                         {{ translationService.translations.model.tripleGlazed }}
                         <input
-                          formControlName="windowGlaze"
+                          formControlName="glazure"
                           type="radio"
                           value="triple"
                           required
@@ -242,6 +263,9 @@
                       </label>
                     </div>
                   </div>
+                  {{
+                    translationService.formatPrice(getWindowPrice(getWindow(i)))
+                  }}
                   <div class="buttons">
                     <button
                       class="btn btn-add"
@@ -266,9 +290,7 @@
         </ol>
         <h3 class="price">
           {{ translationService.translations.model.total }}:
-          <strong>{{
-            translationService.formatPrice(getContainerPrice())
-          }}</strong>
+          <strong>{{ translationService.formatPrice(totalPrice) }}</strong>
         </h3>
         <div class="btn-container">
           <button class="btn" (click)="submit()">

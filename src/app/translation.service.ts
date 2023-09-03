@@ -60,7 +60,7 @@ export const TRANSLATIONS = {
       withGlass: 'med glas',
       double: '(dobbelte)',
       pcv: 'PCV',
-      fixed: 'fast',
+      fixed: 'Fast',
       addDoor: 'Tilføj dør',
       removeDoor: 'Fjern døren',
       windows: 'Vinduer',
@@ -142,7 +142,7 @@ export const TRANSLATIONS = {
       withGlass: '(glassed)',
       double: 'double door',
       pcv: 'PCV',
-      fixed: 'fixed',
+      fixed: 'Fixed',
       addDoor: 'Add door',
       removeDoor: 'Remove door',
       windows: 'Windows',
@@ -180,6 +180,7 @@ export class TranslationService {
 
   /** Formats the given numeric value as a price according to the selected locale. */
   formatPrice(value: number) {
+    if (isNaN(value)) return '';
     const locale = this.translations.iso639Locale;
     const formatter = Intl.NumberFormat(locale, {
       style: 'currency',
