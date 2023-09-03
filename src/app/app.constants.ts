@@ -3,6 +3,8 @@ export const MEDIUM_SCREEN_SIZE_PX = 1140;
 export const SMALL_SCREEN_SIZE_PX = 860;
 export const TINY_SCREEN_SIZE_PX = 500;
 
+export const DOOR_LOCATIONS = ['Front', 'Rear', 'Left', 'Right'];
+
 export interface Price {
   price: number;
   approximate: boolean;

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DOOR_LOCATIONS } from './app.constants';
 
 export const TRANSLATIONS = {
   dk: {
@@ -70,7 +71,12 @@ export const TRANSLATIONS = {
       addWindow: 'Tilføj vindue',
       removeWindow: 'Fjern vinduet',
       total: 'Total',
-      order: 'Bestille',
+      submit: 'Send e-mail',
+      customerInformation: 'Kunde information',
+      name: 'Navn',
+      phoneNumber: 'Telefonnummer',
+      placeholderName: 'Navn Navnesen',
+      placeholderPhoneNumber: '+45 50 00 12 34',
     },
     notFound: {
       thePage: 'Siden',
@@ -135,7 +141,7 @@ export const TRANSLATIONS = {
       internalDoor: 'Internal door',
       doors: 'Doors',
       location: 'Location',
-      doorLocations: ['Front', 'Rear', 'Left', 'Right'],
+      doorLocations: DOOR_LOCATIONS,
       material: 'Material',
       steel: 'Steel',
       aluminium: 'Aluminium',
@@ -152,7 +158,12 @@ export const TRANSLATIONS = {
       addWindow: 'Add window',
       removeWindow: 'Remove window',
       total: 'Total',
-      order: 'Order',
+      submit: 'Email us',
+      customerInformation: 'Customer information',
+      name: 'Name',
+      phoneNumber: 'Phone Number',
+      placeholderName: 'John Smith',
+      placeholderPhoneNumber: '+44 7300 123 123',
     },
     notFound: {
       thePage: 'The page',

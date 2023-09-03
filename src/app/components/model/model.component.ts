@@ -3,12 +3,18 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
 import { LayeredInput } from './input-layered/input-layered.component';
-import { MODEL_COMPONENT_PRICES } from 'src/app/app.constants';
+import { DOOR_LOCATIONS, MODEL_COMPONENT_PRICES } from 'src/app/app.constants';
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
   extra: false,
   price: { price: 0, approximate: false },
+};
+
+const FEATURE_DESCRIPTIONS = {
+  toilet: 'shower',
+  kitchen: 'separation wall',
+  partitionWall: 'internal door',
 };
 
 const WINDOW_DIMENSIONS = [
@@ -82,6 +88,10 @@ export class ModelComponent {
     }),
     doors: this.formBuilder.array([this.createDoor(1, 'aluminiumGlass')]),
     windows: this.formBuilder.array([this.createWindow(4, 'pcv', 'double')]),
+    customerInformation: this.formBuilder.group({
+      name: [''],
+      phoneNumber: [''],
+    }),
   });
 
   doors = this.form.controls.doors;
@@ -93,14 +103,13 @@ export class ModelComponent {
         ? WINDOW_DIMENSIONS
         : this.translationService.translations.model.doorLocations;
     return [
-      `—— ${this.translationService.translations.model.select} ——`,
+      `— ${this.translationService.translations.model.select} —`,
       ...options,
     ];
   }
 
   /** Returns '?' if the value is `undefined`, else formats it to one decimal place and adds 'm' unit. */
-  formatDimension = (value?: number | null) =>
-    value == null ? '?' : value.toFixed(1) + ' m';
+  formatDimension = (value?: number | null) => (value ?? 0).toFixed(1) + ' m';
 
   getDoorPrice(doorIdx: number) {
     const door = this.form.value.doors?.[doorIdx];
@@ -180,12 +189,71 @@ export class ModelComponent {
   }
 
   submit() {
-    if (!this.form.valid) {
+    if (this.form.invalid) {
       document
         .querySelector('.image-scroller')
         ?.scrollIntoView({ behavior: 'smooth' });
       this.form.markAllAsTouched();
       return;
     }
+    window.open(this.getSubmitHref(), '_blank');
+  }
+
+  getSubmitHref() {
+    const value = this.form.value;
+    const orderTimestamp = new Date().toLocaleString('en-GB', {
+      dateStyle: 'short',
+      timeStyle: 'long',
+    });
+    const featureDescriptions: string[] = [];
+    for (const [featureName, featureValue] of Object.entries(
+      value.features ?? {}
+    )) {
+      if (!featureValue?.base) continue;
+      const featureKey = featureName as keyof typeof FEATURE_DESCRIPTIONS;
+      const featureDetail = FEATURE_DESCRIPTIONS[featureKey].replace(
+        ' ',
+        '%20'
+      );
+      featureDescriptions.push(
+        `${featureName}%20${
+          featureValue.extra ? 'with' : 'without'
+        }%20${featureDetail}`
+      );
+    }
+    const doorDescriptions = (value.doors ?? []).map(
+      (door, idx) =>
+        `${idx + 1}.%0D%0ALocation%3A%20${
+          DOOR_LOCATIONS[(door.location as number) - 1]
+        }%0D%0AMaterial%3A%20${door.material}`
+    );
+    const windowDescriptions = (value.windows ?? []).map(
+      (window, idx) =>
+        `${idx + 1}.%0D%0ADimensions%3A%20${WINDOW_DIMENSIONS[
+          (window.dimensions as number) - 1
+        ].replace(' ', '%20')}%0D%0AMaterial%3A%20${
+          window.material
+        }%0D%0AGlazure%3A%20${window.glazure}`
+    );
+    const encodedPrice = encodeURIComponent(
+      this.translationService.formatPrice(this.totalPrice)
+    );
+    return `mailto:dampol.sales@gmail.com?subject=Online%20container%20order%20-%20${
+      value.customerInformation?.name
+    }&body=\
+Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
+I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${
+      value.dimensions?.width
+    }%20m%0D%0A\
+II.%20Features%3A%20${featureDescriptions.join('%2C%20') || 'none'}%0D%0A\
+III.%20Doors%3A%0D%0A${doorDescriptions.join('%0D%0A')}%0D%0A%0D%0A\
+IV.%20Windows%3A%0D%0A${windowDescriptions.join('%0D%0A')}%0D%0A%0D%0A\
+Estimated%20price%3A%20${encodedPrice}%0D%0A%0D%0A\
+V.%20Customer%20information%3A%0D%0AName%3A%20${
+      value.customerInformation?.name
+    }%0D%0APhone%20number%3A%20${
+      value.customerInformation?.phoneNumber
+    }%0D%0A%0D%0A\
+Order%20timestamp%3A%20${orderTimestamp}`;
   }
 }

@@ -287,14 +287,45 @@
               </ol>
             </fieldset>
           </li>
+          <h3 class="price">
+            {{ translationService.translations.model.total }}:
+            <strong>{{ translationService.formatPrice(totalPrice) }}</strong>
+          </h3>
+          <li>
+            <fieldset formGroupName="customerInformation">
+              <legend>
+                {{ translationService.translations.model.customerInformation }}
+              </legend>
+              <label>
+                {{ translationService.translations.model.name }}
+                <input
+                  formControlName="name"
+                  name="name"
+                  class="box"
+                  [placeholder]="
+                    translationService.translations.model.placeholderName
+                  "
+                  required
+                />
+              </label>
+              <label>
+                {{ translationService.translations.model.phoneNumber }}
+                <input
+                  formControlName="phoneNumber"
+                  name="phoneNumber"
+                  class="box"
+                  [placeholder]="
+                    translationService.translations.model.placeholderPhoneNumber
+                  "
+                  required
+                />
+              </label>
+            </fieldset>
+          </li>
         </ol>
-        <h3 class="price">
-          {{ translationService.translations.model.total }}:
-          <strong>{{ translationService.formatPrice(totalPrice) }}</strong>
-        </h3>
         <div class="btn-container">
           <button class="btn" (click)="submit()">
-            <h3>{{ translationService.translations.model.order }}</h3>
+            <h3>{{ translationService.translations.model.submit }}</h3>
           </button>
         </div>
       </form>
