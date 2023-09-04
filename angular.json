@@ -24,8 +24,11 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/app/styles/main.scss"],
-            "scripts": [],
+            "styles": [
+              "src/app/styles/main.scss",
+              "node_modules/intl-tel-input/build/css/intlTelInput.css"
+            ],
+            "scripts": ["node_modules/intl-tel-input/build/js/utils.js"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/app/styles"]
             }

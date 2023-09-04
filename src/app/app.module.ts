@@ -20,6 +20,7 @@ import { HomeComponent } from './components/home/home.component';
 import { TranslationService } from './translation.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { InputLayeredComponent } from './components/model/input-layered/input-layered.component';
+import { InputTelComponent } from './components/input-tel/input-tel.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { InputLayeredComponent } from './components/model/input-layered/input-la
     HomeComponent,
     NotFoundComponent,
     InputLayeredComponent,
+    InputTelComponent,
   ],
   imports: [
     BrowserModule,

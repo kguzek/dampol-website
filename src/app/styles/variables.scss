@@ -23,3 +23,12 @@ $color-contrast-dark: #48487e;
     margin-top: 0;
   }
 }
+
+@mixin outlined() {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+@mixin error-outline() {
+  outline: 3px solid $color-error !important;
+}

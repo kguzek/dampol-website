@@ -90,6 +90,26 @@ label {
     width: 100%;
     justify-content: space-between;
   }
+
+  select,
+  input {
+    transition: outline-color 300ms ease;
+    padding: 5px 10px;
+    outline: 3px solid transparent;
+    @include outlined();
+
+    &:focus {
+      outline: 3px solid $color-accent;
+    }
+
+    &.ng-touched.ng-invalid {
+      @include error-outline();
+    }
+  }
+}
+
+app-input-tel.ng-touched.ng-invalid input {
+  @include error-outline();
 }
 
 .model {
@@ -120,6 +140,15 @@ label {
 @media only screen and (max-width: $small-screen-size) {
   html {
     font-size: medium;
+  }
+
+  .model {
+    opacity: 1;
+
+    &:hover {
+      transform: none;
+      box-shadow: 0 8px 16px 0 #555a;
+    }
   }
 }
 

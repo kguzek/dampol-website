@@ -310,15 +310,11 @@
               </label>
               <label>
                 {{ translationService.translations.model.phoneNumber }}
-                <input
+                <app-input-tel
                   formControlName="phoneNumber"
-                  name="phoneNumber"
-                  class="box"
-                  [placeholder]="
-                    translationService.translations.model.placeholderPhoneNumber
-                  "
-                  required
-                />
+                  [options]="{ preferredCountries: ['GB', 'DK'] }"
+                  [required]="true"
+                ></app-input-tel>
               </label>
             </fieldset>
           </li>

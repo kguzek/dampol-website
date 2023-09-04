@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
 import { LayeredInput } from './input-layered/input-layered.component';
 import { DOOR_LOCATIONS, MODEL_COMPONENT_PRICES } from 'src/app/app.constants';
+import {
+  DEFAULT_PHONE_NUMBER_VALUE,
+  PHONE_NUMBER_VALIDATOR,
+  PhoneNumber,
+} from '../input-tel/input-tel.component';
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
@@ -30,12 +35,8 @@ const WINDOW_DIMENSIONS = [
 
 const PATH_REGEXP = /\/model\/(?<modelNumber>\d+)(?:#.+)?/;
 
-const DROPDOWN_VALIDATORS = {
-  validators: [
-    (control: FormControl) =>
-      +control.value === 0 ? { error: 'required' } : null,
-  ],
-};
+const DROPDOWN_VALIDATOR = (control: FormControl) =>
+  +control.value === 0 ? { error: 'required' } : null;
 
 interface Window {
   dimensions: number;
@@ -61,7 +62,7 @@ export class ModelComponent {
 
   createDoor = (location: number = 0, material: string = '') =>
     this.formBuilder.group({
-      location: [location, DROPDOWN_VALIDATORS],
+      location: [location, { validators: [DROPDOWN_VALIDATOR] }],
       material: [material],
     });
 
@@ -71,7 +72,7 @@ export class ModelComponent {
     glazure: Window['glazure'] = ''
   ) =>
     this.formBuilder.group({
-      dimensions: [dimensions, DROPDOWN_VALIDATORS],
+      dimensions: [dimensions, { validators: [DROPDOWN_VALIDATOR] }],
       material: [material],
       glazure: [glazure],
     });
@@ -90,7 +91,10 @@ export class ModelComponent {
     windows: this.formBuilder.array([this.createWindow(4, 'pcv', 'double')]),
     customerInformation: this.formBuilder.group({
       name: [''],
-      phoneNumber: [''],
+      phoneNumber: [
+        DEFAULT_PHONE_NUMBER_VALUE,
+        { validators: [PHONE_NUMBER_VALIDATOR] },
+      ],
     }),
   });
 
@@ -238,9 +242,13 @@ export class ModelComponent {
     const encodedPrice = encodeURIComponent(
       this.translationService.formatPrice(this.totalPrice)
     );
-    return `mailto:dampol.sales@gmail.com?subject=Online%20container%20order%20-%20${
-      value.customerInformation?.name
-    }&body=\
+    const encodedName = encodeURIComponent(
+      value.customerInformation?.name ?? ''
+    );
+    const encodedPhoneNumber = encodeURIComponent(
+      (value.customerInformation?.phoneNumber as PhoneNumber).value
+    );
+    return `mailto:dampol.sales@gmail.com?subject=Online%20container%20order%20-%20${encodedName}&body=\
 Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
 I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${
       value.dimensions?.width
@@ -249,11 +257,7 @@ II.%20Features%3A%20${featureDescriptions.join('%2C%20') || 'none'}%0D%0A\
 III.%20Doors%3A%0D%0A${doorDescriptions.join('%0D%0A')}%0D%0A%0D%0A\
 IV.%20Windows%3A%0D%0A${windowDescriptions.join('%0D%0A')}%0D%0A%0D%0A\
 Estimated%20price%3A%20${encodedPrice}%0D%0A%0D%0A\
-V.%20Customer%20information%3A%0D%0AName%3A%20${
-      value.customerInformation?.name
-    }%0D%0APhone%20number%3A%20${
-      value.customerInformation?.phoneNumber
-    }%0D%0A%0D%0A\
+V.%20Customer%20information%3A%0D%0AName%3A%20${encodedName}%0D%0APhone%20number%3A%20${encodedPhoneNumber}%0D%0A%0D%0A\
 Order%20timestamp%3A%20${orderTimestamp}`;
   }
 }

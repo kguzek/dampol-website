@@ -1,0 +1,14 @@
+<label>
+  <ng-content></ng-content>
+  <input
+    class="input-tel"
+    type="text"
+    name="phoneNumber"
+    [required]="required"
+    [(ngModel)]="value"
+    (ngModelChange)="validatePhoneNumber()"
+    (blur)="onTouched()"
+    (countrychange)="validatePhoneNumber()"
+    #phoneInput
+  />
+</label>

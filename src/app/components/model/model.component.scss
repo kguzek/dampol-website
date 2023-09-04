@@ -23,20 +23,13 @@ fieldset {
   flex-direction: column;
   gap: 5px;
   padding: 0.5rem;
-}
-
-fieldset,
-select,
-.box {
-  border: 2px solid #ccc;
-  border-radius: 5px;
+  @include outlined();
 }
 
 select,
 .box {
   font-family: unset;
   color: $color-text-primary;
-  padding: 5px 10px;
 }
 
 .form-sections {
@@ -153,19 +146,6 @@ h4 {
 .btn-container {
   display: flex;
   justify-content: center;
-}
-
-select,
-input {
-  transition: outline 50ms ease;
-
-  &:focus {
-    outline: 3px solid $color-accent;
-  }
-
-  &.ng-touched.ng-invalid {
-    outline: 3px solid $color-error !important;
-  }
 }
 
 @media only screen and (max-width: $tiny-screen-size) {
