@@ -16,6 +16,7 @@ $color-contrast-dark: #48487e;
 
 @mixin radiobutton-checkbox-label() {
   flex-direction: row-reverse;
+	justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
 
