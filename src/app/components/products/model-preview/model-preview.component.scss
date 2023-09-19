@@ -1,17 +1,22 @@
 @import "variables.scss";
 
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 .model-content {
   display: inline-block;
-  margin: 1.5rem;
+  width: 100%;
 }
 
 .image-carousel {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  height: 100%;
 
   img {
-    height: 300px;
     width: 100%;
     object-fit: contain;
   }
@@ -71,4 +76,12 @@
 h3 {
   font-weight: normal;
   font-size: 1.5rem;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.price {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
 }

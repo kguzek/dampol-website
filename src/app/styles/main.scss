@@ -121,19 +121,37 @@ app-input-tel.ng-touched.ng-invalid input {
   opacity: 0.7;
   transition: all 200ms ease;
 
+  .image-carousel img {
+    height: 300px;
+  }
+
+  &:hover:not(.active) {
+    transform: translateY(-10px);
+  }
+
   &:hover,
   &.active {
     opacity: 1;
-    transform: translateY(-10px);
     box-shadow: 0 16px 24px 0 #555e;
   }
 
   &.active {
-    transform: none;
+    min-width: 65%;
 
     .image-scroller {
       border-radius: 0;
     }
+
+    .image-carousel img {
+      height: 600px;
+      margin: 1.5rem;
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-screen-size) {
+  .model.active .image-carousel img {
+    height: 300px;
   }
 }
 
@@ -145,9 +163,15 @@ app-input-tel.ng-touched.ng-invalid input {
   .model {
     opacity: 1;
 
-    &:hover {
+    &:hover:not(.active) {
       transform: none;
       box-shadow: 0 8px 16px 0 #555a;
+    }
+
+    &.active .image-carousel {
+      img {
+        margin: 0;
+      }
     }
   }
 }

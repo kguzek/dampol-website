@@ -4,13 +4,9 @@
 >
   <a class="model-content" routerLink="/model/{{ modelNumber }}">
     <h3>Model {{ modelNumber }}</h3>
-    <p>
-      {{
-        translationService.translations.products.modelDescriptions[
-          this.modelNumber - 1
-        ] || translationService.translations.products.temporaryModelDescription
-      }}
-    </p>
+    <h4 class="price">
+      {{ translationService.formatPrice(model.basePrice) }}
+    </h4>
     <div class="image-carousel">
       <img
         src="

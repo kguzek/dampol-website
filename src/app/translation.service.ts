@@ -18,9 +18,6 @@ export const TRANSLATIONS = {
       next: 'Næste',
       image: 'Billede',
       customise: 'Tilpas',
-      temporaryModelDescription:
-        'Denne containerpavillon er designet til at fremvise bæredygtig og miljøvenlig praksis.',
-      modelDescriptions: [],
     },
     about: {
       header: 'Om',
@@ -105,9 +102,6 @@ export const TRANSLATIONS = {
       next: 'Next',
       image: 'Image',
       customise: 'Customise',
-      temporaryModelDescription:
-        'This container pavilion is designed to showcase sustainable and eco-friendly practices.',
-      modelDescriptions: [],
     },
     about: {
       header: 'About',

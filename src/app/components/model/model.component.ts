@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
 import { LayeredInput } from './input-layered/input-layered.component';
@@ -9,6 +9,9 @@ import {
   PHONE_NUMBER_VALIDATOR,
   PhoneNumber,
 } from '../input-tel/input-tel.component';
+import { MODELS } from '../products/model.data';
+
+const DEFAULT_OPTIONS_PRICE = 5700;
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
@@ -158,7 +161,7 @@ export class ModelComponent {
   get dimensionsPrice() {
     const prices = MODEL_COMPONENT_PRICES.dimensions;
 
-    let price = 2300;
+    let price = MODELS[this.modelNumber - 1].basePrice - DEFAULT_OPTIONS_PRICE;
     const dimensions = this.form.value.dimensions;
     const length = dimensions?.length ?? 0;
     const width = dimensions?.width ?? 0;

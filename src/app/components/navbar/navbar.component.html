@@ -1,6 +1,6 @@
 <nav [class]="isMenuOpen ? 'open' : 'closed'">
   <ul [class]="'navbar-list'">
-    <li class="header">
+    <li class="header" (click)="isMenuOpen = false">
       <a routerLink="/"
         ><img
           src="assets/images/dampol-logo.jpg"

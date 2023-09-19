@@ -13,7 +13,6 @@ export class ModelPreviewComponent implements OnInit {
   @Input() modelNumber!: number;
   @ViewChild('imageScroller') imageScroller!: ElementRef;
 
-  modelDescription!: string;
   selectedImage = 1;
   model!: Model;
 
