@@ -92,7 +92,8 @@ label {
   }
 
   select,
-  input {
+  input,
+  textarea {
     transition: outline-color 300ms ease;
     padding: 5px 10px;
     outline: 3px solid transparent;

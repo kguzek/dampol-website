@@ -11,8 +11,6 @@ import {
 } from '../input-tel/input-tel.component';
 import { MODELS } from '../products/model.data';
 
-const DEFAULT_OPTIONS_PRICE = 5700;
-
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
   extra: false,
@@ -24,17 +22,6 @@ const FEATURE_DESCRIPTIONS = {
   kitchen: 'separation wall',
   partitionWall: 'internal door',
 };
-
-const WINDOW_DIMENSIONS = [
-  [50, 50],
-  [60, 90],
-  [100, 100],
-  [90, 190],
-  [100, 200],
-  [200, 200],
-].map((dimensions) =>
-  dimensions.map((dimension) => `${dimension} cm`).join(' × ')
-);
 
 const PATH_REGEXP = /\/model\/(?<modelNumber>\d+)(?:#.+)?/;
 
@@ -80,18 +67,18 @@ export class ModelComponent {
       glazure: [glazure],
     });
 
+  model = MODELS[this.modelNumber - 1];
   form = this.formBuilder.group({
     dimensions: this.formBuilder.group({
-      length: [6],
-      width: [3],
+      length: [this.model.dimensions[0]],
+      width: [this.model.dimensions[1]],
     }),
     features: this.formBuilder.group({
       toilet: [DEFAULT_LAYERED_INPUT_VALUE],
       kitchen: [DEFAULT_LAYERED_INPUT_VALUE],
       partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
     }),
-    doors: this.formBuilder.array([this.createDoor(1, 'aluminiumGlass')]),
-    windows: this.formBuilder.array([this.createWindow(4, 'pcv', 'double')]),
+    specialFeatures: '',
     customerInformation: this.formBuilder.group({
       name: [''],
       phoneNumber: [
@@ -101,56 +88,8 @@ export class ModelComponent {
     }),
   });
 
-  doors = this.form.controls.doors;
-  windows = this.form.controls.windows;
-
-  getDropdownOptions(menu: 'windows' | 'doors') {
-    const options =
-      menu === 'windows'
-        ? WINDOW_DIMENSIONS
-        : this.translationService.translations.model.doorLocations;
-    return [
-      `— ${this.translationService.translations.model.select} —`,
-      ...options,
-    ];
-  }
-
   /** Returns '?' if the value is `undefined`, else formats it to one decimal place and adds 'm' unit. */
   formatDimension = (value?: number | null) => (value ?? 0).toFixed(1) + ' m';
-
-  getDoorPrice(doorIdx: number) {
-    const door = this.form.value.doors?.[doorIdx];
-    const material = door?.material as string;
-    if (!Object.keys(MODEL_COMPONENT_PRICES.doors).includes(material))
-      return NaN;
-    return MODEL_COMPONENT_PRICES.doors[
-      material as keyof typeof MODEL_COMPONENT_PRICES.doors
-    ];
-  }
-
-  getWindow = (windowIdx: number) =>
-    this.form.value.windows?.[windowIdx] as Window;
-
-  getWindowDimensionsPrice(window: Window) {
-    if (!window.dimensions) return NaN;
-    const dimensionsIdx = (window.dimensions as number) - 1;
-    return MODEL_COMPONENT_PRICES.windows.dimensionPrices[dimensionsIdx];
-  }
-
-  getWindowMaterialMultiplier(window: Window) {
-    if (!window.material) return NaN;
-    return MODEL_COMPONENT_PRICES.windows.materialMultipliers[window.material];
-  }
-
-  getWindowPrice(window: Window) {
-    if (!window.glazure) return NaN;
-    let price = this.getWindowDimensionsPrice(window);
-    price *= this.getWindowMaterialMultiplier(window);
-    if (window.glazure === 'triple') {
-      price *= MODEL_COMPONENT_PRICES.windows.tripleGlazedMultiplier;
-    }
-    return price;
-  }
 
   formatMultiplier(multiplier: number) {
     if (isNaN(multiplier) || multiplier === 1) return '';
@@ -158,39 +97,11 @@ export class ModelComponent {
     return `${result > 0 ? '+' : ''}${result}%`;
   }
 
-  get dimensionsPrice() {
-    const prices = MODEL_COMPONENT_PRICES.dimensions;
-
-    let price = MODELS[this.modelNumber - 1].basePrice - DEFAULT_OPTIONS_PRICE;
-    const dimensions = this.form.value.dimensions;
-    const length = dimensions?.length ?? 0;
-    const width = dimensions?.width ?? 0;
-    price +=
-      length < prices.lengthCutoff
-        ? length * prices.lengthUnitPrice * prices.lengthMultiplierUnderCutoff
-        : prices.lengthCutoff *
-            prices.lengthUnitPrice *
-            prices.lengthMultiplierUnderCutoff +
-          (length - prices.lengthCutoff) * prices.lengthUnitPrice;
-    price += width * prices.widthUnitPrice;
-    price += (Math.ceil(width / 3) - 1) * prices.additionalContainerWidthPrice;
-    return price;
-  }
-
   get totalPrice() {
-    let price = this.dimensionsPrice;
+    let price = this.model.basePrice;
     for (const feature in this.form.value.features) {
       const control = this.form.controls.features.get(feature);
       price += control?.value.price.price;
-    }
-    for (let i = 0; i < (this.form.value.doors?.length ?? 0); i++) {
-      const doorPrice = this.getDoorPrice(i);
-      if (!isNaN(doorPrice)) price += doorPrice;
-    }
-    for (let i = 0; i < (this.form.value.windows?.length ?? 0); i++) {
-      const window = this.getWindow(i);
-      const windowPrice = this.getWindowPrice(window);
-      if (!isNaN(windowPrice)) price += windowPrice;
     }
     return price;
   }
@@ -198,7 +109,7 @@ export class ModelComponent {
   submit() {
     if (this.form.invalid) {
       document
-        .querySelector('.image-scroller')
+        .getElementById('customise')
         ?.scrollIntoView({ behavior: 'smooth' });
       this.form.markAllAsTouched();
       return;
@@ -228,28 +139,17 @@ export class ModelComponent {
         }%20${featureDetail}`
       );
     }
-    const doorDescriptions = (value.doors ?? []).map(
-      (door, idx) =>
-        `${idx + 1}.%0D%0ALocation%3A%20${
-          DOOR_LOCATIONS[(door.location as number) - 1]
-        }%0D%0AMaterial%3A%20${door.material}`
-    );
-    const windowDescriptions = (value.windows ?? []).map(
-      (window, idx) =>
-        `${idx + 1}.%0D%0ADimensions%3A%20${WINDOW_DIMENSIONS[
-          (window.dimensions as number) - 1
-        ].replace(' ', '%20')}%0D%0AMaterial%3A%20${
-          window.material
-        }%0D%0AGlazure%3A%20${window.glazure}`
-    );
-    const encodedPrice = encodeURIComponent(
-      this.translationService.formatPrice(this.totalPrice)
+    const encodedSpecialFeatures = encodeURIComponent(
+      value.specialFeatures || 'none'
     );
     const encodedName = encodeURIComponent(
-      value.customerInformation?.name ?? ''
+      value.customerInformation?.name || 'none'
     );
     const encodedPhoneNumber = encodeURIComponent(
       (value.customerInformation?.phoneNumber as PhoneNumber).value
+    );
+    const encodedPrice = encodeURIComponent(
+      this.translationService.formatPrice(this.totalPrice)
     );
     return `mailto:dampol.sales@gmail.com?subject=Online%20container%20order%20-%20${encodedName}&body=\
 Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
@@ -257,10 +157,9 @@ I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${
       value.dimensions?.width
     }%20m%0D%0A\
 II.%20Features%3A%20${featureDescriptions.join('%2C%20') || 'none'}%0D%0A\
-III.%20Doors%3A%0D%0A${doorDescriptions.join('%0D%0A')}%0D%0A%0D%0A\
-IV.%20Windows%3A%0D%0A${windowDescriptions.join('%0D%0A')}%0D%0A%0D%0A\
+III.%20Special%20features%3A%0D%0A${encodedSpecialFeatures}%0D%0A%0D%0A\
+IV.%20Customer%20information%3A%0D%0AName%3A%20${encodedName}%0D%0APhone%20number%3A%20${encodedPhoneNumber}%0D%0A%0D%0A\
 Estimated%20price%3A%20${encodedPrice}%0D%0A%0D%0A\
-V.%20Customer%20information%3A%0D%0AName%3A%20${encodedName}%0D%0APhone%20number%3A%20${encodedPhoneNumber}%0D%0A%0D%0A\
 Order%20timestamp%3A%20${orderTimestamp}`;
   }
 }

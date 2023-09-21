@@ -6,7 +6,7 @@
         <h3>{{ translationService.translations.model.header }}</h3>
         <ol class="form-sections">
           <li>
-            <fieldset formGroupName="dimensions">
+            <fieldset formGroupName="dimensions" [disabled]="true">
               <legend>
                 {{ translationService.translations.model.dimensions }}
               </legend>
@@ -19,7 +19,6 @@
                   min="2"
                   max="12"
                   step="0.5"
-                  required
                 />
               </label>
               <label>
@@ -33,9 +32,6 @@
                   step="0.5"
                 />
               </label>
-              <span class="dimensions-price">{{
-                translationService.formatPrice(dimensionsPrice)
-              }}</span>
             </fieldset>
           </li>
           <li>
@@ -71,226 +67,19 @@
               </app-input-layered>
             </fieldset>
           </li>
-          <li>
-            <fieldset class="windows array-container">
-              <legend>
-                {{ translationService.translations.model.doors }}
-              </legend>
-              <ol formArrayName="doors">
-                <li
-                  *ngFor="let door of doors.controls; index as i"
-                  [formGroupName]="i"
-                >
-                  <label
-                    >{{ translationService.translations.model.location }}
-                    <select formControlName="location">
-                      <option
-                        *ngFor="
-                          let option of getDropdownOptions('doors');
-                          index as key
-                        "
-                        [value]="key"
-                      >
-                        {{ option }}
-                      </option>
-                    </select>
-                  </label>
-                  <div class="radios-container">
-                    <div class="radios-header">
-                      <h4>
-                        {{ translationService.translations.model.material }}
-                      </h4>
-                      {{ translationService.formatPrice(getDoorPrice(i)) }}
-                    </div>
-                    <div class="radios">
-                      <label>
-                        {{ translationService.translations.model.steel }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="steel"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.aluminium }}
-                        {{ translationService.translations.model.withGlass }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="aluminiumGlass"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.aluminium }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="aluminium"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.aluminium }}
-                        {{ translationService.translations.model.double }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="aluminiumDouble"
-                          required
-                        />
-                      </label>
-                    </div>
-                  </div>
-                  <div class="buttons">
-                    <button
-                      class="btn btn-add"
-                      role="button"
-                      (click)="doors.insert(i + 1, createDoor())"
-                    >
-                      {{ translationService.translations.model.addDoor }}
-                    </button>
-                    <button
-                      class="btn btn-del"
-                      role="button"
-                      (click)="doors.removeAt(i)"
-                      [disabled]="doors.length < 2"
-                    >
-                      {{ translationService.translations.model.removeDoor }}
-                    </button>
-                  </div>
-                </li>
-              </ol>
+          <li id="customise">
+            <fieldset>
+              <legend>Customisation</legend>
+              <label
+                >Special features
+                <textarea
+                  placeholder="Additional doors and windows, materials, etc."
+                  formControlName="specialFeatures"
+                  resize
+                ></textarea>
+              </label>
             </fieldset>
           </li>
-          <li>
-            <fieldset class="windows array-container">
-              <legend>
-                {{ translationService.translations.model.windows }}
-              </legend>
-              <ol formArrayName="windows">
-                <li
-                  *ngFor="let window of windows.controls; index as i"
-                  [formGroupName]="i"
-                >
-                  <label>
-                    <div>
-                      {{ translationService.translations.model.dimensions }}
-                      <span>
-                        {{
-                          translationService.formatPrice(
-                            getWindowDimensionsPrice(getWindow(i))
-                          )
-                        }}
-                      </span>
-                    </div>
-                    <select formControlName="dimensions">
-                      <option
-                        *ngFor="
-                          let option of getDropdownOptions('windows');
-                          index as key
-                        "
-                        [value]="key"
-                      >
-                        {{ option }}
-                      </option>
-                    </select>
-                  </label>
-                  <div class="radios-container">
-                    <div class="radios-header">
-                      <h4>
-                        {{ translationService.translations.model.material }}
-                      </h4>
-                      {{
-                        formatMultiplier(
-                          getWindowMaterialMultiplier(getWindow(i))
-                        )
-                      }}
-                    </div>
-                    <div class="radios">
-                      <label>
-                        {{ translationService.translations.model.aluminium }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="aluminium"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.pcv }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="pcv"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.fixed }}
-                        <input
-                          formControlName="material"
-                          type="radio"
-                          value="fixed"
-                          required
-                        />
-                      </label>
-                    </div>
-                  </div>
-                  <div class="radios-container">
-                    <h4>
-                      {{ translationService.translations.model.glazure }}
-                    </h4>
-                    <div class="radios">
-                      <label>
-                        {{ translationService.translations.model.doubleGlazed }}
-                        <input
-                          formControlName="glazure"
-                          type="radio"
-                          value="double"
-                          required
-                        />
-                      </label>
-                      <label>
-                        {{ translationService.translations.model.tripleGlazed }}
-                        <input
-                          formControlName="glazure"
-                          type="radio"
-                          value="triple"
-                          required
-                        />
-                      </label>
-                    </div>
-                  </div>
-                  {{
-                    translationService.formatPrice(getWindowPrice(getWindow(i)))
-                  }}
-                  <div class="buttons">
-                    <button
-                      class="btn btn-add"
-                      role="button"
-                      (click)="windows.insert(i + 1, createWindow())"
-                    >
-                      {{ translationService.translations.model.addWindow }}
-                    </button>
-                    <button
-                      class="btn btn-del"
-                      role="button"
-                      (click)="windows.removeAt(i)"
-                      [disabled]="windows.length < 2"
-                    >
-                      {{ translationService.translations.model.removeWindow }}
-                    </button>
-                  </div>
-                </li>
-              </ol>
-            </fieldset>
-          </li>
-          <h3 class="price">
-            {{ translationService.translations.model.total }}:
-            <strong>{{ translationService.formatPrice(totalPrice) }}</strong>
-          </h3>
           <li>
             <fieldset formGroupName="customerInformation">
               <legend>
@@ -319,6 +108,10 @@
             </fieldset>
           </li>
         </ol>
+        <h3 class="price">
+          {{ translationService.translations.model.total }}:
+          <strong>{{ translationService.formatPrice(totalPrice) }}</strong>
+        </h3>
         <div class="btn-container">
           <button class="btn" (click)="submit()">
             <h3>{{ translationService.translations.model.submit }}</h3>

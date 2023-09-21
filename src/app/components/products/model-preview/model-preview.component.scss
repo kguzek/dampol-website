@@ -14,11 +14,20 @@
 
 .image-carousel {
   display: flex;
-  height: 100%;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   img {
+    flex: 1 0 100%;
     width: 100%;
     object-fit: contain;
+    scroll-snap-align: start;
   }
 }
 

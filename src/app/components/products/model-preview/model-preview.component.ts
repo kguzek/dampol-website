@@ -11,28 +11,49 @@ export class ModelPreviewComponent implements OnInit {
   constructor(protected translationService: TranslationService) {}
 
   @Input() modelNumber!: number;
-  @ViewChild('imageScroller') imageScroller!: ElementRef;
+  @ViewChild('imageCarousel') imageCarousel!: ElementRef;
 
-  selectedImage = 1;
+  selectedImage!: number;
   model!: Model;
+  images!: number[];
 
   ngOnInit() {
     this.model = MODELS[this.modelNumber - 1];
+    this.images = Array.from({ length: this.model.numImages }, (_, i) => i + 1);
+  }
+
+  ngAfterViewInit() {
+    this.selectedImage = this.getSelectedImage();
+  }
+
+  getSelectedImage() {
+    const target = this.imageCarousel.nativeElement;
+    const imageWidth = target.scrollWidth / this.model.numImages;
+    return Math.round(target.scrollLeft / imageWidth) + 1;
+  }
+
+  scrollToImage(imageNumber: number) {
+    const imageId = `model-${this.modelNumber}-image-${imageNumber}`;
+    document.getElementById(imageId)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
   }
 
   nextImage() {
     if (this.selectedImage >= this.model.numImages) {
-      this.selectedImage = 1;
+      this.scrollToImage(1);
     } else {
-      this.selectedImage += 1;
+      this.scrollToImage(this.selectedImage + 1);
     }
   }
 
   previousImage() {
     if (this.selectedImage <= 1) {
-      this.selectedImage = this.model.numImages;
+      this.scrollToImage(this.model.numImages);
     } else {
-      this.selectedImage -= 1;
+      this.scrollToImage(this.selectedImage - 1);
     }
   }
 }
