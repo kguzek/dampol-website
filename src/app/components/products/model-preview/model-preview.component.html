@@ -16,6 +16,7 @@
         *ngFor="let i of images"
         id="model-{{ modelNumber }}-image-{{ i }}"
         class="model-image"
+        loading="lazy"
         src="
         assets/images/models/{{ modelNumber }}/image-{{ i }}.jpg
         "

@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   updateBackgroundImage() {
     this.imageSrc =
       window.innerWidth <= TINY_SCREEN_SIZE_PX
-        ? 'assets/images/models/12/model-12-image-1.jpg'
+        ? 'assets/images/models/11/image-1.jpg'
         : 'assets/images/background.png';
   }
 
