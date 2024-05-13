@@ -35,10 +35,10 @@
       <mat-icon>chevron_left</mat-icon>
     </button>
     <button
-      *ngFor="let i of images"
-      class="indicator{{ i === selectedImage ? ' active' : '' }}"
-      (click)="scrollToImage(i)"
-      title="{{ translationService.translations.products.image }} {{ i }}"
+      *ngFor="let image of images"
+      class="indicator{{ image === (selectedImage || 1) ? ' active' : '' }}"
+      (click)="scrollToImage(image)"
+      title="{{ translationService.translations.products.image }} {{ image }}"
     >
       <mat-icon>fiber_manual_record</mat-icon>
     </button>
