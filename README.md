@@ -4,22 +4,22 @@ This is the product website for Dampol Investment sp. z o. o., which is a local 
 
 The website is hosted on [GitHub Pages](https://kguzek.github.io/dampol-website).
 
-![Website preview](https://github.com/kguzek/dampol-website/blob/images/all-devices-black.png?raw=true)
+![Website preview](https://github.com/kguzek/dampol-website/blob/images/homepage/all-devices-black.png?raw=true)
 
 ## Screenshot Previews
 
 ### Desktop
 
-<img alt="Desktop website preview" src="https://github.com/kguzek/dampol-website/blob/images/desktop.png?raw=true" height="400" />
+<img alt="Desktop website preview" src="https://github.com/kguzek/dampol-website/blob/images/models/desktop.png?raw=true" height="400" />
 
 ### Laptop
 
-<img alt="Laptop website preview" src="https://github.com/kguzek/dampol-website/blob/images/laptop.png?raw=true" height="400" />
+<img alt="Laptop website preview" src="https://github.com/kguzek/dampol-website/blob/images/models/laptop.png?raw=true" height="400" />
 
 ### Tablet
 
-<img alt="Laptop website preview|500" src="https://github.com/kguzek/dampol-website/blob/images/tablet-black.png?raw=true" height="400" />
+<img alt="Laptop website preview|500" src="https://github.com/kguzek/dampol-website/blob/images/models/tablet-black.png?raw=true" height="400" />
 
 ### Mobile
 
-<img alt="Mobile website preview" src="https://github.com/kguzek/dampol-website/blob/images/mobile-black.png?raw=true" height="400" />
+<img alt="Mobile website preview" src="https://github.com/kguzek/dampol-website/blob/images/models/mobile-black.png?raw=true" height="400" />
