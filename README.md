@@ -1,27 +1,25 @@
-# DampolWebsite
+# Dampol Website
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+This is the product website for Dampol Investment sp. z o. o., which is a local container producer in Czekanów, Poland. It was written in Svelte and includes model previews, feature selection, price prediction, as well as a customer information form and order submission feature. Aside from this, it includes an "About" section and a "Contact" section for more information about the company and to help guide customers if further information is needed.
 
-## Development server
+The website is hosted on [GitHub Pages](https://kguzek.github.io/dampol-website).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![Website preview](https://github.com/kguzek/dampol-website/blob/images/all-devices-black.png?raw=true)
 
-## Code scaffolding
+## Screenshot Previews
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Desktop
 
-## Build
+<img alt="Desktop website preview" src="https://github.com/kguzek/dampol-website/blob/images/desktop.png?raw=true" height="400" />
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Laptop
 
-## Running unit tests
+<img alt="Laptop website preview" src="https://github.com/kguzek/dampol-website/blob/images/laptop.png?raw=true" height="400" />
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Tablet
 
-## Running end-to-end tests
+<img alt="Laptop website preview|500" src="https://github.com/kguzek/dampol-website/blob/images/tablet-black.png?raw=true" height="400" />
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Mobile
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<img alt="Mobile website preview" src="https://github.com/kguzek/dampol-website/blob/images/mobile-black.png?raw=true" height="400" />
