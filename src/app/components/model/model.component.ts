@@ -3,7 +3,6 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
 import { LayeredInput } from './input-layered/input-layered.component';
-import { DOOR_LOCATIONS, MODEL_COMPONENT_PRICES } from 'src/app/app.constants';
 import {
   DEFAULT_PHONE_NUMBER_VALUE,
   PHONE_NUMBER_VALIDATOR,
@@ -18,6 +17,7 @@ const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
 };
 
 const FEATURE_DESCRIPTIONS = {
+  airConditioning: 'air conditioning',
   toilet: 'shower',
   kitchen: 'separation wall',
   partitionWall: 'internal door',
@@ -74,6 +74,7 @@ export class ModelComponent {
       width: [this.model.dimensions[1]],
     }),
     features: this.formBuilder.group({
+      airConditioning: [DEFAULT_LAYERED_INPUT_VALUE],
       toilet: [DEFAULT_LAYERED_INPUT_VALUE],
       kitchen: [DEFAULT_LAYERED_INPUT_VALUE],
       partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],

@@ -40,6 +40,16 @@
                 {{ translationService.translations.model.features }}
               </legend>
               <app-input-layered
+                formControlName="airConditioning"
+                [outerLabel]="
+                  translationService.translations.model.airConditioning
+                "
+                [innerLabel]="
+                  translationService.translations.model.airConditioning2
+                "
+              >
+              </app-input-layered>
+              <app-input-layered
                 formControlName="toilet"
                 [outerLabel]="translationService.translations.model.toiletLabel"
                 [innerLabel]="translationService.translations.model.shower"
