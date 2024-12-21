@@ -81,9 +81,12 @@
             <fieldset>
               <legend>Customisation</legend>
               <label
-                >Special features
+                >{{ translationService.translations.model.specialFeatures }}
                 <textarea
-                  placeholder="Additional doors and windows, materials, etc."
+                  placeholder="{{
+                    translationService.translations.model
+                      .placeholderSpecialFeatures
+                  }}"
                   formControlName="specialFeatures"
                   resize
                 ></textarea>

@@ -76,6 +76,9 @@ export const TRANSLATIONS = {
       phoneNumber: 'Telefonnummer',
       placeholderName: 'Navn Navnesen',
       placeholderPhoneNumber: '+45 50 00 12 34',
+      specialFeatures: 'Særlige funktioner',
+      placeholderSpecialFeatures:
+        'Yderligere døre og vinduer, materialer, etc.',
     },
     notFound: {
       thePage: 'Siden',
@@ -162,6 +165,9 @@ export const TRANSLATIONS = {
       phoneNumber: 'Phone Number',
       placeholderName: 'John Smith',
       placeholderPhoneNumber: '+44 7300 123 123',
+      specialFeatures: 'Special features',
+      placeholderSpecialFeatures:
+        'Additional doors and windows, materials, etc.',
     },
     notFound: {
       thePage: 'The page',
