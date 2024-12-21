@@ -22,7 +22,7 @@ export const MODEL_COMPONENT_PRICES = {
     airConditioning: [1000, 600],
     toilet: [1200, 650],
     kitchen: [800, 450],
-    partitionWall: [{ price: 300, approximate: true } as Price, 200],
+    partitionWall: [{ price: 500, approximate: true } as Price, 200],
   },
   doors: {
     aluminium: 900,

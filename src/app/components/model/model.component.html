@@ -80,17 +80,27 @@
           <li id="customise">
             <fieldset>
               <legend>Customisation</legend>
-              <label
-                >{{ translationService.translations.model.specialFeatures }}
-                <textarea
-                  placeholder="{{
-                    translationService.translations.model
-                      .placeholderSpecialFeatures
-                  }}"
-                  formControlName="specialFeatures"
-                  resize
-                ></textarea>
-              </label>
+              {{ translationService.translations.model.specialFeatureHeader }}
+              <ul style="list-style-type: none">
+                <!-- iterate through object values -->
+                <li
+                  *ngFor="
+                    let feature of translationService.translations.model
+                      .specialFeatures | keyvalue
+                  "
+                >
+                  <mat-icon>check</mat-icon>
+                  {{ feature.value }}
+                </li>
+              </ul>
+              <textarea
+                placeholder="{{
+                  translationService.translations.model
+                    .placeholderSpecialFeatures
+                }}"
+                formControlName="specialFeatures"
+                resize
+              ></textarea>
             </fieldset>
           </li>
           <li>
