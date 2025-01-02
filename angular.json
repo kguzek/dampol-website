@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "dampol-website:build:production"
+              "buildTarget": "dampol-website:build:production"
             },
             "development": {
-              "browserTarget": "dampol-website:build:development"
+              "buildTarget": "dampol-website:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "dampol-website:build"
+            "buildTarget": "dampol-website:build"
           }
         },
         "test": {
