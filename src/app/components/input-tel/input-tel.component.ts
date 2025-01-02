@@ -25,16 +25,17 @@ const TEL_INPUT_OPTIONS = {
 };
 
 @Component({
-  selector: 'app-input-tel',
-  templateUrl: './input-tel.component.html',
-  styleUrls: ['./input-tel.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTelComponent),
-      multi: true,
-    },
-  ],
+    selector: 'app-input-tel',
+    templateUrl: './input-tel.component.html',
+    styleUrls: ['./input-tel.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputTelComponent),
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class InputTelComponent {
   @ViewChild('phoneInput') phoneInput!: ElementRef;

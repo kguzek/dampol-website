@@ -12,10 +12,11 @@ import {
 import { TranslationService } from 'src/app/translation.service';
 
 @Component({
-  selector: 'app-navbar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+    selector: 'app-navbar',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: false
 })
 export class NavbarComponent {
   constructor(protected translationService: TranslationService) {}

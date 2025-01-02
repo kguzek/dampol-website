@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use "variables.scss";
 
 li a {
   white-space: nowrap;
@@ -15,7 +15,7 @@ li a {
       position: absolute;
       left: 0;
       bottom: -2px;
-      background: $color-accent;
+      background: variables.$color-accent;
       width: 0;
       height: 2px;
       transition: all 200ms ease;
@@ -27,19 +27,19 @@ li a {
   }
 }
 
-@media only screen and (max-width: $medium-screen-size) {
+@media only screen and (max-width: variables.$medium-screen-size) {
   li {
     font-size: medium;
   }
 }
 
-@media only screen and (max-width: $small-screen-size) {
+@media only screen and (max-width: variables.$small-screen-size) {
   li {
     font-size: small;
   }
 }
 
-@media only screen and (max-width: $tiny-screen-size) {
+@media only screen and (max-width: variables.$tiny-screen-size) {
   li {
     font-size: large;
   }

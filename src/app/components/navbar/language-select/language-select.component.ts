@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { TRANSLATIONS, TranslationService } from 'src/app/translation.service';
 
 @Component({
-  selector: 'app-language-select',
-  templateUrl: './language-select.component.html',
-  styleUrls: ['./language-select.component.scss'],
+    selector: 'app-language-select',
+    templateUrl: './language-select.component.html',
+    styleUrls: ['./language-select.component.scss'],
+    standalone: false
 })
 export class LanguageSelectComponent {
   constructor(protected translationService: TranslationService) {}

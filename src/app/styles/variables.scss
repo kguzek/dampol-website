@@ -13,23 +13,3 @@ $color-background: #f4fdfd;
 
 $color-contrast-light: #2f2f5a;
 $color-contrast-dark: #48487e;
-
-@mixin radiobutton-checkbox-label() {
-  flex-direction: row-reverse;
-	justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-
-  input {
-    margin-top: 0;
-  }
-}
-
-@mixin outlined() {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-}
-
-@mixin error-outline() {
-  outline: 3px solid $color-error !important;
-}

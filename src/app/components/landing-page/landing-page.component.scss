@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use "variables.scss";
 
 .background {
   height: 100vh;
@@ -35,7 +35,7 @@ h1 {
   }
 }
 
-@media only screen and (max-width: $tiny-screen-size) {
+@media only screen and (max-width: variables.$tiny-screen-size) {
   .background {
     gap: 20px;
   }

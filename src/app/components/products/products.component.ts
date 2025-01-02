@@ -3,9 +3,10 @@ import { MODELS } from './model.data';
 import { TranslationService } from 'src/app/translation.service';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+    selector: 'app-products',
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.scss'],
+    standalone: false
 })
 export class ProductsComponent {
   constructor(protected translationService: TranslationService) {}

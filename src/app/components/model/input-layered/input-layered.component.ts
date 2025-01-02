@@ -14,16 +14,17 @@ export interface LayeredInput {
 }
 
 @Component({
-  selector: 'app-input-layered',
-  templateUrl: './input-layered.component.html',
-  styleUrls: ['./input-layered.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputLayeredComponent),
-      multi: true,
-    },
-  ],
+    selector: 'app-input-layered',
+    templateUrl: './input-layered.component.html',
+    styleUrls: ['./input-layered.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputLayeredComponent),
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class InputLayeredComponent implements ControlValueAccessor, OnInit {
   constructor(public translationService: TranslationService) {}

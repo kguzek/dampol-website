@@ -3,9 +3,10 @@ import { MODELS, Model } from '../model.data';
 import { TranslationService } from 'src/app/translation.service';
 
 @Component({
-  selector: 'app-model-preview',
-  templateUrl: './model-preview.component.html',
-  styleUrls: ['./model-preview.component.scss'],
+    selector: 'app-model-preview',
+    templateUrl: './model-preview.component.html',
+    styleUrls: ['./model-preview.component.scss'],
+    standalone: false
 })
 export class ModelPreviewComponent implements OnInit {
   constructor(protected translationService: TranslationService) {}

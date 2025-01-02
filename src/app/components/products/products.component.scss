@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use "variables.scss";
 
 .models {
   display: grid;
@@ -8,14 +8,14 @@
   padding: 0 15vw;
 }
 
-@media only screen and (max-width: $medium-screen-size) {
+@media only screen and (max-width: variables.$medium-screen-size) {
   .models {
     grid-template-columns: repeat(2, 1fr);
     padding: 0 10vw;
   }
 }
 
-@media only screen and (max-width: $small-screen-size) {
+@media only screen and (max-width: variables.$small-screen-size) {
   .models {
     grid-template-columns: 1fr;
     padding: 0 5%;

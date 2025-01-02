@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use "variables.scss";
 
 :host {
   display: flex;
@@ -36,7 +36,7 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  background-color: $color-text-secondary;
+  background-color: variables.$color-text-secondary;
   border-radius: 0 0 10px 10px;
   padding: 1.5rem;
 

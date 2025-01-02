@@ -35,9 +35,10 @@ interface Window {
 }
 
 @Component({
-  selector: 'app-model',
-  templateUrl: './model.component.html',
-  styleUrls: ['./model.component.scss'],
+    selector: 'app-model',
+    templateUrl: './model.component.html',
+    styleUrls: ['./model.component.scss'],
+    standalone: false
 })
 export class ModelComponent {
   constructor(

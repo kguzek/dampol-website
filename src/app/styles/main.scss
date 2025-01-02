@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@use "variables.scss";
+@use "mixins.scss";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Martel+Sans&display=swap");
-@import "variables.scss";
 
 html {
   font-family: "Martel Sans", sans-serif;
@@ -11,7 +12,7 @@ html {
 
 body {
   margin: 0px;
-  color: $color-text-primary;
+  color: variables.$color-text-primary;
 
   app-root {
     display: flex;
@@ -41,12 +42,12 @@ h2 {
 }
 
 .btn {
-  color: $color-text-secondary;
+  color: variables.$color-text-secondary;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: $color-accent-active;
+  background-color: variables.$color-accent-active;
   border: none;
   border-radius: 50px;
   padding: 12px 50px;
@@ -58,14 +59,14 @@ h2 {
   cursor: pointer;
 
   &.btn-del {
-    background-color: $color-error;
+    background-color: variables.$color-error;
   }
 
   &:hover:not([disabled]) {
-    background-color: $color-accent;
+    background-color: variables.$color-accent;
 
     &.btn-del {
-      background-color: $color-error-active;
+      background-color: variables.$color-error-active;
     }
   }
 
@@ -74,7 +75,7 @@ h2 {
   }
 
   &[disabled] {
-    background-color: $color-text-secondary;
+    background-color: variables.$color-text-secondary;
     color: #999;
     cursor: not-allowed;
   }
@@ -97,25 +98,25 @@ label {
     transition: outline-color 300ms ease;
     padding: 5px 10px;
     outline: 3px solid transparent;
-    @include outlined();
+    @include mixins.outlined();
 
     &:focus {
-      outline: 3px solid $color-accent;
+      outline: 3px solid variables.$color-accent;
     }
 
     &.ng-touched.ng-invalid {
-      @include error-outline();
+      @include mixins.error-outline();
     }
   }
 }
 
 app-input-tel.ng-touched.ng-invalid input {
-  @include error-outline();
+  @include mixins.error-outline();
 }
 
 .model {
   box-shadow: 0 8px 16px 0 #555a;
-  background-color: $color-background;
+  background-color: variables.$color-background;
   backdrop-filter: blur(4px);
   border-radius: 10px;
   max-width: 700px;
@@ -150,13 +151,13 @@ app-input-tel.ng-touched.ng-invalid input {
   }
 }
 
-@media only screen and (max-width: $medium-screen-size) {
+@media only screen and (max-width: variables.$medium-screen-size) {
   .model.active .image-carousel img {
     height: 300px;
   }
 }
 
-@media only screen and (max-width: $small-screen-size) {
+@media only screen and (max-width: variables.$small-screen-size) {
   html {
     font-size: medium;
   }
@@ -177,7 +178,7 @@ app-input-tel.ng-touched.ng-invalid input {
   }
 }
 
-@media only screen and (max-width: $tiny-screen-size) {
+@media only screen and (max-width: variables.$tiny-screen-size) {
   html {
     font-size: small;
   }

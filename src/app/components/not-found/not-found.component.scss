@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use "variables.scss";
 
 section {
   width: 100%;
@@ -27,19 +27,19 @@ section {
   }
 }
 
-@media only screen and (max-width: $medium-screen-size) {
+@media only screen and (max-width: variables.$medium-screen-size) {
   section {
     font-size: 2rem;
   }
 }
 
-@media only screen and (max-width: $small-screen-size) {
+@media only screen and (max-width: variables.$small-screen-size) {
   section {
     font-size: 1.5rem;
   }
 }
 
-@media only screen and (max-width: $tiny-screen-size) {
+@media only screen and (max-width: variables.$tiny-screen-size) {
   section {
     font-size: unset;
 

@@ -3,9 +3,10 @@ import { TranslationService } from '../../translation.service';
 import { TINY_SCREEN_SIZE_PX } from '../../app.constants';
 
 @Component({
-  selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss'],
+    selector: 'app-landing-page',
+    templateUrl: './landing-page.component.html',
+    styleUrls: ['./landing-page.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
   constructor(protected translationService: TranslationService) {}
