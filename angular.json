@@ -15,12 +15,13 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/dampol-website",
+            "outputPath": {
+              "base": "dist/dampol-website"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
@@ -31,7 +32,9 @@
             "scripts": ["node_modules/intl-tel-input/build/js/utils.js"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/app/styles"]
-            }
+            },
+            "browser": "src/main.ts",
+            "allowedCommonJsDependencies": ["intl-tel-input"]
           },
           "configurations": {
             "production": {
@@ -50,9 +53,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true

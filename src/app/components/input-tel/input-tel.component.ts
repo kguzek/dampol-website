@@ -8,7 +8,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as intlTelInput from 'intl-tel-input';
+import intlTelInput from 'intl-tel-input';
 
 /** The datatype of the value stored by the input component. */
 export type PhoneNumber = { value: string; valid: boolean };

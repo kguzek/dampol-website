@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -40,17 +43,20 @@ import { InputTelComponent } from './components/input-tel/input-tel.component';
     InputLayeredComponent,
     InputTelComponent,
   ],
+  exports: [MatIconModule],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [MatIconModule],
-  providers: [TranslationService, FormBuilder],
-  bootstrap: [AppComponent],
+  providers: [
+    TranslationService,
+    FormBuilder,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 })
 export class AppModule {
   constructor(
