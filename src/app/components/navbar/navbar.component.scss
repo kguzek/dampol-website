@@ -9,27 +9,13 @@ nav {
   z-index: 1;
   color: variables.$color-text-secondary;
 
-  .hamburger-menu {
-    position: absolute;
-    visibility: hidden;
-    transform: scale(1.5);
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-    transition: color 500ms ease;
-
-    &.dark {
-      color: #444;
-    }
-  }
-
   .navbar-list {
     display: flex;
     list-style: none;
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 10px 0;
+    padding: 10px 150px;
     width: 100%;
     background: linear-gradient(45deg, #191a22ed, #36384dda);
     box-shadow: 0 0 10px #111;
@@ -52,10 +38,6 @@ nav {
         }
       }
     }
-  }
-
-  &.open .hamburger-menu {
-    color: unset;
   }
 }
 
@@ -88,11 +70,6 @@ nav {
 }
 
 @media only screen and (max-width: variables.$tiny-screen-size) {
-  .hamburger-menu {
-    visibility: visible !important;
-    top: unset;
-  }
-
   .header {
     margin: 0 !important;
     font-size: 2rem;

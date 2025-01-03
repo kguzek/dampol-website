@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NavbarLinkComponent } from './components/navbar/navbar-link/navbar-link.component';
+import { HamburgerComponent } from './components/navbar/hamburger/hamburger.component';
 import { AboutComponent } from './components/about/about.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { ProductsComponent } from './components/products/products.component';
@@ -36,6 +37,7 @@ import { InputTelComponent } from './components/input-tel/input-tel.component';
     AppComponent,
     NavbarComponent,
     NavbarLinkComponent,
+    HamburgerComponent,
     AboutComponent,
     ScrollToTopComponent,
     ProductsComponent,

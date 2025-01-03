@@ -1,0 +1,68 @@
+@use "variables.scss";
+
+.hamburger-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  transition: all 500ms ease;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  padding: 15px;
+  visibility: visible;
+
+  &.dark .line {
+    background: variables.$color-text-primary;
+  }
+
+  &.open {
+    transform: translateX(6px);
+
+    .line {
+      background: variables.$color-text-secondary;
+    }
+  }
+
+  .line {
+    width: 34px;
+    height: 4px;
+    background: variables.$color-text-secondary;
+    opacity: 1;
+    transition: all 500ms ease;
+    border-radius: 20px;
+    position: relative;
+
+    &.top {
+      transform-origin: 0% 0%;
+    }
+
+    &.bottom {
+      transform-origin: 0% 100%;
+    }
+  }
+
+  &.open {
+    .line {
+      &.top {
+        transform: rotate(45deg);
+      }
+
+      &.middle {
+        opacity: 0;
+      }
+
+      &.bottom {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: variables.$tiny-screen-size) {
+  .hamburger-menu {
+    display: flex !important;
+  }
+}

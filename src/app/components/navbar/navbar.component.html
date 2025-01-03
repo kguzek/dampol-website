@@ -26,9 +26,9 @@
       <app-language-select></app-language-select>
     </div>
   </ul>
-  <mat-icon
-    class="hamburger-menu{{ showDarkHamburger ? ' dark' : '' }}"
+  <app-hamburger
     (click)="isMenuOpen = !isMenuOpen"
-    >{{ isMenuOpen ? "close" : "menu" }}</mat-icon
-  >
+    [isDark]="showDarkHamburger"
+    [isMenuOpen]="isMenuOpen"
+  ></app-hamburger>
 </nav>

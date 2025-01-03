@@ -47,6 +47,8 @@ export class ModelComponent {
     public translationService: TranslationService
   ) {}
 
+  baseHref = 'mailto:dampol.sales@gmail.com';
+
   modelNumber = +(
     PATH_REGEXP.exec(this.router.url)?.groups?.['modelNumber'] ?? 1
   );
@@ -169,7 +171,9 @@ export class ModelComponent {
     const encodedPrice = encodeURIComponent(
       this.translationService.formatPrice(this.totalPrice)
     );
-    return `mailto:dampol.sales@gmail.com?subject=Online%20container%20order%20-%20${encodedName}&body=\
+    return `${
+      this.baseHref
+    }?subject=Online%20container%20order%20-%20${encodedName}&body=\
 Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
 I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${
       value.dimensions?.width
