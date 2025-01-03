@@ -9,21 +9,22 @@
         <h1>Dampol</h1></a
       >
     </li>
-    <ng-container
-      *ngFor="
-        let link of translationService.translations.navbar
-          | keyvalue : originalOrder
-      "
-    >
-      <app-navbar-link
-        *ngIf="link.key !== 'products' || showProductsLink"
-        [link]="link.key"
-        [label]="link.value"
-        (click)="isMenuOpen = false"
-        [isButton]="link.key === 'products'"
-      ></app-navbar-link>
-    </ng-container>
-    <app-language-select></app-language-select>
+    <div class="links">
+      <ng-container
+        *ngFor="
+          let link of translationService.translations.navbar
+            | keyvalue : originalOrder
+        "
+      >
+        <app-navbar-link
+          [link]="link.key"
+          [label]="link.value"
+          (click)="isMenuOpen = false"
+          [isButton]="link.key === 'products'"
+        ></app-navbar-link>
+      </ng-container>
+      <app-language-select></app-language-select>
+    </div>
   </ul>
   <mat-icon
     class="hamburger-menu{{ showDarkHamburger ? ' dark' : '' }}"

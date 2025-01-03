@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostListener,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { originalOrder } from 'src/app/app.component';
 import {
   SMALL_SCREEN_SIZE_PX,
@@ -24,7 +19,6 @@ export class NavbarComponent {
   @Input() showDarkHamburger!: boolean;
 
   isMenuOpen = false;
-  showProductsLink = this.shouldShowProductsLink();
 
   originalOrder = originalOrder;
 
@@ -37,10 +31,5 @@ export class NavbarComponent {
     } catch {
       return true;
     }
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.showProductsLink = this.shouldShowProductsLink();
   }
 }

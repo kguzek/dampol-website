@@ -3,15 +3,15 @@
 nav {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: center;
   z-index: 1;
   color: variables.$color-text-secondary;
 
   .hamburger-menu {
+    position: absolute;
     visibility: hidden;
-    position: inherit;
     transform: scale(1.5);
     top: 10px;
     right: 10px;
@@ -25,19 +25,22 @@ nav {
 
   .navbar-list {
     display: flex;
-    gap: 50px;
     list-style: none;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    margin: 0px;
-    padding: 10px 130px;
+    margin: 0;
+    padding: 10px 0;
     width: 100%;
     background: linear-gradient(45deg, #191a22ed, #36384dda);
     box-shadow: 0 0 10px #111;
 
-    .header {
-      margin-right: auto;
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+    }
 
+    .header {
       a {
         display: flex;
         align-items: center;
@@ -59,7 +62,10 @@ nav {
 @media only screen and (max-width: variables.$medium-screen-size) {
   .navbar-list {
     padding: 10px 15px !important;
-    gap: 2em !important;
+
+    .links {
+      gap: 2em !important;
+    }
   }
 
   .header {
@@ -68,12 +74,16 @@ nav {
 }
 
 @media only screen and (max-width: variables.$small-screen-size) {
-  .navbar-list {
-    gap: 3% !important;
-  }
-
   .header {
     margin-left: 2%;
+  }
+
+  .navbar-list .links {
+    gap: 5vw !important;
+
+    :first-child {
+      display: none;
+    }
   }
 }
 
@@ -85,10 +95,19 @@ nav {
 
   .header {
     margin: 0 !important;
+    font-size: 2rem;
+
+    img {
+      display: none;
+    }
+  }
+
+  nav.closed {
+    visibility: hidden;
   }
 
   .navbar-list {
-    position: inherit;
+    left: 0;
     flex-direction: column;
     padding: 25px 0px !important;
     transition: all 500ms ease;
@@ -96,6 +115,15 @@ nav {
     border-bottom-right-radius: 15px;
     gap: 10px !important;
     background: linear-gradient(45deg, #191a22fc, #36384dfa);
+
+    .links {
+      flex-direction: column;
+      gap: 50px !important;
+
+      :first-child {
+        display: unset;
+      }
+    }
 
     .closed & {
       transform: translateY(-100%);
