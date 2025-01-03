@@ -34,7 +34,14 @@
               "includePaths": ["src/app/styles"]
             },
             "browser": "src/main.ts",
-            "allowedCommonJsDependencies": ["intl-tel-input"]
+            "allowedCommonJsDependencies": ["intl-tel-input"],
+            "server": "src/main.server.ts",
+            "prerender": {
+              "routesFile": "prerender-routes.txt"
+            },
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {

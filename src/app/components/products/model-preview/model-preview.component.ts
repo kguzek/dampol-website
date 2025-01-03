@@ -3,10 +3,10 @@ import { MODELS, Model } from '../model.data';
 import { TranslationService } from 'src/app/translation.service';
 
 @Component({
-    selector: 'app-model-preview',
-    templateUrl: './model-preview.component.html',
-    styleUrls: ['./model-preview.component.scss'],
-    standalone: false
+  selector: 'app-model-preview',
+  templateUrl: './model-preview.component.html',
+  styleUrls: ['./model-preview.component.scss'],
+  standalone: false,
 })
 export class ModelPreviewComponent implements OnInit {
   constructor(protected translationService: TranslationService) {}
@@ -35,11 +35,18 @@ export class ModelPreviewComponent implements OnInit {
 
   scrollToImage(imageNumber: number) {
     const imageId = `model-${this.modelNumber}-image-${imageNumber}`;
-    document.getElementById(imageId)?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'nearest',
-    });
+    try {
+      document.getElementById(imageId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    } catch (error) {
+      console.warn(
+        'Could not scroll to model image. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+        error
+      );
+    }
   }
 
   nextImage() {

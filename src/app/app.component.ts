@@ -12,10 +12,10 @@ export const originalOrder = (
 ): number => 0;
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
@@ -40,12 +40,22 @@ export class AppComponent {
 
     this.router.events.subscribe((event) => {
       if (event.type !== EventType.Scroll) return;
-      if (this.changingFragment) return void (this.changingFragment = false);
+      if (this.changingFragment) {
+        this.changingFragment = false;
+        return;
+      }
       if (this.fragment === null) {
         scrollToTop();
-      } else {
+        return;
+      }
+      try {
         const element = document.getElementById(this.fragment) as Element;
         element.scrollIntoView({ behavior: 'smooth' });
+      } catch (error) {
+        console.warn(
+          'Could not scroll to element. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+          error
+        );
       }
     });
   }
@@ -53,16 +63,39 @@ export class AppComponent {
   @HostListener('window:scroll')
   @HostListener('window:resize')
   onWindowScroll() {
-    this.pagesScrolled = window.scrollY / window.innerHeight;
+    try {
+      this.pagesScrolled = window.scrollY / window.innerHeight;
+    } catch (error) {
+      console.warn(
+        'Could not determine window scroll position. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+        error
+      );
+    }
 
     // Handle changing the URL fragment when the user reaches a given position on the screen
     let page = null;
     for (const fragment of FRAGMENTS) {
-      const element = document.getElementById(fragment);
+      let element;
+      try {
+        element = document.getElementById(fragment);
+      } catch (error) {
+        console.warn(
+          'Could not determine element position. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+          error
+        );
+        return;
+      }
       if (!element) continue;
       const elementOffset = element.getBoundingClientRect().top;
       if (fragment === 'about') this.passedAboutPage = elementOffset <= 100;
-      if (elementOffset / window.innerHeight > 0.7) continue;
+      try {
+        if (elementOffset / window.innerHeight > 0.7) continue;
+      } catch (error) {
+        console.warn(
+          'Could not determine window height. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+          error
+        );
+      }
       page = fragment;
     }
     if (page === this.fragment) {

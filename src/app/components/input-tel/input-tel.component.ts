@@ -24,18 +24,37 @@ const TEL_INPUT_OPTIONS = {
   separateDialCode: true,
 };
 
+function tryRemoveEnglishNames() {
+  let win;
+  try {
+    win = window as any;
+  } catch (error) {
+    console.warn(
+      'Could not remove English names from the country dropdown. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+      error
+    );
+    return;
+  }
+  win.intlTelInputGlobals
+    .getCountryData()
+    .forEach(
+      (country: intlTelInput.CountryData) =>
+        (country.name = country.name.replace(/.+\((.+)\)/, '$1'))
+    );
+}
+
 @Component({
-    selector: 'app-input-tel',
-    templateUrl: './input-tel.component.html',
-    styleUrls: ['./input-tel.component.scss'],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => InputTelComponent),
-            multi: true,
-        },
-    ],
-    standalone: false
+  selector: 'app-input-tel',
+  templateUrl: './input-tel.component.html',
+  styleUrls: ['./input-tel.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputTelComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class InputTelComponent {
   @ViewChild('phoneInput') phoneInput!: ElementRef;
@@ -49,12 +68,7 @@ export class InputTelComponent {
 
   ngAfterViewInit() {
     // Removes English names from the country dropdown
-    (window as any).intlTelInputGlobals
-      .getCountryData()
-      .forEach(
-        (country: intlTelInput.CountryData) =>
-          (country.name = country.name.replace(/.+\((.+)\)/, '$1'))
-      );
+    tryRemoveEnglishNames();
 
     this._intlTelInput = intlTelInput(this.phoneInput.nativeElement, {
       ...TEL_INPUT_OPTIONS,

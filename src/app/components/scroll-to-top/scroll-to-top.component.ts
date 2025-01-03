@@ -3,14 +3,22 @@ import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/translation.service';
 
 export function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (error) {
+    console.warn(
+      'Could not scroll to top. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+      error
+    );
+    return;
+  }
 }
 
 @Component({
-    selector: 'app-scroll-to-top',
-    templateUrl: './scroll-to-top.component.html',
-    styleUrls: ['./scroll-to-top.component.scss'],
-    standalone: false
+  selector: 'app-scroll-to-top',
+  templateUrl: './scroll-to-top.component.html',
+  styleUrls: ['./scroll-to-top.component.scss'],
+  standalone: false,
 })
 export class ScrollToTopComponent {
   constructor(

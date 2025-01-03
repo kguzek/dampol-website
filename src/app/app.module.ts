@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  DomSanitizer,
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import {
   provideHttpClient,
+  withFetch,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
@@ -55,7 +61,8 @@ import { InputTelComponent } from './components/input-tel/input-tel.component';
   providers: [
     TranslationService,
     FormBuilder,
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideClientHydration(withEventReplay()),
   ],
 })
 export class AppModule {

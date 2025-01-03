@@ -35,10 +35,10 @@ interface Window {
 }
 
 @Component({
-    selector: 'app-model',
-    templateUrl: './model.component.html',
-    styleUrls: ['./model.component.scss'],
-    standalone: false
+  selector: 'app-model',
+  templateUrl: './model.component.html',
+  styleUrls: ['./model.component.scss'],
+  standalone: false,
 })
 export class ModelComponent {
   constructor(
@@ -110,13 +110,29 @@ export class ModelComponent {
 
   submit() {
     if (this.form.invalid) {
-      document
-        .getElementById('customise')
-        ?.scrollIntoView({ behavior: 'smooth' });
+      try {
+        document
+          .getElementById('customise')
+          ?.scrollIntoView({ behavior: 'smooth' });
+      } catch (error) {
+        console.warn(
+          'Could not scroll up to the form. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
+          error
+        );
+      }
       this.form.markAllAsTouched();
       return;
     }
-    window.open(this.getSubmitHref(), '_blank');
+    const url = this.getSubmitHref();
+    try {
+      window.open(this.getSubmitHref(), '_blank');
+    } catch (error) {
+      console.warn(
+        "Could not open the form submission link. If you're using a browser extension that blocks popups, please allow popups for this website. Otherwise, please copy the link below and paste it into your navigation bar.",
+        error
+      );
+      console.info(url);
+    }
   }
 
   getSubmitHref() {

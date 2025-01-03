@@ -196,10 +196,17 @@ export const TRANSLATIONS = {
 export type LanguageCode = keyof typeof TRANSLATIONS;
 export type Translation = (typeof TRANSLATIONS)[LanguageCode];
 
+function tryGetLanguage() {
+  try {
+    return localStorage.getItem('language');
+  } catch {
+    return null;
+  }
+}
+
 @Injectable()
 export class TranslationService {
-  selectedLanguage: LanguageCode = (localStorage.getItem('language') ||
-    'gb') as LanguageCode;
+  selectedLanguage: LanguageCode = (tryGetLanguage() || 'gb') as LanguageCode;
 
   get translations() {
     return TRANSLATIONS[this.selectedLanguage];
