@@ -4,7 +4,10 @@
 >
   <a class="model-content" routerLink="/model/{{ modelNumber }}">
     <h3>Model {{ modelNumber }}</h3>
-    <h3 style="margin-top: 0">Size: {{ model.dimensions.join("×") }} m</h3>
+    <h3 style="margin-top: 0">
+      {{ translationService.translations.model.size }}:
+      {{ model.dimensions.join("×") }} m
+    </h3>
     <h4 class="price">
       {{ translationService.formatPrice(model.basePrice) }}
     </h4>

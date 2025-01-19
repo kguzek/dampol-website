@@ -1,13 +1,13 @@
 <nav [class]="isMenuOpen ? 'open' : 'closed'">
   <ul [class]="'navbar-list'">
     <li class="header" (click)="isMenuOpen = false">
-      <a routerLink="/"
-        ><img
+      <a routerLink="/">
+        <img
           src="assets/images/dampol-logo.jpg"
           [alt]="translationService.translations.alt.dampolLogo"
         />
-        <h1>Dampol</h1></a
-      >
+        <p class="serif title">Dampol</p>
+      </a>
     </li>
     <div class="links">
       <ng-container

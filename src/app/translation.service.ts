@@ -37,6 +37,7 @@ export const TRANSLATIONS = {
       salesDepartment: 'Salgsafdeling',
     },
     model: {
+      size: 'Størrelse',
       header: 'Tilpas din container',
       select: 'Vælg',
       dimensions: 'Dimensioner',
@@ -135,6 +136,7 @@ export const TRANSLATIONS = {
     },
     model: {
       header: 'Customise your container',
+      size: 'Size',
       select: 'Select',
       dimensions: 'Dimensions',
       length: 'Length',
