@@ -1,7 +1,7 @@
 import { DOOR_LOCATIONS } from "src/app/app.constants";
 
-export const TRANSLATIONS_GB = {
-  languageCode: "EN (UK)",
+export const TRANSLATIONS_EN = {
+  languageCode: "EN (GB)",
   iso639Locale: "en-GB",
   alt: { dampolLogo: "Dampol logo" },
   navbar: { products: "Products", about: "About", contact: "Contact" },

@@ -14,7 +14,7 @@ import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.c
 import { ProductsComponent } from "./components/home/products/products.component";
 import { ModelPreviewComponent } from "./components/home/products/model-preview/model-preview.component";
 import { ModelComponent } from "./routes/model/model.component";
-import { ContactComponent } from "./components/home/contact/contact.component";
+import { FooterComponent } from "./components/home/footer/footer.component";
 import { HeaderComponent } from "./components/home/landing-page/landing-page.component";
 import { LanguageSelectComponent } from "./components/navbar/language-select/language-select.component";
 import { HomeComponent } from "./routes/home/home.component";
@@ -34,9 +34,8 @@ import { InputTelComponent } from "./components/model/input-tel/input-tel.compon
     ProductsComponent,
     ModelPreviewComponent,
     ModelComponent,
-    ContactComponent,
+    FooterComponent,
     HeaderComponent,
-    LanguageSelectComponent,
     HomeComponent,
     NotFoundComponent,
     InputLayeredComponent,
@@ -44,7 +43,7 @@ import { InputTelComponent } from "./components/model/input-tel/input-tel.compon
   ],
   exports: [MatIconModule],
   bootstrap: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, MatIconModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, MatIconModule, FormsModule, ReactiveFormsModule, LanguageSelectComponent],
   providers: [
     TranslationService,
     FormBuilder,

@@ -2,11 +2,11 @@ import { Component } from "@angular/core";
 import { TranslationService } from "src/app/services/translation/translation.service";
 
 @Component({
-  selector: "app-contact",
-  templateUrl: "./contact.component.html",
-  styleUrls: ["./contact.component.scss"],
+  selector: "app-footer",
+  templateUrl: "./footer.component.html",
+  styleUrls: ["./footer.component.scss"],
   standalone: false,
 })
-export class ContactComponent {
+export class FooterComponent {
   constructor(protected translationService: TranslationService) {}
 }

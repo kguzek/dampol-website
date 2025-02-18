@@ -19,3 +19,22 @@
 @mixin error-outline() {
   outline: 3px solid variables.$color-error !important;
 }
+
+@mixin hover-underlined($height: 1px) {
+  background-position: left bottom;
+  background-size: 100% $height;
+}
+
+@mixin hover-underline($color: currentColor, $height: 1px) {
+  background-image: linear-gradient($color, $color);
+  background-size: 0 $height;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  transition:
+    300ms background-size,
+    0ms background-position ease-in;
+
+  &:hover {
+    @include hover-underlined($height);
+  }
+}

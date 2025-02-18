@@ -1,19 +1,18 @@
 <div
-  class="
-    language language-selector {{ isLanguageSelectorOpen ? 'open' : 'closed' }}
-  "
+  class="language language-selector {{ isLanguageSelectorOpen ? 'open' : 'closed' }}"
   (click)="isLanguageSelectorOpen = !isLanguageSelectorOpen"
 >
-  <span class="fi fi-{{ translationService.selectedLanguage }}"></span>{{ translationService.translations.languageCode
-  }}<mat-icon>expand_more</mat-icon>
+  <span [class]="getIcon(translationService.selectedLanguage)"></span>
+  {{ translationService.translations.languageCode }}
+  <mat-icon>expand_more</mat-icon>
   <div class="language-list">
-    <div
-      *ngFor="let language of languageCodes | keyvalue"
-      class="language{{ language.key === translationService.selectedLanguage ? ' active' : '' }}
-      "
-      (click)="translationService.setSelectedLanguage(language.key)"
-    >
-      <span class="fi fi-{{ language.key }}"></span>{{ language.value }}
-    </div>
+    @for (language of languageCodes; track $index) {
+      <div
+        class="language {{ translationService.selectedLanguage === language[0] ? 'selected' : '' }}"
+        (click)="translationService.setSelectedLanguage(language[0])"
+      >
+        <span [class]="getIcon(language[0])"></span>{{ language[1] }}
+      </div>
+    }
   </div>
 </div>

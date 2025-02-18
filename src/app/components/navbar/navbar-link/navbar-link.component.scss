@@ -1,4 +1,5 @@
 @use "variables.scss";
+@use "mixins.scss";
 
 li a {
   white-space: nowrap;
@@ -10,21 +11,7 @@ li a {
   h3 {
     position: relative;
     margin: 0;
-
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      background: variables.$color-accent;
-      width: 0;
-      height: 2px;
-      transition: all 200ms ease;
-    }
-
-    &:hover::after {
-      width: 100%;
-    }
+    @include mixins.hover-underline(variables.$color-accent, 2px);
   }
 }
 

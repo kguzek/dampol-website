@@ -1,0 +1,97 @@
+@use "variables.scss";
+@use "mixins.scss";
+
+h2 {
+  padding-top: 0;
+}
+
+footer {
+  background-color: #191919;
+  position: relative;
+  color: variables.$color-text-secondary;
+  width: 100vw;
+  padding: 30px 0 15px;
+}
+
+#contact {
+  padding: 0 25% 15px;
+  outline: 2px dashed #444;
+  border-top: 2px dashed #444;
+  border-bottom: 2px dashed #444;
+}
+
+address {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.contact-us {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1em;
+
+  .karolina {
+    display: flex;
+    width: 100%;
+    gap: 1em;
+    align-items: center;
+  }
+
+  img {
+    display: block;
+    object-fit: contain;
+    max-height: calc(120 / 16) * 1em;
+    border-radius: 5px;
+  }
+
+  .address {
+    min-width: max-content;
+  }
+
+  .karolina-details,
+  .address {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      color: lightblue;
+      font-style: italic;
+    }
+  }
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+}
+
+.copyright {
+  margin-top: 15px;
+  text-align: center;
+
+  a {
+    @include mixins.hover-underline();
+  }
+}
+
+@media only screen and (max-width: variables.$medium-screen-size) {
+  #contact {
+    margin: 30px 0px;
+  }
+
+  .contact-us {
+    width: unset;
+  }
+}
+
+@media only screen and (max-width: variables.$small-screen-size) {
+  .contact-us {
+    flex-direction: column;
+    gap: 4em;
+  }
+}
