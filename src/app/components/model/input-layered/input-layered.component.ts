@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Price, MODEL_COMPONENT_PRICES } from 'src/app/app.constants';
-import { TranslationService } from 'src/app/translation.service';
+import { Component, Input, OnInit, forwardRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Price, MODEL_COMPONENT_PRICES } from "src/app/app.constants";
+import { TranslationService } from "src/app/services/translation/translation.service";
 
 const isPrice = (price: number | Price): price is Price => {
   return (price as any).approximate !== undefined;
@@ -14,17 +14,17 @@ export interface LayeredInput {
 }
 
 @Component({
-    selector: 'app-input-layered',
-    templateUrl: './input-layered.component.html',
-    styleUrls: ['./input-layered.component.scss'],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => InputLayeredComponent),
-            multi: true,
-        },
-    ],
-    standalone: false
+  selector: "app-input-layered",
+  templateUrl: "./input-layered.component.html",
+  styleUrls: ["./input-layered.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputLayeredComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class InputLayeredComponent implements ControlValueAccessor, OnInit {
   constructor(public translationService: TranslationService) {}
@@ -41,8 +41,7 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
   private prices!: (number | Price)[];
 
   ngOnInit(): void {
-    const feature = this
-      .formControlName as keyof typeof MODEL_COMPONENT_PRICES.features;
+    const feature = this.formControlName as keyof typeof MODEL_COMPONENT_PRICES.features;
     this.prices = MODEL_COMPONENT_PRICES.features[feature];
   }
 
@@ -83,6 +82,6 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
 
   formatPrice(value: Price) {
     const formattedPrice = this.translationService.formatPrice(value.price);
-    return `${value.approximate ? '⨤' : '+'} ${formattedPrice}`;
+    return `${value.approximate ? "⨤" : "+"} ${formattedPrice}`;
   }
 }

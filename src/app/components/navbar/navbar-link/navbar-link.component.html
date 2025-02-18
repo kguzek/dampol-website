@@ -1,9 +1,5 @@
 <li>
-  <a
-    [class]="isButton ? 'btn' : 'link'"
-    [routerLink]="link === 'contact' ? [] : '/'"
-    [fragment]="link"
-  >
+  <a [class]="isButton ? 'btn' : 'link'" [routerLink]="link === 'contact' ? [] : '/'" [fragment]="link">
     <h3>{{ label }}</h3>
   </a>
 </li>

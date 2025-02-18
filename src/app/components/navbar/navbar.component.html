@@ -2,20 +2,12 @@
   <ul [class]="'navbar-list'">
     <li class="header" (click)="isMenuOpen = false">
       <a routerLink="/">
-        <img
-          src="assets/images/dampol-logo.jpg"
-          [alt]="translationService.translations.alt.dampolLogo"
-        />
+        <img src="assets/images/dampol-logo.jpg" [alt]="translationService.translations.alt.dampolLogo" />
         <p class="serif title">Dampol</p>
       </a>
     </li>
     <div class="links">
-      <ng-container
-        *ngFor="
-          let link of translationService.translations.navbar
-            | keyvalue : originalOrder
-        "
-      >
+      <ng-container *ngFor="let link of translationService.translations.navbar | keyvalue: originalOrder">
         <app-navbar-link
           [link]="link.key"
           [label]="link.value"

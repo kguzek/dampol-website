@@ -1,26 +1,20 @@
 // TODO: Make this component an Angular library
 
-import {
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-  forwardRef,
-} from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import intlTelInput from 'intl-tel-input';
+import { Component, ElementRef, Input, ViewChild, forwardRef } from "@angular/core";
+import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
+import intlTelInput from "intl-tel-input";
 
 /** The datatype of the value stored by the input component. */
 export type PhoneNumber = { value: string; valid: boolean };
 
 /** To use as the default value of a form control bound to by this component. */
-export const DEFAULT_PHONE_NUMBER_VALUE = { value: '', valid: false };
+export const DEFAULT_PHONE_NUMBER_VALUE = { value: "", valid: false };
 
 export const PHONE_NUMBER_VALIDATOR = (control: FormControl) =>
   control.value.valid ? null : { formatError: { value: control.value.value } };
 
 const TEL_INPUT_OPTIONS = {
-  utilsScript: 'node_modules/intl_tel_input/src/js/utils.js',
+  utilsScript: "node_modules/intl_tel_input/src/js/utils.js",
   separateDialCode: true,
 };
 
@@ -30,23 +24,20 @@ function tryRemoveEnglishNames() {
     win = window as any;
   } catch (error) {
     console.warn(
-      'Could not remove English names from the country dropdown. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
-      error
+      "Could not remove English names from the country dropdown. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
+      error,
     );
     return;
   }
   win.intlTelInputGlobals
     .getCountryData()
-    .forEach(
-      (country: intlTelInput.CountryData) =>
-        (country.name = country.name.replace(/.+\((.+)\)/, '$1'))
-    );
+    .forEach((country: intlTelInput.CountryData) => (country.name = country.name.replace(/.+\((.+)\)/, "$1")));
 }
 
 @Component({
-  selector: 'app-input-tel',
-  templateUrl: './input-tel.component.html',
-  styleUrls: ['./input-tel.component.scss'],
+  selector: "app-input-tel",
+  templateUrl: "./input-tel.component.html",
+  styleUrls: ["./input-tel.component.scss"],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -57,7 +48,7 @@ function tryRemoveEnglishNames() {
   standalone: false,
 })
 export class InputTelComponent {
-  @ViewChild('phoneInput') phoneInput!: ElementRef;
+  @ViewChild("phoneInput") phoneInput!: ElementRef;
   @Input() required: boolean = false;
   @Input() options?: intlTelInput.Options;
   private _intlTelInput: any;

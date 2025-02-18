@@ -1,26 +1,26 @@
-import { Component, HostListener } from '@angular/core';
-import { KeyValue } from '@angular/common';
-import { scrollToTop } from './components/scroll-to-top/scroll-to-top.component';
-import { ActivatedRoute, EventType, Router } from '@angular/router';
+import { Component, HostListener } from "@angular/core";
+import { KeyValue } from "@angular/common";
+import { scrollToTop } from "./components/scroll-to-top/scroll-to-top.component";
+import { ActivatedRoute, EventType, Router } from "@angular/router";
 
-const FRAGMENTS = ['products', 'about', 'contact'];
+const FRAGMENTS = ["products", "about", "contact"];
 
 // Preserve original property order
-export const originalOrder = (
-  _a: KeyValue<string, string>,
-  _b: KeyValue<string, string>
-): number => 0;
+export const originalOrder = (_a: KeyValue<string, string>, _b: KeyValue<string, string>): number => 0;
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   standalone: false,
 })
 export class AppComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
-  title = 'dampol-website';
+  title = "dampol-website";
   pagesScrolled = 0;
   passedAboutPage = false;
 
@@ -50,25 +50,25 @@ export class AppComponent {
       }
       try {
         const element = document.getElementById(this.fragment) as Element;
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       } catch (error) {
         console.warn(
-          'Could not scroll to element. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
-          error
+          "Could not scroll to element. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
+          error,
         );
       }
     });
   }
 
-  @HostListener('window:scroll')
-  @HostListener('window:resize')
+  @HostListener("window:scroll")
+  @HostListener("window:resize")
   onWindowScroll() {
     try {
       this.pagesScrolled = window.scrollY / window.innerHeight;
     } catch (error) {
       console.warn(
-        'Could not determine window scroll position. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
-        error
+        "Could not determine window scroll position. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
+        error,
       );
     }
 
@@ -80,20 +80,20 @@ export class AppComponent {
         element = document.getElementById(fragment);
       } catch (error) {
         console.warn(
-          'Could not determine element position. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
-          error
+          "Could not determine element position. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
+          error,
         );
         return;
       }
       if (!element) continue;
       const elementOffset = element.getBoundingClientRect().top;
-      if (fragment === 'about') this.passedAboutPage = elementOffset <= 100;
+      if (fragment === "about") this.passedAboutPage = elementOffset <= 100;
       try {
         if (elementOffset / window.innerHeight > 0.7) continue;
       } catch (error) {
         console.warn(
-          'Could not determine window height. If you are seeing this message, report it as a bug to @kguzek on GitHub.',
-          error
+          "Could not determine window height. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
+          error,
         );
       }
       page = fragment;

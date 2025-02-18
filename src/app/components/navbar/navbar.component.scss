@@ -19,6 +19,7 @@ nav {
     width: 100%;
     background: linear-gradient(45deg, #191a22ed, #36384dda);
     box-shadow: 0 0 10px #111;
+    backdrop-filter: blur(6px);
 
     .links {
       display: flex;

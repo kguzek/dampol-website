@@ -1,16 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { originalOrder } from 'src/app/app.component';
-import {
-  SMALL_SCREEN_SIZE_PX,
-  TINY_SCREEN_SIZE_PX,
-} from 'src/app/app.constants';
-import { TranslationService } from 'src/app/translation.service';
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { originalOrder } from "src/app/app.component";
+import { SMALL_SCREEN_SIZE_PX, TINY_SCREEN_SIZE_PX } from "src/app/app.constants";
+import { TranslationService } from "src/app/services/translation/translation.service";
 
 @Component({
-  selector: 'app-navbar',
+  selector: "app-navbar",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.scss"],
   standalone: false,
 })
 export class NavbarComponent {
@@ -24,10 +21,7 @@ export class NavbarComponent {
 
   shouldShowProductsLink() {
     try {
-      return (
-        window.innerWidth <= TINY_SCREEN_SIZE_PX ||
-        window.innerWidth > SMALL_SCREEN_SIZE_PX
-      );
+      return window.innerWidth <= TINY_SCREEN_SIZE_PX || window.innerWidth > SMALL_SCREEN_SIZE_PX;
     } catch {
       return true;
     }

@@ -8,7 +8,8 @@
     "deploy": "ng deploy --cname=modern-container.com",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:dampol-website": "node dist/dampol-website/server/server.mjs"
+    "serve:ssr:dampol-website": "node dist/dampol-website/server/server.mjs",
+    "format": "prettier --write ."
   },
   "private": true,
   "dependencies": {
@@ -46,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.5.1",
     "typescript": "~5.6.3"
   }
 }

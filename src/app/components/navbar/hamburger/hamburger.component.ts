@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-hamburger',
-  templateUrl: './hamburger.component.html',
-  styleUrl: './hamburger.component.scss',
+  selector: "app-hamburger",
+  templateUrl: "./hamburger.component.html",
+  styleUrl: "./hamburger.component.scss",
   standalone: false,
 })
 export class HamburgerComponent {

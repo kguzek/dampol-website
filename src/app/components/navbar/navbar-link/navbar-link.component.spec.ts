@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavbarLinkComponent } from './navbar-link.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { NavbarLinkComponent } from "./navbar-link.component";
 
-describe('NavbarLinkComponent', () => {
+describe("NavbarLinkComponent", () => {
   let component: NavbarLinkComponent;
   let fixture: ComponentFixture<NavbarLinkComponent>;
 
@@ -15,7 +15,7 @@ describe('NavbarLinkComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

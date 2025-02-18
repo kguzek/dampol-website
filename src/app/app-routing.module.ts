@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ModelComponent } from './components/model/model.component';
-import { HomeComponent } from './components/home/home.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ModelComponent } from "./components/model/model.component";
+import { HomeComponent } from "./components/home/home.component";
+import { NotFoundComponent } from "./components/not-found/not-found.component";
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'model/:id', component: ModelComponent },
-  { path: '**', component: NotFoundComponent },
+  { path: "", component: HomeComponent },
+  { path: "model/:id", component: ModelComponent },
+  { path: "**", component: NotFoundComponent },
 ];
 
 @NgModule({

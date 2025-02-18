@@ -1,21 +1,11 @@
-<ng-container
-  (keydown.ArrowRight)="nextImage()"
-  (keydown.ArrowLeft)="previousImage()"
->
+<ng-container (keydown.ArrowRight)="nextImage()" (keydown.ArrowLeft)="previousImage()">
   <a class="model-content" routerLink="/model/{{ modelNumber }}">
     <h3>Model {{ modelNumber }}</h3>
-    <h3 style="margin-top: 0">
-      {{ translationService.translations.model.size }}:
-      {{ model.dimensions.join("×") }} m
-    </h3>
+    <h3 style="margin-top: 0">{{ translationService.translations.model.size }}: {{ model.dimensions.join("×") }} m</h3>
     <h4 class="price">
       {{ translationService.formatPrice(model.basePrice) }}
     </h4>
-    <div
-      class="image-carousel"
-      (scroll)="selectedImage = getSelectedImage()"
-      #imageCarousel
-    >
+    <div class="image-carousel" (scroll)="selectedImage = getSelectedImage()" #imageCarousel>
       <img
         *ngFor="let i of images"
         id="model-{{ modelNumber }}-image-{{ i }}"
@@ -32,9 +22,7 @@
     <button
       class="btn-image-scroller"
       (click)="previousImage()"
-      title="{{ translationService.translations.products.prev }} {{
-        translationService.translations.products.image
-      }}"
+      title="{{ translationService.translations.products.prev }} {{ translationService.translations.products.image }}"
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -49,9 +37,7 @@
     <button
       class="btn-image-scroller"
       (click)="nextImage()"
-      title="{{ translationService.translations.products.next }} {{
-        translationService.translations.products.image
-      }}"
+      title="{{ translationService.translations.products.next }} {{ translationService.translations.products.image }}"
     >
       <mat-icon>chevron_right</mat-icon>
     </button>

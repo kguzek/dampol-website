@@ -13,24 +13,12 @@
               <label>
                 {{ translationService.translations.model.length }}:
                 {{ formatDimension(form.value.dimensions?.length) }}
-                <input
-                  formControlName="length"
-                  type="range"
-                  min="2"
-                  max="12"
-                  step="0.5"
-                />
+                <input formControlName="length" type="range" min="2" max="12" step="0.5" />
               </label>
               <label>
                 {{ translationService.translations.model.width }}:
                 {{ formatDimension(form.value.dimensions?.width) }}
-                <input
-                  formControlName="width"
-                  type="range"
-                  min="2"
-                  max="9"
-                  step="0.5"
-                />
+                <input formControlName="width" type="range" min="2" max="9" step="0.5" />
               </label>
             </fieldset>
           </li>
@@ -41,12 +29,8 @@
               </legend>
               <app-input-layered
                 formControlName="airConditioning"
-                [outerLabel]="
-                  translationService.translations.model.airConditioning
-                "
-                [innerLabel]="
-                  translationService.translations.model.airConditioning2
-                "
+                [outerLabel]="translationService.translations.model.airConditioning"
+                [innerLabel]="translationService.translations.model.airConditioning2"
               >
               </app-input-layered>
               <app-input-layered
@@ -57,22 +41,14 @@
               </app-input-layered>
               <app-input-layered
                 formControlName="kitchen"
-                [outerLabel]="
-                  translationService.translations.model.kitchenAnnexe
-                "
-                [innerLabel]="
-                  translationService.translations.model.separationWall
-                "
+                [outerLabel]="translationService.translations.model.kitchenAnnexe"
+                [innerLabel]="translationService.translations.model.separationWall"
               >
               </app-input-layered>
               <app-input-layered
                 formControlName="partitionWall"
-                [outerLabel]="
-                  translationService.translations.model.partitionWall
-                "
-                [innerLabel]="
-                  translationService.translations.model.internalDoor
-                "
+                [outerLabel]="translationService.translations.model.partitionWall"
+                [innerLabel]="translationService.translations.model.internalDoor"
               >
               </app-input-layered>
             </fieldset>
@@ -83,21 +59,13 @@
               {{ translationService.translations.model.specialFeatureHeader }}
               <ul style="list-style-type: none">
                 <!-- iterate through object values -->
-                <li
-                  *ngFor="
-                    let feature of translationService.translations.model
-                      .specialFeatures | keyvalue
-                  "
-                >
+                <li *ngFor="let feature of translationService.translations.model.specialFeatures | keyvalue">
                   <mat-icon>check</mat-icon>
                   {{ feature.value }}
                 </li>
               </ul>
               <textarea
-                placeholder="{{
-                  translationService.translations.model
-                    .placeholderSpecialFeatures
-                }}"
+                placeholder="{{ translationService.translations.model.placeholderSpecialFeatures }}"
                 formControlName="specialFeatures"
                 resize
               ></textarea>
@@ -114,9 +82,7 @@
                   formControlName="name"
                   name="name"
                   class="box"
-                  [placeholder]="
-                    translationService.translations.model.placeholderName
-                  "
+                  [placeholder]="translationService.translations.model.placeholderName"
                   required
                 />
               </label>

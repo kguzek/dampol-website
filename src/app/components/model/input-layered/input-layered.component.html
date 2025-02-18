@@ -2,9 +2,7 @@
   <label>
     <div>
       {{ outerLabel }}
-      <span *ngIf="outerValue" class="price">{{
-        formatPrice(getPrice())
-      }}</span>
+      <span *ngIf="outerValue" class="price">{{ formatPrice(getPrice()) }}</span>
     </div>
     <input
       type="checkbox"
