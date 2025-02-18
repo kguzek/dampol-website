@@ -9,19 +9,19 @@ import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { NavbarLinkComponent } from "./components/navbar/navbar-link/navbar-link.component";
 import { HamburgerComponent } from "./components/navbar/hamburger/hamburger.component";
-import { AboutComponent } from "./components/about/about.component";
+import { AboutComponent } from "./components/home/about/about.component";
 import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.component";
-import { ProductsComponent } from "./components/products/products.component";
-import { ModelPreviewComponent } from "./components/products/model-preview/model-preview.component";
-import { ModelComponent } from "./components/model/model.component";
-import { ContactComponent } from "./components/contact/contact.component";
-import { HeaderComponent } from "./components/landing-page/landing-page.component";
+import { ProductsComponent } from "./components/home/products/products.component";
+import { ModelPreviewComponent } from "./components/home/products/model-preview/model-preview.component";
+import { ModelComponent } from "./routes/model/model.component";
+import { ContactComponent } from "./components/home/contact/contact.component";
+import { HeaderComponent } from "./components/home/landing-page/landing-page.component";
 import { LanguageSelectComponent } from "./components/navbar/language-select/language-select.component";
-import { HomeComponent } from "./components/home/home.component";
+import { HomeComponent } from "./routes/home/home.component";
 import { TranslationService } from "./services/translation/translation.service";
-import { NotFoundComponent } from "./components/not-found/not-found.component";
+import { NotFoundComponent } from "./routes/not-found/not-found.component";
 import { InputLayeredComponent } from "./components/model/input-layered/input-layered.component";
-import { InputTelComponent } from "./components/input-tel/input-tel.component";
+import { InputTelComponent } from "./components/model/input-tel/input-tel.component";
 
 @NgModule({
   declarations: [

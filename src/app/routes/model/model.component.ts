@@ -2,9 +2,13 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { TranslationService } from "src/app/services/translation/translation.service";
-import { LayeredInput } from "./input-layered/input-layered.component";
-import { DEFAULT_PHONE_NUMBER_VALUE, PHONE_NUMBER_VALIDATOR, PhoneNumber } from "../input-tel/input-tel.component";
-import { MODELS } from "../products/model.data";
+import { LayeredInput } from "../../components/model/input-layered/input-layered.component";
+import {
+  DEFAULT_PHONE_NUMBER_VALUE,
+  PHONE_NUMBER_VALIDATOR,
+  PhoneNumber,
+} from "../../components/model/input-tel/input-tel.component";
+import { MODELS } from "../../components/home/products/model.data";
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
