@@ -21,13 +21,13 @@
           <span>{{ translationService.translations.region.regions.pl }}</span>
           <hr />
           <div>
+            <button class="change-region" (click)="regionService.openPopup()">
+              {{ translationService.translations.region.changeRegion }}
+            </button>
             @if (regionService.region != null) {
               <span [class]="regionService.getIcon(regionService.region)"></span>
               {{ translationService.translations.region.regions[regionService.region] }}
             }
-            <button class="change-region" (click)="regionService.openPopup()">
-              {{ translationService.translations.region.changeRegion }}
-            </button>
           </div>
         </div>
       </div>

@@ -1,10 +1,11 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 
 import { TRANSLATIONS_DK } from "./translations.dk";
 import { TRANSLATIONS_EN } from "./translations.en";
 import { TRANSLATIONS_NL } from "./translations.nl";
 import { TRANSLATIONS_PL } from "./translations.pl";
+import { isPlatformBrowser } from "@angular/common";
 
 export const TRANSLATIONS = {
   dk: TRANSLATIONS_DK,
@@ -28,9 +29,14 @@ export const DEFAULT_LANGUAGE = "en";
 })
 export class TranslationService {
   private selectedLanguage!: LanguageCode;
+  private isBrowser: boolean;
 
-  constructor(private cookieService: CookieService) {
+  constructor(
+    private cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) {
     this.selectedLanguage = this.savedLanguageCode ?? DEFAULT_LANGUAGE;
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   get translations() {
@@ -39,7 +45,17 @@ export class TranslationService {
 
   get savedLanguageCode() {
     const languageCookie = this.cookieService.get("language");
-    const language = this.isValidLanguageCode(languageCookie) ? languageCookie : null;
+    let language = this.isValidLanguageCode(languageCookie) ? languageCookie : null;
+    if (language != null || !this.isBrowser) {
+      return language;
+    }
+    const browserLanguage = navigator.language.split("-")[0].toLowerCase();
+    if (this.isValidLanguageCode(browserLanguage)) {
+      language = browserLanguage;
+    } else {
+      language = DEFAULT_LANGUAGE;
+    }
+    this.setSelectedLanguage(language);
     return language;
   }
 
@@ -53,7 +69,7 @@ export class TranslationService {
   isValidLanguageCode = (code: string): code is LanguageCode => code in TRANSLATIONS;
 
   setSelectedLanguage(language: LanguageCode) {
-    this.cookieService.set("language", language);
+    this.cookieService.set("language", language, { path: "/", expires: 365 });
     this.selectedLanguage = language;
   }
 

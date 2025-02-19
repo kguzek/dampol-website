@@ -19,7 +19,7 @@ export const TRANSLATIONS_PL = {
   },
   region: {
     selectRegion: "Wybierz region",
-    subtitle: "Używane do obliczeń wysyłki i cen",
+    subtitle: "Wykorzystywane przy obliczaniu cen oraz dostawy",
     selectedRegion: "Wybrany region",
     changeRegion: "Zmień region",
     regions: {
