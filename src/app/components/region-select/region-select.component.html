@@ -24,7 +24,7 @@
         </li>
       }
     </ul>
-    <button class="btn close" [disabled]="regionService.shouldShowPopup()" (click)="regionService.closePopup()">
+    <button class="btn close" [disabled]="regionService.region == null" (click)="regionService.closePopup()">
       {{ translationService.translations.ui.ok }}
     </button>
   </div>

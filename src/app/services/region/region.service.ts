@@ -10,6 +10,8 @@ type Region = keyof Translation["region"]["regions"];
 
 @Injectable()
 export class RegionService implements OnInit {
+  private popupOpen = false;
+
   constructor(
     private cookieService: CookieService,
     private scrollService: ScrollService,
@@ -22,17 +24,22 @@ export class RegionService implements OnInit {
   private initialiseRegion() {
     const regionCookie = this.cookieService.get("region");
     if (regionCookie === "") {
+      this.openPopup();
       return;
     }
     this.setRegion(regionCookie);
-    this.popupOpen = this.shouldShowPopup();
+    this.closePopup();
   }
 
   private isValidRegion = (region: string | null): region is Region =>
     region != null && Object.values(TRANSLATIONS).every(({ region: { regions } }) => region in regions);
 
   get region() {
-    return this._region;
+    const regionCookie = this.cookieService.get("region");
+    if (regionCookie === "" || !this.isValidRegion(regionCookie)) {
+      return null;
+    }
+    return regionCookie;
   }
 
   get popupVisible() {
@@ -46,7 +53,6 @@ export class RegionService implements OnInit {
 
   setRegion(region: string) {
     if (!this.isValidRegion(region)) throw new Error(`Invalid region: ${region}`);
-    this._region = region;
     this.cookieService.set("region", region);
   }
 
@@ -55,13 +61,8 @@ export class RegionService implements OnInit {
   }
 
   closePopup() {
-    this.popupOpen = this.shouldShowPopup();
+    this.popupOpen = this.region == null;
   }
 
   getIcon = (region: string) => `fi fi-${region}`;
-
-  shouldShowPopup = () => !this.isValidRegion(this._region);
-
-  private _region: Region | null = null;
-  private popupOpen = false;
 }
