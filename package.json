@@ -8,7 +8,6 @@
     "start": "serve dist/dampol-website/browser",
     "deploy": "ng deploy --cname=modern-container.com",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "serve:ssr:dampol-website": "node dist/dampol-website/server/server.mjs",
     "format": "prettier --write ."
   },

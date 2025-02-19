@@ -1,10 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 
-import { warnInProduction } from "@/lib/logging";
+import { Model, MODELS } from "@/components/model/model.data";
+import { PlatformService } from "@/services/platform/platform.service";
 import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
-
-import { Model, MODELS } from "../model.data";
 
 @Component({
   selector: "app-model-preview",
@@ -16,6 +15,7 @@ export class ModelPreviewComponent implements OnInit {
   constructor(
     protected translationService: TranslationService,
     protected regionService: RegionService,
+    private platformService: PlatformService,
   ) {}
 
   @Input() modelNumber!: number;
@@ -42,19 +42,13 @@ export class ModelPreviewComponent implements OnInit {
   }
 
   scrollToImage(imageNumber: number) {
+    if (this.platformService.isServer) return;
     const imageId = `model-${this.modelNumber}-image-${imageNumber}`;
-    try {
-      document.getElementById(imageId)?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "nearest",
-      });
-    } catch (error) {
-      warnInProduction(
-        "Could not scroll to model image. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-        error,
-      );
-    }
+    document.getElementById(imageId)?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
   }
 
   nextImage() {

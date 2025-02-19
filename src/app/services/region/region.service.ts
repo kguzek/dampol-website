@@ -1,12 +1,13 @@
-import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { Injectable } from "@angular/core";
+import { GeolocationService } from "@ng-web-apis/geolocation";
 import { CookieService } from "ngx-cookie-service";
+import { take } from "rxjs";
 
 import type { Translation } from "../translation/translation.service";
+import { PlatformService } from "../platform/platform.service";
 import { ScrollService } from "../scroll/scroll.service";
 import { TRANSLATIONS } from "../translation/translation.service";
-import { isPlatformBrowser } from "@angular/common";
-import { GeolocationService } from "@ng-web-apis/geolocation";
-import { take } from "rxjs";
 
 type Region = keyof Translation["region"]["regions"];
 
@@ -28,21 +29,19 @@ const REGION_PRICE_FORMATS = Object.fromEntries(
 @Injectable()
 export class RegionService {
   private popupOpen = false;
-  private isBrowser: boolean;
   private suggestedRegion: Region | null = null;
 
   constructor(
     private cookieService: CookieService,
     private scrollService: ScrollService,
+    private platformService: PlatformService,
     private readonly geolocation$: GeolocationService,
-    @Inject(PLATFORM_ID) platformId: Object,
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
     this.initialiseRegion();
   }
 
   private initialiseRegion() {
-    if (!this.isBrowser) return;
+    if (this.platformService.isServer) return;
     const regionCookie = this.cookieService.get("region");
     if (regionCookie === "") {
       this.openPopup();
@@ -90,7 +89,7 @@ export class RegionService {
   }
 
   get region() {
-    if (!this.isBrowser) return undefined;
+    if (this.platformService.isServer) return undefined;
     const regionCookie = this.cookieService.get("region");
     if (this.isValidRegion(regionCookie)) {
       return regionCookie;
@@ -99,7 +98,7 @@ export class RegionService {
   }
 
   get popupVisible() {
-    if (!this.isBrowser) return undefined;
+    if (this.platformService.isServer) return undefined;
     return this.popupOpen;
   }
 

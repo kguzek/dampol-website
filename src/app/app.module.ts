@@ -9,10 +9,10 @@ import { AppComponent } from "./app.component";
 import { AboutComponent } from "./components/home/about/about.component";
 import { FooterComponent } from "./components/home/footer/footer.component";
 import { HeaderComponent } from "./components/home/landing-page/landing-page.component";
-import { ModelPreviewComponent } from "./components/home/products/model-preview/model-preview.component";
 import { ProductsComponent } from "./components/home/products/products.component";
 import { InputLayeredComponent } from "./components/model/input-layered/input-layered.component";
 import { InputTelComponent } from "./components/model/input-tel/input-tel.component";
+import { ModelPreviewComponent } from "./components/model/model-preview/model-preview.component";
 import { HamburgerComponent } from "./components/navbar/hamburger/hamburger.component";
 import { LanguageSelectComponent } from "./components/navbar/language-select/language-select.component";
 import { NavbarLinkComponent } from "./components/navbar/navbar-link/navbar-link.component";
@@ -23,6 +23,7 @@ import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.c
 import { HomeComponent } from "./routes/home/home.component";
 import { ModelComponent } from "./routes/model/model.component";
 import { NotFoundComponent } from "./routes/not-found/not-found.component";
+import { PlatformService } from "./services/platform/platform.service";
 import { RegionService } from "./services/region/region.service";
 import { ScrollService } from "./services/scroll/scroll.service";
 import { TranslationService } from "./services/translation/translation.service";
@@ -58,6 +59,7 @@ import { TranslationService } from "./services/translation/translation.service";
     RegionSelectComponent,
   ],
   providers: [
+    PlatformService,
     TranslationService,
     RegionService,
     ScrollService,

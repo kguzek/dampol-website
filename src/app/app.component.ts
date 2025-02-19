@@ -1,9 +1,9 @@
 import { KeyValue } from "@angular/common";
-import { Component, HostListener } from "@angular/core";
+import { Component, HostListener, ViewChild } from "@angular/core";
 import { ActivatedRoute, EventType, Router } from "@angular/router";
 
-import { scrollToTop } from "./components/scroll-to-top/scroll-to-top.component";
-import { warnInProduction } from "./lib/logging";
+import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.component";
+import { PlatformService } from "./services/platform/platform.service";
 
 const FRAGMENTS = ["products", "about", "contact"];
 
@@ -20,7 +20,10 @@ export class AppComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private platformService: PlatformService,
   ) {}
+
+  @ViewChild(ScrollToTopComponent) scrollToTop!: ScrollToTopComponent;
 
   title = "dampol-website";
   pagesScrolled = 0;
@@ -47,17 +50,12 @@ export class AppComponent {
         return;
       }
       if (this.fragment === null) {
-        scrollToTop();
+        this.scrollToTop.scrollToTop();
         return;
       }
-      try {
+      if (this.platformService.isBrowser) {
         const element = document.getElementById(this.fragment) as Element;
         element.scrollIntoView({ behavior: "smooth" });
-      } catch (error) {
-        warnInProduction(
-          "Could not scroll to element. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-          error,
-        );
       }
     });
   }
@@ -65,39 +63,21 @@ export class AppComponent {
   @HostListener("window:scroll")
   @HostListener("window:resize")
   onWindowScroll() {
-    try {
-      this.pagesScrolled = window.scrollY / window.innerHeight;
-    } catch (error) {
-      warnInProduction(
-        "Could not determine window scroll position. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-        error,
-      );
-    }
+    if (this.platformService.isServer) return;
+    this.pagesScrolled = window.scrollY / window.innerHeight;
 
     // Handle changing the URL fragment when the user reaches a given position on the screen
     let page = null;
+
+    if (this.platformService.isServer) {
+      return;
+    }
     for (const fragment of FRAGMENTS) {
-      let element;
-      try {
-        element = document.getElementById(fragment);
-      } catch (error) {
-        warnInProduction(
-          "Could not determine element position. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-          error,
-        );
-        return;
-      }
+      const element = document.getElementById(fragment);
       if (!element) continue;
       const elementOffset = element.getBoundingClientRect().top;
       if (fragment === "about") this.passedAboutPage = elementOffset <= 100;
-      try {
-        if (elementOffset / window.innerHeight > 0.7) continue;
-      } catch (error) {
-        warnInProduction(
-          "Could not determine window height. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-          error,
-        );
-      }
+      if (elementOffset / window.innerHeight > 0.7) continue;
       page = fragment;
     }
     if (page === this.fragment) {

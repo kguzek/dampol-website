@@ -2,14 +2,14 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { MODELS } from "@/components/home/products/model.data";
 import { LayeredInput } from "@/components/model/input-layered/input-layered.component";
 import {
   DEFAULT_PHONE_NUMBER_VALUE,
   PHONE_NUMBER_VALIDATOR,
   PhoneNumber,
 } from "@/components/model/input-tel/input-tel.component";
-import { warnInProduction } from "@/lib/logging";
+import { MODELS } from "@/components/model/model.data";
+import { PlatformService } from "@/services/platform/platform.service";
 import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
 
@@ -48,6 +48,7 @@ export class ModelComponent {
     private formBuilder: FormBuilder,
     protected translationService: TranslationService,
     protected regionService: RegionService,
+    private platformService: PlatformService,
   ) {}
 
   baseHref = "mailto:dampol.sales@gmail.com";
@@ -105,15 +106,11 @@ export class ModelComponent {
   }
 
   submit() {
+    if (this.platformService.isServer) {
+      return;
+    }
     if (this.form.invalid) {
-      try {
-        document.getElementById("customise")?.scrollIntoView({ behavior: "smooth" });
-      } catch (error) {
-        warnInProduction(
-          "Could not scroll up to the form. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-          error,
-        );
-      }
+      document.getElementById("customise")?.scrollIntoView({ behavior: "smooth" });
       this.form.markAllAsTouched();
       return;
     }
@@ -121,7 +118,7 @@ export class ModelComponent {
     try {
       window.open(this.getSubmitHref(), "_blank");
     } catch (error) {
-      warnInProduction(
+      console.error(
         "Could not open the form submission link. If you're using a browser extension that blocks popups, please allow popups for this website. Otherwise, please copy the link below and paste it into your navigation bar.",
         error,
       );

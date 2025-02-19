@@ -1,20 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { warnInProduction } from "@/lib/logging";
+import { PlatformService } from "@/services/platform/platform.service";
 import { TranslationService } from "@/services/translation/translation.service";
-
-export function scrollToTop() {
-  try {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } catch (error) {
-    warnInProduction(
-      "Could not scroll to top. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
-      error,
-    );
-    return;
-  }
-}
 
 @Component({
   selector: "app-scroll-to-top",
@@ -26,11 +14,16 @@ export class ScrollToTopComponent {
   constructor(
     protected translationService: TranslationService,
     private router: Router,
+    private platformService: PlatformService,
   ) {}
 
   @Input() pagesScrolled!: number;
 
-  scrollToTop = scrollToTop;
+  scrollToTop() {
+    if (this.platformService.isBrowser) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
 
   getRouterLink() {
     // Remove the last query fragment
