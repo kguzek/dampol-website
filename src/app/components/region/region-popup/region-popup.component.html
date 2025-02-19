@@ -22,7 +22,10 @@
       </p>
     }
     <ul class="regions">
-      @for (region of translationService.translations.region.regions | keyvalue; track region.key) {
+      @for (
+        region of translationService.translations.region.regions | keyvalue: translationService.valueOrder;
+        track region.key
+      ) {
         <li class="region {{ regionService.region == region.key ? 'selected' : '' }}">
           <button (click)="regionService.setRegion(region.key)">
             <span [class]="regionService.getIcon(region.key)"></span> {{ region.value }}

@@ -106,6 +106,7 @@
         <h3 class="price">
           {{ translationService.translations.model.total }}:
           <strong>{{ regionService.formatPrice(totalPrice) }}</strong>
+          ({{ translationService.translations.model.net }})
         </h3>
         <div class="btn-container">
           <button class="btn" (click)="submit()">

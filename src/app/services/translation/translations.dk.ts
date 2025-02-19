@@ -95,6 +95,7 @@ export const TRANSLATIONS_DK = {
     addWindow: "Tilføj vindue",
     removeWindow: "Fjern vinduet",
     total: "Total",
+    net: "netto",
     submit: "Send e-mail",
     customerInformation: "Kunde information",
     name: "Navn",

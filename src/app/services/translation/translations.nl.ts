@@ -95,6 +95,7 @@ export const TRANSLATIONS_NL = {
     addWindow: "Raam toevoegen",
     removeWindow: "Raam verwijderen",
     total: "Totaal",
+    net: "netto",
     submit: "E-mail ons",
     customerInformation: "Klantinformatie",
     name: "Naam",

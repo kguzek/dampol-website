@@ -96,6 +96,7 @@ export const TRANSLATIONS_PL = {
     addWindow: "Dodaj okno",
     removeWindow: "Usuń okno",
     total: "Suma",
+    net: "netto",
     submit: "Wyślij e-mail",
     customerInformation: "Informacje o kliencie",
     name: "Imię i nazwisko",

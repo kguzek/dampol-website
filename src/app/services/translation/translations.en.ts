@@ -97,6 +97,7 @@ export const TRANSLATIONS_EN = {
     addWindow: "Add window",
     removeWindow: "Remove window",
     total: "Total",
+    net: "net",
     submit: "Email us",
     customerInformation: "Customer information",
     name: "Name",

@@ -7,7 +7,7 @@ import { PlatformService } from "./services/platform/platform.service";
 
 const FRAGMENTS = ["products", "about", "contact"];
 
-// Preserve original property order
+/** Preserve original sort order */
 export const originalOrder = (_a: KeyValue<string, string>, _b: KeyValue<string, string>): number => 0;
 
 @Component({

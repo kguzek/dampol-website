@@ -1,3 +1,5 @@
+import type { KeyValue } from "@angular/common";
+import { isPlatformBrowser } from "@angular/common";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 
@@ -5,7 +7,6 @@ import { TRANSLATIONS_DK } from "./translations.dk";
 import { TRANSLATIONS_EN } from "./translations.en";
 import { TRANSLATIONS_NL } from "./translations.nl";
 import { TRANSLATIONS_PL } from "./translations.pl";
-import { isPlatformBrowser } from "@angular/common";
 
 export const TRANSLATIONS = {
   dk: TRANSLATIONS_DK,
@@ -72,4 +73,8 @@ export class TranslationService {
     this.cookieService.set("language", language, { path: "/", expires: 365 });
     this.selectedLanguage = language;
   }
+
+  /** Sort by object value */
+  valueOrder = (a: KeyValue<string, string>, b: KeyValue<string, string>): number =>
+    a.value.localeCompare(b.value, new Intl.Locale(this.selectedLanguage));
 }
