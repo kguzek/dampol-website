@@ -74,27 +74,18 @@ export class RegionService {
     });
   }
 
-  private getRegion() {
+  get region() {
     if (!this.isBrowser) return undefined;
     const regionCookie = this.cookieService.get("region");
     if (this.isValidRegion(regionCookie)) {
       return regionCookie;
     }
-    return null;
-  }
-
-  /** `undefined` if accessed on the server and `null` if the cookie isn't set. */
-  get region() {
-    return this.getRegion() ?? this.suggestedRegion;
+    return this.suggestedRegion;
   }
 
   get popupVisible() {
     if (!this.isBrowser) return undefined;
     return this.popupOpen;
-  }
-
-  get isRegionNull() {
-    return this.region == null;
   }
 
   setRegion(region: string) {
@@ -110,7 +101,7 @@ export class RegionService {
   /** Closes the popup if a valid region is set.
    * @returns true if the popup was closed otherwise false */
   closePopup() {
-    if (this.getRegion() == null) {
+    if (this.region == null) {
       return false;
     }
     this.popupOpen = false;
