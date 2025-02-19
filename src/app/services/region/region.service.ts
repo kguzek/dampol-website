@@ -1,4 +1,3 @@
-import type { OnInit } from "@angular/core";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 
@@ -6,11 +5,13 @@ import type { Translation } from "../translation/translation.service";
 import { ScrollService } from "../scroll/scroll.service";
 import { TRANSLATIONS } from "../translation/translation.service";
 import { isPlatformBrowser } from "@angular/common";
+import { GeolocationService } from "@ng-web-apis/geolocation";
+import { take } from "rxjs";
 
 type Region = keyof Translation["region"]["regions"];
 
 @Injectable()
-export class RegionService implements OnInit {
+export class RegionService {
   private popupOpen = false;
   private isBrowser: boolean;
   private suggestedRegion: Region | null = null;
@@ -18,28 +19,60 @@ export class RegionService implements OnInit {
   constructor(
     private cookieService: CookieService,
     private scrollService: ScrollService,
+    private readonly geolocation$: GeolocationService,
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.initialiseRegion();
   }
 
-  ngOnInit() {
-    this.initialiseRegion();
-  }
-
   private initialiseRegion() {
+    if (!this.isBrowser) return;
     const regionCookie = this.cookieService.get("region");
     if (regionCookie === "") {
       this.openPopup();
+      this.determineRegion();
       return;
     }
     this.setRegion(regionCookie);
     this.checkPopup();
   }
 
-  private isValidRegion = (region: string | null): region is Region =>
+  private isValidRegion = (region?: string | null): region is Region =>
     region != null && Object.values(TRANSLATIONS).every(({ region: { regions } }) => region in regions);
+
+  private determineRegion() {
+    this.geolocation$.pipe(take(1)).subscribe(async (position) => {
+      console.log("[RegionService] User geolocation:", position);
+      const { latitude, longitude } = position.coords;
+      let res;
+      try {
+        res = await fetch(`https://ctc-api.guzek.uk/${latitude}/${longitude}`);
+      } catch (error) {
+        console.error("[RegionService] Failed to fetch region:", error);
+        return;
+      }
+      let body: { error: string | null; iso2: string | null; iso3: string | null };
+      try {
+        body = await res.json();
+      } catch (error) {
+        console.error("[RegionService] Failed to parse region response:", error);
+        return;
+      }
+      const { error, ...data } = body;
+      if (!res.ok) {
+        console.error("[RegionService] Non-ok response:", error);
+        return;
+      }
+      const region = data.iso2?.toLowerCase();
+      if (this.isValidRegion(region)) {
+        console.info("[RegionService] Suggested region:", region);
+        this.suggestedRegion = region;
+      } else {
+        console.log("[RegionService] Unsupported region:", data);
+      }
+    });
+  }
 
   private getRegion() {
     if (!this.isBrowser) return undefined;
