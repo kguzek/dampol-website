@@ -1,0 +1,31 @@
+<div
+  class="full-background {{ regionService.popupVisible ? 'visible' : 'hidden' }}"
+  (click)="regionService.closePopup()"
+>
+  <div class="popup" (click)="$event.stopPropagation()">
+    <div class="header">
+      <img src="assets/images/world.svg" alt="World" class="world" height="200" />
+      <app-language-select></app-language-select>
+    </div>
+    <div style="text-align: center">
+      <h1 class="title">
+        {{ translationService.translations.region.selectRegion }}
+      </h1>
+      <small class="subtitle">
+        {{ translationService.translations.region.subtitle }}
+      </small>
+    </div>
+    <ul class="regions">
+      @for (region of translationService.translations.region.regions | keyvalue; track region.key) {
+        <li class="region {{ regionService.region == region.key ? 'selected' : '' }}">
+          <button (click)="regionService.setRegion(region.key)">
+            <span [class]="regionService.getIcon(region.key)"></span> {{ region.value }}
+          </button>
+        </li>
+      }
+    </ul>
+    <button class="btn close" [disabled]="regionService.shouldShowPopup()" (click)="regionService.closePopup()">
+      {{ translationService.translations.ui.ok }}
+    </button>
+  </div>
+</div>

@@ -17,12 +17,12 @@
   justify-content: center;
   white-space: nowrap;
 
-  mat-icon {
+  .expand-icon {
     transition: transform 200ms ease;
   }
 
   &.open {
-    mat-icon {
+    .expand-icon {
       transform: rotate(180deg);
     }
 
@@ -58,6 +58,7 @@
       border: 3px solid transparent;
       border-radius: 5px;
       transition: inherit;
+      color: variables.$color-background;
 
       &:hover {
         color: variables.$color-contrast-light;

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, forwardRef } from "@angular/core";
+import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { Price, MODEL_COMPONENT_PRICES } from "src/app/app.constants";
+import { MODEL_COMPONENT_PRICES, Price } from "src/app/app.constants";
 import { TranslationService } from "src/app/services/translation/translation.service";
 
 const isPrice = (price: number | Price): price is Price => {

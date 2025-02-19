@@ -1,20 +1,44 @@
 import { DOOR_LOCATIONS } from "src/app/app.constants";
 
 export const TRANSLATIONS_EN = {
-  languageCode: "EN (GB)",
+  language: "EN (GB)",
   iso639Locale: "en-GB",
   alt: { dampolLogo: "Dampol logo" },
   navbar: { products: "Products", about: "About", contact: "Contact" },
-  ui: { scrollToTop: "Scroll to top" },
+  ui: {
+    scrollToTop: "Scroll to top",
+    ok: "Ok",
+    price: {
+      multiplier: 0.8,
+      format: Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }),
+    },
+  },
   header: {
     getStarted: "Get started",
   },
   region: {
     selectRegion: "Select your region",
+    subtitle: "Used for shipping calculations & prices",
+    selectedRegion: "Selected region",
+    changeRegion: "Change region",
     regions: {
-      uk: "United Kingdom",
-      dk: "Denmark",
+      de: "Germany",
+      fr: "France",
+      gb: "United Kingdom",
+      it: "Italy",
+      es: "Spain",
       pl: "Poland",
+      nl: "Netherlands",
+      be: "Belgium",
+      gr: "Greece",
+      pt: "Portugal",
+      at: "Austria",
+      ie: "Ireland",
+      sk: "Slovakia",
+      fi: "Finland",
     },
   },
   products: {
@@ -39,7 +63,6 @@ export const TRANSLATIONS_EN = {
   },
   contact: {
     header: "Contact Us",
-    poland: "Poland",
     salesDepartment: "Sales department",
   },
   model: {
@@ -83,6 +106,7 @@ export const TRANSLATIONS_EN = {
     phoneNumber: "Phone Number",
     placeholderName: "John Smith",
     placeholderPhoneNumber: "+44 7300 123 123",
+    customisation: "Customisation",
     specialFeatureHeader: "We also offer the following special features:",
     specialFeatures: {
       externalLedLamp: "External LED Lamp",

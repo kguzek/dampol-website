@@ -1,7 +1,9 @@
-import { Component, HostListener } from "@angular/core";
 import { KeyValue } from "@angular/common";
-import { scrollToTop } from "./components/scroll-to-top/scroll-to-top.component";
+import { Component, HostListener } from "@angular/core";
 import { ActivatedRoute, EventType, Router } from "@angular/router";
+
+import { scrollToTop } from "./components/scroll-to-top/scroll-to-top.component";
+import { warnInProduction } from "./lib/logging";
 
 const FRAGMENTS = ["products", "about", "contact"];
 
@@ -52,7 +54,7 @@ export class AppComponent {
         const element = document.getElementById(this.fragment) as Element;
         element.scrollIntoView({ behavior: "smooth" });
       } catch (error) {
-        console.warn(
+        warnInProduction(
           "Could not scroll to element. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
           error,
         );
@@ -66,7 +68,7 @@ export class AppComponent {
     try {
       this.pagesScrolled = window.scrollY / window.innerHeight;
     } catch (error) {
-      console.warn(
+      warnInProduction(
         "Could not determine window scroll position. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
         error,
       );
@@ -79,7 +81,7 @@ export class AppComponent {
       try {
         element = document.getElementById(fragment);
       } catch (error) {
-        console.warn(
+        warnInProduction(
           "Could not determine element position. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
           error,
         );
@@ -91,7 +93,7 @@ export class AppComponent {
       try {
         if (elementOffset / window.innerHeight > 0.7) continue;
       } catch (error) {
-        console.warn(
+        warnInProduction(
           "Could not determine window height. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
           error,
         );

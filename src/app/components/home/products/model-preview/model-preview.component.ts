@@ -1,6 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
-import { MODELS, Model } from "../model.data";
 import { TranslationService } from "src/app/services/translation/translation.service";
+
+import { warnInProduction } from "@/lib/logging";
+
+import { Model, MODELS } from "../model.data";
 
 @Component({
   selector: "app-model-preview",
@@ -42,7 +45,7 @@ export class ModelPreviewComponent implements OnInit {
         inline: "nearest",
       });
     } catch (error) {
-      console.warn(
+      warnInProduction(
         "Could not scroll to model image. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
         error,
       );

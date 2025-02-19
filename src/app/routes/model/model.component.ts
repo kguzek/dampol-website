@@ -2,13 +2,16 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { TranslationService } from "src/app/services/translation/translation.service";
-import { LayeredInput } from "../../components/model/input-layered/input-layered.component";
+
+import { MODELS } from "@/components/home/products/model.data";
+import { LayeredInput } from "@/components/model/input-layered/input-layered.component";
 import {
   DEFAULT_PHONE_NUMBER_VALUE,
   PHONE_NUMBER_VALIDATOR,
   PhoneNumber,
-} from "../../components/model/input-tel/input-tel.component";
-import { MODELS } from "../../components/home/products/model.data";
+} from "@/components/model/input-tel/input-tel.component";
+import { warnInProduction } from "@/lib/logging";
+import { RegionService } from "@/services/region/region.service";
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
@@ -43,7 +46,8 @@ export class ModelComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    public translationService: TranslationService,
+    protected translationService: TranslationService,
+    protected regionService: RegionService,
   ) {}
 
   baseHref = "mailto:dampol.sales@gmail.com";
@@ -105,7 +109,7 @@ export class ModelComponent {
       try {
         document.getElementById("customise")?.scrollIntoView({ behavior: "smooth" });
       } catch (error) {
-        console.warn(
+        warnInProduction(
           "Could not scroll up to the form. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
           error,
         );
@@ -117,7 +121,7 @@ export class ModelComponent {
     try {
       window.open(this.getSubmitHref(), "_blank");
     } catch (error) {
-      console.warn(
+      warnInProduction(
         "Could not open the form submission link. If you're using a browser extension that blocks popups, please allow popups for this website. Otherwise, please copy the link below and paste it into your navigation bar.",
         error,
       );

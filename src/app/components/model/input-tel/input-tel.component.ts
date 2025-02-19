@@ -1,8 +1,10 @@
 // TODO: Make this component an Angular library
 
-import { Component, ElementRef, Input, ViewChild, forwardRef } from "@angular/core";
+import { Component, ElementRef, forwardRef, Input, ViewChild } from "@angular/core";
 import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 import intlTelInput from "intl-tel-input";
+
+import { warnInProduction } from "@/lib/logging";
 
 /** The datatype of the value stored by the input component. */
 export type PhoneNumber = { value: string; valid: boolean };
@@ -23,7 +25,7 @@ function tryRemoveEnglishNames() {
   try {
     win = window as any;
   } catch (error) {
-    console.warn(
+    warnInProduction(
       "Could not remove English names from the country dropdown. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
       error,
     );

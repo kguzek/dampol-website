@@ -13,6 +13,7 @@ html {
 body {
   margin: 0px;
   color: variables.$color-text-primary;
+  overflow-x: hidden;
 
   app-root {
     display: flex;
@@ -39,6 +40,25 @@ h3 {
 
 h2 {
   padding: 150px 0 30px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+hr {
+  width: 100%;
+}
+
+.fi {
+  // flag icons, for white background visibility
+  border: 1px solid #bbb;
 }
 
 .btn {

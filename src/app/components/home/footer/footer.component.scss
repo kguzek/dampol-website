@@ -10,14 +10,16 @@ footer {
   position: relative;
   color: variables.$color-text-secondary;
   width: 100vw;
-  padding: 30px 0 15px;
+  padding-bottom: 15px;
 }
 
 #contact {
   padding: 0 25% 15px;
   outline: 2px dashed #444;
-  border-top: 2px dashed #444;
-  border-bottom: 2px dashed #444;
+  border: 2px dashed #444;
+  border-right: none;
+  border-left: none;
+  overflow-x: hidden;
 }
 
 address {
@@ -77,6 +79,14 @@ address {
   a {
     @include mixins.hover-underline();
   }
+}
+
+.change-region {
+  background: variables.$color-accent;
+  font-size: small;
+  border-radius: 5px;
+  padding: 2px 6px;
+  color: variables.$color-background;
 }
 
 @media only screen and (max-width: variables.$medium-screen-size) {

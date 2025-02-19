@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { TranslationService } from "src/app/services/translation/translation.service";
+
+import { RegionService } from "@/services/region/region.service";
+import { TranslationService } from "@/services/translation/translation.service";
 
 @Component({
   selector: "app-footer",
@@ -8,5 +10,8 @@ import { TranslationService } from "src/app/services/translation/translation.ser
   standalone: false,
 })
 export class FooterComponent {
-  constructor(protected translationService: TranslationService) {}
+  constructor(
+    protected translationService: TranslationService,
+    protected regionService: RegionService,
+  ) {}
 }

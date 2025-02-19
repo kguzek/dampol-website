@@ -1,0 +1,100 @@
+@use "variables.scss";
+
+.full-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition:
+    opacity 300ms,
+    visibility 300ms;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.popup {
+  background-color: variables.$color-background;
+  padding: 2em 3em;
+  border-radius: 25px;
+  min-width: 50%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+
+  .header {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+    app-language-select {
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.subtitle {
+  color: grey;
+}
+
+.regions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  width: min-content;
+  column-gap: 2em;
+}
+
+.region {
+  text-wrap: nowrap;
+
+  &.selected {
+    color: variables.$color-accent;
+  }
+}
+.close.btn {
+  min-width: 140px;
+}
+
+@media only screen and (max-width: variables.$small-screen-size) {
+  .popup {
+    min-width: 90%;
+  }
+
+  .regions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: variables.$tiny-screen-size) {
+  .popup {
+    min-width: 95%;
+    border-radius: 20px;
+  }
+
+  .regions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

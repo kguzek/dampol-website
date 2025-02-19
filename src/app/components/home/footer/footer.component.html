@@ -18,7 +18,17 @@
           <span>Dampol Investment Sp. z o.o.</span>
           <span>ul. Gliwicka 20a</span>
           <span>42-677 Czekanów</span>
-          <span>{{ translationService.translations.contact.poland }}</span>
+          <span>{{ translationService.translations.region.regions.pl }}</span>
+          <hr />
+          <div>
+            @if (regionService.region != null) {
+              <span [class]="regionService.getIcon(regionService.region)"></span>
+              {{ translationService.translations.region.regions[regionService.region] }}
+            }
+            <button class="change-region" (click)="regionService.openPopup()">
+              {{ translationService.translations.region.changeRegion }}
+            </button>
+          </div>
         </div>
       </div>
       <div class="socials">

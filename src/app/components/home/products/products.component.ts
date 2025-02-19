@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { MODELS } from "./model.data";
 import { TranslationService } from "src/app/services/translation/translation.service";
+
+import { MODELS } from "./model.data";
 
 @Component({
   selector: "app-products",

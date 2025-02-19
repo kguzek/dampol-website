@@ -2,13 +2,15 @@
   class="language language-selector {{ isLanguageSelectorOpen ? 'open' : 'closed' }}"
   (click)="isLanguageSelectorOpen = !isLanguageSelectorOpen"
 >
-  <span [class]="getIcon(translationService.selectedLanguage)"></span>
-  {{ translationService.translations.languageCode }}
-  <mat-icon>expand_more</mat-icon>
+  @if (translationService.savedLanguageCode != null) {
+    <span [class]="getIcon(translationService.savedLanguageCode)"></span>
+  }
+  {{ translationService.translations.language }}
+  <mat-icon class="expand-icon">expand_more</mat-icon>
   <div class="language-list">
     @for (language of languageCodes; track $index) {
       <div
-        class="language {{ translationService.selectedLanguage === language[0] ? 'selected' : '' }}"
+        class="language {{ translationService.savedLanguageCode === language[0] ? 'selected' : '' }}"
         (click)="translationService.setSelectedLanguage(language[0])"
       >
         <span [class]="getIcon(language[0])"></span>{{ language[1] }}

@@ -1,18 +1,42 @@
 export const TRANSLATIONS_DK = {
-  languageCode: "DK",
+  language: "DK",
   iso639Locale: "da-DK",
   alt: { dampolLogo: "Dampol logo" },
   navbar: { products: "Produkter", about: "Om os", contact: "Kontakt" },
-  ui: { scrollToTop: "Rul til toppen" },
+  ui: {
+    scrollToTop: "Rul til toppen",
+    ok: "Ok",
+    price: {
+      multiplier: 1,
+      format: Intl.NumberFormat("da-DK", {
+        style: "currency",
+        currency: "EUR",
+      }),
+    },
+  },
   header: {
     getStarted: "Kom igang",
   },
   region: {
     selectRegion: "Vælg din region",
+    subtitle: "Bruges til forsendelsesberegninger og priser",
+    selectedRegion: "Valgt region",
+    changeRegion: "Skift region",
     regions: {
-      uk: "Storbritannien",
-      dk: "Danmark",
+      de: "Tyskland",
+      fr: "Frankrig",
+      gb: "Storbritannien",
+      it: "Italien",
+      es: "Spanien",
       pl: "Polen",
+      nl: "Nederlandene",
+      be: "Belgien",
+      gr: "Grækenland",
+      pt: "Portugal",
+      at: "Østrig",
+      ie: "Irland",
+      sk: "Slovakiet",
+      fi: "Finland",
     },
   },
   products: {
@@ -37,7 +61,6 @@ export const TRANSLATIONS_DK = {
   },
   contact: {
     header: "Kontakt",
-    poland: "Polen",
     salesDepartment: "Salgsafdeling",
   },
   model: {
@@ -81,6 +104,7 @@ export const TRANSLATIONS_DK = {
     phoneNumber: "Telefonnummer",
     placeholderName: "Navn Navnesen",
     placeholderPhoneNumber: "+45 50 00 12 34",
+    customisation: "Tilpasning",
     specialFeatureHeader: "Vi tilbyder også følgende specielle funktioner:",
     specialFeatures: {
       externalLedLamp: "Ekstern LED-lampe",
@@ -95,11 +119,5 @@ export const TRANSLATIONS_DK = {
   notFound: {
     thePage: "Siden",
     wasNotFound: "blev ikke fundet.",
-  },
-  utils: {
-    priceFormat: Intl.NumberFormat("da-DK", {
-      style: "currency",
-      currency: "EUR",
-    }),
   },
 };

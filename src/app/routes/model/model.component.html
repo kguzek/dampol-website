@@ -55,7 +55,7 @@
           </li>
           <li id="customise">
             <fieldset>
-              <legend>Customisation</legend>
+              <legend>{{ translationService.translations.model.customisation }}</legend>
               {{ translationService.translations.model.specialFeatureHeader }}
               <ul style="list-style-type: none">
                 <!-- iterate through object values -->
@@ -90,7 +90,9 @@
                 {{ translationService.translations.model.phoneNumber }}
                 <app-input-tel
                   formControlName="phoneNumber"
-                  [options]="{ preferredCountries: ['GB', 'DK'] }"
+                  [options]="{
+                    preferredCountries: [(regionService.region ?? translationService.translations.code).toUpperCase()],
+                  }"
                   [required]="true"
                 ></app-input-tel>
               </label>

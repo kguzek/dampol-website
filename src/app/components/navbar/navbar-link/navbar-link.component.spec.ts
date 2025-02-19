@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+
 import { NavbarLinkComponent } from "./navbar-link.component";
 
 describe("NavbarLinkComponent", () => {

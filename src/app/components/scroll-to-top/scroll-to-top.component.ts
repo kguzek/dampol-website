@@ -2,11 +2,13 @@ import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslationService } from "src/app/services/translation/translation.service";
 
+import { warnInProduction } from "@/lib/logging";
+
 export function scrollToTop() {
   try {
     window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (error) {
-    console.warn(
+    warnInProduction(
       "Could not scroll to top. If you are seeing this message, report it as a bug to @kguzek on GitHub.",
       error,
     );
