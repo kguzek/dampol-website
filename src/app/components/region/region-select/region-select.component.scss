@@ -1,0 +1,20 @@
+@use "variables.scss";
+
+:host,
+.selected-region {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+:host {
+  gap: 0.5em;
+}
+
+.region-select {
+  background: variables.$color-accent;
+  font-size: small;
+  border-radius: 5px;
+  padding: 2px 6px;
+  color: variables.$color-background;
+}

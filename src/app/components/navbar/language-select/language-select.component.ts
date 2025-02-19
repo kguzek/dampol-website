@@ -1,11 +1,8 @@
-import type { LanguageCode, Translation } from "src/app/services/translation/translation.service";
 import { Component } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
-import {
-  LANGUAGE_CODE_MAPPINGS,
-  TRANSLATIONS,
-  TranslationService,
-} from "src/app/services/translation/translation.service";
+
+import type { LanguageCode, Translation } from "@/services/translation/translation.service";
+import { LANGUAGE_CODE_MAPPINGS, TRANSLATIONS, TranslationService } from "@/services/translation/translation.service";
 
 const TRANSLATION_ENTRIES = Object.entries(TRANSLATIONS) as [LanguageCode, Translation][];
 

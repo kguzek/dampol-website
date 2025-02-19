@@ -72,10 +72,4 @@ export class TranslationService {
     this.cookieService.set("language", language, { path: "/", expires: 365 });
     this.selectedLanguage = language;
   }
-
-  /** Formats the given numeric value as a price according to the selected locale. */
-  formatPrice(value: number) {
-    if (isNaN(value)) return "";
-    return this.translations.ui.price.format.format(value * this.translations.ui.price.multiplier);
-  }
 }

@@ -1,4 +1,6 @@
-import { DOOR_LOCATIONS } from "src/app/app.constants";
+import { urlToHttpOptions } from "node:url";
+
+import { DOOR_LOCATIONS } from "@/app.constants";
 
 export const TRANSLATIONS_EN = {
   language: "EN (GB)",
@@ -9,7 +11,7 @@ export const TRANSLATIONS_EN = {
     scrollToTop: "Scroll to top",
     ok: "Ok",
     price: {
-      multiplier: 0.8,
+      multiplier: 1,
       format: Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: "GBP",
@@ -25,20 +27,17 @@ export const TRANSLATIONS_EN = {
     selectedRegion: "Selected region",
     changeRegion: "Change region",
     regions: {
-      de: "Germany",
-      fr: "France",
-      gb: "United Kingdom",
-      it: "Italy",
-      es: "Spain",
-      pl: "Poland",
-      nl: "Netherlands",
-      be: "Belgium",
-      gr: "Greece",
-      pt: "Portugal",
       at: "Austria",
-      ie: "Ireland",
-      sk: "Slovakia",
-      fi: "Finland",
+      be: "Belgium",
+      cz: "Czech Republic", // -500
+      de: "Germany",
+      dk: "Denmark",
+      fr: "France", // +3000
+      hu: "Hungary",
+      nl: "Netherlands",
+      pl: "Poland", // ???
+      sk: "Slovakia", // -500
+      gb: "United Kingdom",
     },
   },
   products: {

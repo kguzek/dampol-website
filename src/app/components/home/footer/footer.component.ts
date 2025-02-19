@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 
-import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
 
 @Component({
@@ -10,8 +9,5 @@ import { TranslationService } from "@/services/translation/translation.service";
   standalone: false,
 })
 export class FooterComponent {
-  constructor(
-    protected translationService: TranslationService,
-    protected regionService: RegionService,
-  ) {}
+  constructor(protected translationService: TranslationService) {}
 }

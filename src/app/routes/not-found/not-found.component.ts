@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { TranslationService } from "src/app/services/translation/translation.service";
+
+import { TranslationService } from "@/services/translation/translation.service";
 
 @Component({
   selector: "app-not-found",

@@ -1,8 +1,10 @@
 <section>
   <h2 id="products">{{ translationService.translations.products.header }}</h2>
   <div class="models">
-    <div class="model" *ngFor="let _ of models; index as i">
-      <app-model-preview [modelNumber]="i + 1"></app-model-preview>
-    </div>
+    @for (_ of models; track $index) {
+      <div class="model">
+        <app-model-preview [modelNumber]="$index + 1"></app-model-preview>
+      </div>
+    }
   </div>
 </section>

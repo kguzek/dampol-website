@@ -1,6 +1,6 @@
 <section>
   <div class="model active">
-    <app-model-preview [modelNumber]="modelNumber"></app-model-preview>
+    <app-model-preview [modelNumber]="modelNumber" [isFullPage]="true"></app-model-preview>
     <div class="model-body">
       <form [formGroup]="form" [action]="baseHref" method="get" target="_blank">
         <h3>{{ translationService.translations.model.header }}</h3>
@@ -99,9 +99,13 @@
             </fieldset>
           </li>
         </ol>
+        <div style="display: flex; justify-content: center; gap: 0.5em">
+          {{ translationService.translations.region.selectedRegion }}:
+          <app-region-select></app-region-select>
+        </div>
         <h3 class="price">
           {{ translationService.translations.model.total }}:
-          <strong>{{ translationService.formatPrice(totalPrice) }}</strong>
+          <strong>{{ regionService.formatPrice(totalPrice) }}</strong>
         </h3>
         <div class="btn-container">
           <button class="btn" (click)="submit()">

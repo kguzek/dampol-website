@@ -1,8 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { TranslationService } from "src/app/services/translation/translation.service";
 
 import { warnInProduction } from "@/lib/logging";
+import { TranslationService } from "@/services/translation/translation.service";
 
 export function scrollToTop() {
   try {

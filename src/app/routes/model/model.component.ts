@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
-import { TranslationService } from "src/app/services/translation/translation.service";
 
 import { MODELS } from "@/components/home/products/model.data";
 import { LayeredInput } from "@/components/model/input-layered/input-layered.component";
@@ -12,6 +11,7 @@ import {
 } from "@/components/model/input-tel/input-tel.component";
 import { warnInProduction } from "@/lib/logging";
 import { RegionService } from "@/services/region/region.service";
+import { TranslationService } from "@/services/translation/translation.service";
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
@@ -145,7 +145,7 @@ export class ModelComponent {
     const encodedSpecialFeatures = encodeURIComponent(value.specialFeatures || "none");
     const encodedName = encodeURIComponent(value.customerInformation?.name || "none");
     const encodedPhoneNumber = encodeURIComponent((value.customerInformation?.phoneNumber as PhoneNumber).value);
-    const encodedPrice = encodeURIComponent(this.translationService.formatPrice(this.totalPrice));
+    const encodedPrice = encodeURIComponent(this.regionService.formatPrice(this.totalPrice));
     return `${this.baseHref}?subject=Online%20container%20order%20-%20${encodedName}&body=\
 Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
 I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${value.dimensions?.width}%20m%0D%0A\

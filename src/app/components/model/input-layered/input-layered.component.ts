@@ -1,7 +1,9 @@
 import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { MODEL_COMPONENT_PRICES, Price } from "src/app/app.constants";
-import { TranslationService } from "src/app/services/translation/translation.service";
+
+import { MODEL_COMPONENT_PRICES, Price } from "@/app.constants";
+import { RegionService } from "@/services/region/region.service";
+import { TranslationService } from "@/services/translation/translation.service";
 
 const isPrice = (price: number | Price): price is Price => {
   return (price as any).approximate !== undefined;
@@ -27,7 +29,10 @@ export interface LayeredInput {
   standalone: false,
 })
 export class InputLayeredComponent implements ControlValueAccessor, OnInit {
-  constructor(public translationService: TranslationService) {}
+  constructor(
+    public translationService: TranslationService,
+    private regionService: RegionService,
+  ) {}
 
   @Input({ required: true }) formControlName!: string;
   @Input({ required: true }) outerLabel!: string;
@@ -81,7 +86,7 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
   }
 
   formatPrice(value: Price) {
-    const formattedPrice = this.translationService.formatPrice(value.price);
+    const formattedPrice = this.regionService.formatPrice(value.price, false);
     return `${value.approximate ? "⨤" : "+"} ${formattedPrice}`;
   }
 }

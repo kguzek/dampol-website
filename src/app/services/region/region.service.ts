@@ -10,6 +10,21 @@ import { take } from "rxjs";
 
 type Region = keyof Translation["region"]["regions"];
 
+const CURRENCIES: { [region in Region]?: string } = {
+  gb: "GBP",
+  pl: "PLN",
+};
+
+const REGION_PRICE_FORMATS = Object.fromEntries(
+  Object.keys(TRANSLATIONS.en.region.regions).map((key) => [
+    key,
+    Intl.NumberFormat(key, {
+      style: "currency",
+      currency: CURRENCIES[key as Region] ?? "EUR",
+    }),
+  ]),
+) as { [region in Region]: Intl.NumberFormat };
+
 @Injectable()
 export class RegionService {
   private popupOpen = false;
@@ -118,6 +133,38 @@ export class RegionService {
     if (!this.closePopup()) {
       this.openPopup();
     }
+  }
+
+  /** Formats the given numeric value as a price according to the selected region.
+   * @param value The value to format as a price.
+   * @param localise Whether to adjust the price based on region. Defaults to `true`.
+   */
+  formatPrice(value: number, localise = true) {
+    if (isNaN(value)) return "";
+    let price = localise ? this.localisePrice(value) : value;
+    if (this.region === "pl") {
+      // Always localise PLN to account for exchange rate.
+      price = this.localisePricePLN(price);
+    }
+    return REGION_PRICE_FORMATS[this.region ?? "de"].format(price);
+  }
+
+  /** Performs adjustments to the price based on region. */
+  localisePrice(value: number) {
+    switch (this.region) {
+      case "sk":
+      case "cz":
+        return value - 500;
+      case "fr":
+        return value + 3000;
+      default:
+        return value;
+    }
+  }
+
+  /** Applies the exchange rate for EUR to PLN. */
+  localisePricePLN(euros: number) {
+    return euros * 5;
   }
 
   getIcon = (region: string) => `fi fi-${region}`;

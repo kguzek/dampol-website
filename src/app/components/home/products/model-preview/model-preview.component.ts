@@ -1,7 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
-import { TranslationService } from "src/app/services/translation/translation.service";
 
 import { warnInProduction } from "@/lib/logging";
+import { RegionService } from "@/services/region/region.service";
+import { TranslationService } from "@/services/translation/translation.service";
 
 import { Model, MODELS } from "../model.data";
 
@@ -12,9 +13,13 @@ import { Model, MODELS } from "../model.data";
   standalone: false,
 })
 export class ModelPreviewComponent implements OnInit {
-  constructor(protected translationService: TranslationService) {}
+  constructor(
+    protected translationService: TranslationService,
+    protected regionService: RegionService,
+  ) {}
 
   @Input() modelNumber!: number;
+  @Input() isFullPage = false;
   @ViewChild("imageCarousel") imageCarousel!: ElementRef;
 
   selectedImage!: number;

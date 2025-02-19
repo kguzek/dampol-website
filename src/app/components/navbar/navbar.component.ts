@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
-import { originalOrder } from "src/app/app.component";
-import { SMALL_SCREEN_SIZE_PX, TINY_SCREEN_SIZE_PX } from "src/app/app.constants";
-import { TranslationService } from "src/app/services/translation/translation.service";
+
+import { originalOrder } from "@/app.component";
+import { SMALL_SCREEN_SIZE_PX, TINY_SCREEN_SIZE_PX } from "@/app.constants";
+import { TranslationService } from "@/services/translation/translation.service";
 
 @Component({
   selector: "app-navbar",

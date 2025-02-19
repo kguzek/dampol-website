@@ -1,0 +1,9 @@
+@if (regionService.region != null) {
+  <div class="selected-region">
+    <span [class]="regionService.getIcon(regionService.region)"></span>
+    {{ translationService.translations.region.regions[regionService.region] }}
+  </div>
+}
+<button class="region-select" (click)="regionService.openPopup()">
+  {{ translationService.translations.region.changeRegion }}
+</button>

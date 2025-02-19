@@ -17,7 +17,8 @@ import { HamburgerComponent } from "./components/navbar/hamburger/hamburger.comp
 import { LanguageSelectComponent } from "./components/navbar/language-select/language-select.component";
 import { NavbarLinkComponent } from "./components/navbar/navbar-link/navbar-link.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { RegionSelectComponent } from "./components/region-select/region-select.component";
+import { RegionPopupComponent } from "./components/region/region-popup/region-popup.component";
+import { RegionSelectComponent } from "./components/region/region-select/region-select.component";
 import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.component";
 import { HomeComponent } from "./routes/home/home.component";
 import { ModelComponent } from "./routes/model/model.component";
@@ -53,6 +54,7 @@ import { TranslationService } from "./services/translation/translation.service";
     FormsModule,
     ReactiveFormsModule,
     LanguageSelectComponent,
+    RegionPopupComponent,
     RegionSelectComponent,
   ],
   providers: [

@@ -20,15 +20,7 @@
           <span>42-677 Czekanów</span>
           <span>{{ translationService.translations.region.regions.pl }}</span>
           <hr />
-          <div>
-            <button class="change-region" (click)="regionService.openPopup()">
-              {{ translationService.translations.region.changeRegion }}
-            </button>
-            @if (regionService.region != null) {
-              <span [class]="regionService.getIcon(regionService.region)"></span>
-              {{ translationService.translations.region.regions[regionService.region] }}
-            }
-          </div>
+          <app-region-select></app-region-select>
         </div>
       </div>
       <div class="socials">
