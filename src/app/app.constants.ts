@@ -12,17 +12,17 @@ export interface Price {
 
 export const MODEL_COMPONENT_PRICES = {
   dimensions: {
+    widthUnitPrice: 500,
     lengthUnitPrice: 1000,
     lengthCutoff: 6,
     lengthMultiplierUnderCutoff: 0.5,
     additionalContainerWidthPrice: 2500,
-    widthUnitPrice: 500,
   },
   features: {
     airConditioning: [1000, 600],
     toilet: [1200, 650],
     kitchen: [800, 450],
-    partitionWall: [{ price: 500, approximate: true } as Price, 200],
+    partitionWall: [{ price: 500, approximate: true } satisfies Price, 200],
   },
   doors: {
     aluminium: 900,

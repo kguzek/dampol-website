@@ -7,6 +7,6 @@ import { Component, Input } from "@angular/core";
   standalone: false,
 })
 export class HamburgerComponent {
-  @Input() isMenuOpen!: boolean;
-  @Input() isDark!: boolean;
+  @Input({ required: true }) isMenuOpen!: boolean;
+  @Input({ required: true }) isDark!: boolean;
 }

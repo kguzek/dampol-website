@@ -4,6 +4,8 @@ import { GeolocationService } from "@ng-web-apis/geolocation";
 import { CookieService } from "ngx-cookie-service";
 import { take } from "rxjs";
 
+import type { Model } from "@/components/model/model.data";
+
 import type { Translation } from "../translation/translation.service";
 import { PlatformService } from "../platform/platform.service";
 import { ScrollService } from "../scroll/scroll.service";
@@ -134,37 +136,39 @@ export class RegionService {
     }
   }
 
+  private extractPrice(value: number | Model) {
+    if (typeof value === "number") {
+      return value;
+    }
+    return this.region === "pl" ? (value.price.pln ?? this.localisePricePLN(value.price.eur)) : value.price.eur;
+  }
+
   /** Formats the given numeric value as a price according to the selected region.
    * @param value The value to format as a price.
    * @param localise Whether to adjust the price based on region. Defaults to `true`.
    */
-  formatPrice(value: number, localise = true) {
-    if (isNaN(value)) return "";
-    let price = localise ? this.localisePrice(value) : value;
-    if (this.region === "pl") {
-      // Always localise PLN to account for exchange rate.
-      price = this.localisePricePLN(price);
-    }
+  formatPrice(value: number | Model, localise = true) {
+    if (typeof value === "number" && isNaN(value)) return "";
+    const price = localise ? this.localisePrice(value) : this.extractPrice(value);
     return REGION_PRICE_FORMATS[this.region ?? "de"].format(price);
   }
 
   /** Performs adjustments to the price based on region. */
-  localisePrice(value: number) {
+  localisePrice(value: number | Model) {
+    const price = this.extractPrice(value);
     switch (this.region) {
       case "sk":
       case "cz":
-        return value - 500;
+        return price - 500;
       case "fr":
-        return value + 3000;
+        return price + 3000;
       default:
-        return value;
+        return price;
     }
   }
 
-  /** Applies the exchange rate for EUR to PLN. */
-  localisePricePLN(euros: number) {
-    return euros * 5;
-  }
+  /** Conditionally applies the exchange rate for EUR to PLN. Used for flat-rate feature prices. */
+  localisePricePLN = (euros: number) => (this.region === "pl" ? euros * 3 : euros);
 
   getIcon = (region: string) => `fi fi-${region}`;
 }

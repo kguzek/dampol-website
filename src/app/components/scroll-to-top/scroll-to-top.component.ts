@@ -17,7 +17,7 @@ export class ScrollToTopComponent {
     private platformService: PlatformService,
   ) {}
 
-  @Input() pagesScrolled!: number;
+  @Input({ required: true }) pagesScrolled!: number;
 
   scrollToTop() {
     if (this.platformService.isBrowser) {

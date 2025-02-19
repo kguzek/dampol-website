@@ -7,7 +7,7 @@ import { Component, Input } from "@angular/core";
   standalone: false,
 })
 export class NavbarLinkComponent {
-  @Input() link!: string;
-  @Input() label!: string;
-  @Input() isButton?: boolean = false;
+  @Input({ required: true }) link!: string;
+  @Input({ required: true }) label!: string;
+  @Input({ required: true }) isButton?: boolean = false;
 }

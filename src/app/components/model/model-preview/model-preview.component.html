@@ -3,7 +3,7 @@
     <h3>Model {{ modelNumber }}</h3>
     <h3 style="margin-top: 0">{{ translationService.translations.model.size }}: {{ model.dimensions.join("×") }} m</h3>
     <h4 class="price">
-      {{ regionService.formatPrice(model.basePrice) }}
+      {{ regionService.formatPrice(model) }}
     </h4>
     <div class="image-carousel" (scroll)="selectedImage = getSelectedImage()" #imageCarousel>
       <img

@@ -11,7 +11,7 @@ import {
 import { MODELS } from "@/components/model/model.data";
 import { PlatformService } from "@/services/platform/platform.service";
 import { RegionService } from "@/services/region/region.service";
-import { TranslationService } from "@/services/translation/translation.service";
+import { TRANSLATIONS, TranslationService } from "@/services/translation/translation.service";
 
 const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   base: false,
@@ -97,7 +97,7 @@ export class ModelComponent {
   }
 
   get totalPrice() {
-    let price = this.model.basePrice;
+    let price = this.regionService.localisePrice(this.model);
     for (const feature in this.form.value.features) {
       const control = this.form.controls.features.get(feature);
       price += control?.value.price.price;
@@ -143,13 +143,24 @@ export class ModelComponent {
     const encodedName = encodeURIComponent(value.customerInformation?.name || "none");
     const encodedPhoneNumber = encodeURIComponent((value.customerInformation?.phoneNumber as PhoneNumber).value);
     const encodedPrice = encodeURIComponent(this.regionService.formatPrice(this.totalPrice));
+    const region = this.regionService.region
+      ? TRANSLATIONS.en.region.regions[this.regionService.region]
+      : "unknown%20region";
+    const language = TRANSLATIONS[this.translationService.translations.code].language;
     return `${this.baseHref}?subject=Online%20container%20order%20-%20${encodedName}&body=\
 Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
 I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${value.dimensions?.width}%20m%0D%0A\
 II.%20Features%3A%20${featureDescriptions.join("%2C%20") || "none"}%0D%0A\
-III.%20Special%20features%3A%0D%0A${encodedSpecialFeatures}%0D%0A%0D%0A\
-IV.%20Customer%20information%3A%0D%0AName%3A%20${encodedName}%0D%0APhone%20number%3A%20${encodedPhoneNumber}%0D%0A%0D%0A\
-Estimated%20price%3A%20${encodedPrice}%0D%0A%0D%0A\
+III.%20Special%20features%3A%0D%0A${encodedSpecialFeatures}%0D%0A\
+%0D%0A\
+IV.%20Customer%20information%3A%0D%0A\
+Name%3A%20${encodedName}%0D%0A\
+Phone%20number%3A%20${encodedPhoneNumber}%0D%0A\
+Language%3A%20${language}%0D%0A\
+Delivery%20region%3A%20${region}%0D%0A\
+%0D%0A\
+Estimated%20price%3A%20${encodedPrice}%0D%0A\
+%0D%0A\
 Order%20timestamp%3A%20${orderTimestamp}`;
   }
 }

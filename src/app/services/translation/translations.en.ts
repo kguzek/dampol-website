@@ -1,5 +1,3 @@
-import { urlToHttpOptions } from "node:url";
-
 import { DOOR_LOCATIONS } from "@/app.constants";
 
 export const TRANSLATIONS_EN = {

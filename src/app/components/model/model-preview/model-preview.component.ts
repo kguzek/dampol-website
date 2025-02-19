@@ -18,7 +18,7 @@ export class ModelPreviewComponent implements OnInit {
     private platformService: PlatformService,
   ) {}
 
-  @Input() modelNumber!: number;
+  @Input({ required: true }) modelNumber!: number;
   @Input() isFullPage = false;
   @ViewChild("imageCarousel") imageCarousel!: ElementRef;
 

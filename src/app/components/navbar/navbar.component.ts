@@ -14,7 +14,7 @@ import { TranslationService } from "@/services/translation/translation.service";
 export class NavbarComponent {
   constructor(protected translationService: TranslationService) {}
 
-  @Input() showDarkHamburger!: boolean;
+  @Input({ required: true }) showDarkHamburger!: boolean;
 
   isMenuOpen = false;
 
