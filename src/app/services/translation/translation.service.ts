@@ -4,12 +4,14 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 
 import { TRANSLATIONS_DK } from "./translations.dk";
+import { TRANSLATIONS_DE } from "./translations.de";
 import { TRANSLATIONS_EN } from "./translations.en";
 import { TRANSLATIONS_NL } from "./translations.nl";
 import { TRANSLATIONS_PL } from "./translations.pl";
 
 export const TRANSLATIONS = {
   dk: TRANSLATIONS_DK,
+  de: TRANSLATIONS_DE,
   nl: TRANSLATIONS_NL,
   en: TRANSLATIONS_EN,
   pl: TRANSLATIONS_PL,

@@ -12,7 +12,7 @@ export const MODELS = [
   { numImages: 4, dimensions: [7, 3], price: { eur: 9499, pln: 27999 } }, //  11
   { numImages: 3, dimensions: [7, 3], price: { eur: 9499, pln: 27999 } }, //  12
   { numImages: 3, dimensions: [7, 3], price: { eur: 10999, pln: 36499 } }, // 13
-  { numImages: 5, dimensions: [7, 3], price: { eur: 10999, pln: 36499 } }, // 14
+  { numImages: 5, dimensions: [7, 3], price: { eur: 11499, pln: 36499 } }, // 14
   { numImages: 5, dimensions: [7, 3], price: { eur: 10999, pln: 37900 } }, // 15
   { numImages: 5, dimensions: [7, 3], price: { eur: 11999, pln: 37900 } }, // 16
   { numImages: 3, dimensions: [7, 3], price: { eur: 11999, pln: 37900 } }, // 17
