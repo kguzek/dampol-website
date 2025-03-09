@@ -45,8 +45,8 @@ export const TRANSLATIONS_PL = {
     customise: "Dostosuj",
   },
   about: {
-    header: "O nas",
-    companyDescription: "polska firma",
+    header: "O",
+    companyDescription: "polskiej firmie",
     paragraphs: [
       "Witamy w Dampol, Twoim głównym miejscu dla wszechstronnych i praktycznych rozwiązań kontenerowych zaprojektowanych dla biur, mieszkań, witryn sklepowych i nie tylko. W Dampol rozumiemy zmieniające się potrzeby firm i osób poszukujących elastycznych i adaptowalnych przestrzeni. Niezależnie od tego, czy szukasz funkcjonalnego środowiska biurowego, komfortowego miejsca do życia czy atrakcyjnej witryny sklepowej, nasza gama wysokiej jakości kontenerów jest zaprojektowana tak, aby spełnić Twoje konkretne wymagania.",
       "Dzięki wieloletniemu doświadczeniu w branży, Dampol stał się zaufanym dostawcą rozwiązań kontenerowych. Jesteśmy dumni z dostarczania trwałych i konfigurowalnych opcji, które są zarówno estetycznie atrakcyjne, jak i praktyczne. Nasze kontenery są zbudowane tak, aby wytrzymać różne warunki pogodowe i są wykonane z najwyższej jakości materiałów, zapewniając długotrwałość i spokój ducha.",

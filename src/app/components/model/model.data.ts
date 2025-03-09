@@ -1,7 +1,7 @@
 export const MODELS = [
   { numImages: 5, dimensions: [4, 3], price: { eur: 7399, pln: 20900 } }, //   1
   { numImages: 4, dimensions: [5, 3], price: { eur: 7899, pln: 23900 } }, //   2
-  { numImages: 2, dimensions: [6, 3], price: { eur: 7999, pln: 24999 } }, //   3?
+  { numImages: 2, dimensions: [6, 3], price: { eur: 7999, pln: 24999 } }, //   3
   { numImages: 2, dimensions: [6, 3], price: { eur: 7999, pln: 21900 } }, //   4
   { numImages: 3, dimensions: [6, 3], price: { eur: 8299, pln: 26500 } }, //   5
   { numImages: 3, dimensions: [6, 3], price: { eur: 8299, pln: 25999 } }, //   6
