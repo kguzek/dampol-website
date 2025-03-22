@@ -139,7 +139,11 @@ export class RegionService {
     if (typeof value === "number") {
       return value;
     }
-    return this.region === "pl" ? (value.price.pln ?? this.localisePricePLN(value.price.eur)) : value.price.eur;
+    return this.region === "pl"
+      ? (value.price.pln ?? this.localisePricePLN(value.price.eur))
+      : this.region === "gb"
+        ? (value.price.gbp ?? value.price.eur)
+        : value.price.eur;
   }
 
   /** Formats the given numeric value as a price according to the selected region.
