@@ -70,3 +70,14 @@
     }
   }
 }
+
+@media only screen and (max-width: variables.$tiny-screen-size) {
+  .image-scroller {
+    gap: 1px;
+    padding: 1.5rem 0.5rem;
+
+    .indicator.active mat-icon {
+      transform: scale(0.9);
+    }
+  }
+}

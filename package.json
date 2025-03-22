@@ -6,7 +6,6 @@
     "dev": "ng serve --port=3000",
     "build": "ng build",
     "start": "serve dist/dampol-website/browser",
-    "deploy": "ng deploy --cname=modern-container.com",
     "watch": "ng build --watch --configuration development",
     "serve:ssr:dampol-website": "node dist/dampol-website/server/server.mjs",
     "format": "prettier --write ."
@@ -46,7 +45,6 @@
     "@types/intl-tel-input": "^18.1.1",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^18.18.0",
-    "angular-cli-ghpages": "^2.0.3",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
