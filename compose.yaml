@@ -1,6 +1,7 @@
 services:
   database:
     image: postgis/postgis:13-master
+    restart: always
     volumes:
       - ${VOLUME_PATH_PREFIX}/database:/var/lib/postgresql/data
     environment:
@@ -17,6 +18,7 @@ services:
 
   cache:
     image: redis:6
+    restart: always
     healthcheck:
       test: [ "CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]" ]
       interval: 10s
@@ -27,6 +29,7 @@ services:
 
   directus:
     image: directus/directus:latest
+    restart: always
     ports:
       - 8055:8055
     volumes:
@@ -56,3 +59,4 @@ services:
       ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
       WEBSOCKETS_ENABLED: "true"
       PUBLIC_URL: ${DIRECTUS_PUBLIC_URL}
+      CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC: "https://modern-container.com"
