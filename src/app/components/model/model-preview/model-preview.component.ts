@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 import type { Media } from "@/components/carousel/carousel.component";
-import { Model, MODELS } from "@/components/model/model.data";
+import type { Model } from "@/services/model/model.service";
+import { DIRECTUS_API_URL } from "@/app.constants";
+import { ModelService } from "@/services/model/model.service";
 import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
 
@@ -11,23 +13,22 @@ import { TranslationService } from "@/services/translation/translation.service";
   styleUrls: ["./model-preview.component.scss"],
   standalone: false,
 })
-export class ModelPreviewComponent implements OnInit {
+export class ModelPreviewComponent {
   constructor(
     protected translationService: TranslationService,
     protected regionService: RegionService,
+    private modelService: ModelService,
   ) {}
 
-  @Input({ required: true }) modelNumber!: number;
+  @Input({ required: true }) model!: Model;
   @Input() isFullPage = false;
 
-  model!: Model;
   modelImages!: Media[];
-
   ngOnInit() {
-    this.model = MODELS[this.modelNumber - 1];
-    this.modelImages = Array.from({ length: this.model.numImages }, (_, i) => ({
-      src: `models/${this.modelNumber}/image-${i + 1}.jpg`,
-      alt: `Model ${this.modelNumber} Image ${i + 1}`,
+    this.model = this.modelService.models[this.model.id - 1];
+    this.modelImages = this.model.images.map((image, i) => ({
+      src: `${DIRECTUS_API_URL}/assets/${image.directus_files_id}`,
+      alt: `Model ${this.model.id} Image ${i + 1}`,
     }));
   }
 }

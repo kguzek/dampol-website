@@ -1,3 +1,5 @@
+export const DIRECTUS_API_URL = "https://cms.modern-container.com";
+
 export const LARGE_SCREEN_SIZE_PX = 1600;
 export const MEDIUM_SCREEN_SIZE_PX = 1140;
 export const SMALL_SCREEN_SIZE_PX = 860;

@@ -2,13 +2,14 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 
+import type { Model } from "@/services/model/model.service";
 import { LayeredInput } from "@/components/model/input-layered/input-layered.component";
 import {
   DEFAULT_PHONE_NUMBER_VALUE,
   PHONE_NUMBER_VALIDATOR,
   PhoneNumber,
 } from "@/components/model/input-tel/input-tel.component";
-import { MODELS } from "@/components/model/model.data";
+import { ModelService } from "@/services/model/model.service";
 import { PlatformService } from "@/services/platform/platform.service";
 import { RegionService } from "@/services/region/region.service";
 import { TRANSLATIONS, TranslationService } from "@/services/translation/translation.service";
@@ -49,11 +50,44 @@ export class ModelComponent {
     protected translationService: TranslationService,
     protected regionService: RegionService,
     private platformService: PlatformService,
-  ) {}
+    modelService: ModelService,
+  ) {
+    this.model = modelService.models[this.modelNumber - 1];
+    this.form = this.formBuilder.group({
+      dimensions: this.formBuilder.group({
+        length: [this.model.length],
+        width: [this.model.width],
+      }),
+      features: this.formBuilder.group({
+        airConditioning: [DEFAULT_LAYERED_INPUT_VALUE],
+        toilet: [DEFAULT_LAYERED_INPUT_VALUE],
+        kitchen: [DEFAULT_LAYERED_INPUT_VALUE],
+        partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
+      }),
+      specialFeatures: "",
+      customerInformation: this.formBuilder.group({
+        name: [""],
+        phoneNumber: [DEFAULT_PHONE_NUMBER_VALUE, { validators: [PHONE_NUMBER_VALIDATOR] }],
+      }),
+    });
+  }
+
+  getModelNumber() {
+    const match = PATH_REGEXP.exec(this.router.url);
+    if (match?.groups == null) {
+      throw new Error(`Model number not found in URL: ${this.router.url}`);
+    }
+    const modelNumber = match.groups["modelNumber"];
+    if (isNaN(+modelNumber)) {
+      throw new Error(`Model number is not a number: ${modelNumber}`);
+    }
+    return +modelNumber;
+  }
 
   baseHref = "mailto:dampol.sales@gmail.com";
-
-  modelNumber = +(PATH_REGEXP.exec(this.router.url)?.groups?.["modelNumber"] ?? 1);
+  modelNumber = this.getModelNumber();
+  model: Model;
+  form;
 
   createDoor = (location: number = 0, material: string = "") =>
     this.formBuilder.group({
@@ -67,25 +101,6 @@ export class ModelComponent {
       material: [material],
       glazure: [glazure],
     });
-
-  model = MODELS[this.modelNumber - 1];
-  form = this.formBuilder.group({
-    dimensions: this.formBuilder.group({
-      length: [this.model.dimensions[0]],
-      width: [this.model.dimensions[1]],
-    }),
-    features: this.formBuilder.group({
-      airConditioning: [DEFAULT_LAYERED_INPUT_VALUE],
-      toilet: [DEFAULT_LAYERED_INPUT_VALUE],
-      kitchen: [DEFAULT_LAYERED_INPUT_VALUE],
-      partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
-    }),
-    specialFeatures: "",
-    customerInformation: this.formBuilder.group({
-      name: [""],
-      phoneNumber: [DEFAULT_PHONE_NUMBER_VALUE, { validators: [PHONE_NUMBER_VALIDATOR] }],
-    }),
-  });
 
   /** Returns '?' if the value is `undefined`, else formats it to one decimal place and adds 'm' unit. */
   formatDimension = (value?: number | null) => (value ?? 0).toFixed(1) + " m";

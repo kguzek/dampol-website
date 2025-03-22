@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --port=3000",
-    "build": "ng build",
+    "generate:routes": "curl -sf https://cms.modern-container.com/items/model?fields=id | jq -r '.data[] | \"/model/\\(.id)\"' > prerender-routes.txt && echo '/404' >> prerender-routes.txt",
+    "generate:404": "cp dist/dampol-website/browser/404/index.html dist/dampol-website/browser/404.html",
+    "build": "npm run generate:routes && ng build && npm run generate:404",
     "start": "serve dist/dampol-website/browser",
     "watch": "ng build --watch --configuration development",
     "serve:ssr:dampol-website": "node dist/dampol-website/server/server.mjs",

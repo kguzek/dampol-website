@@ -4,14 +4,14 @@
     @for (mediaItem of media; track $index) {
       @if (mediaItem.video) {
         <video [id]="getMediaId($index)" class="carousel-item" muted autoplay loop playsinline>
-          <source src="assets/videos/{{ mediaItem.src }}" [type]="mediaItem.type" />
+          <source [src]="mediaItem.src" [type]="mediaItem.type" />
         </video>
       } @else {
         <img
           [id]="getMediaId($index)"
           class="carousel-item"
           loading="lazy"
-          src="assets/images/{{ mediaItem.src }}"
+          [src]="mediaItem.src"
           [alt]="mediaItem.alt"
         />
       }

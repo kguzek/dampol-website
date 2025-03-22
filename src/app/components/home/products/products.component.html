@@ -1,9 +1,9 @@
 <section>
   <h2 id="products">{{ translationService.translations.products.header }}</h2>
   <div class="models">
-    @for (_ of models; track $index) {
+    @for (model of modelService.models; track model.id) {
       <div class="model">
-        <app-model-preview [modelNumber]="$index + 1"></app-model-preview>
+        <app-model-preview [model]="model"></app-model-preview>
       </div>
     }
   </div>

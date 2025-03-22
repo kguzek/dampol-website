@@ -1,7 +1,9 @@
 <app-carousel [media]="modelImages">
-  <a class="model-content" [routerLink]="isFullPage ? undefined : '/model/' + modelNumber">
-    <h3>Model {{ modelNumber }}</h3>
-    <h3 style="margin-top: 0">{{ translationService.translations.model.size }}: {{ model.dimensions.join("×") }} m</h3>
+  <a class="model-content" [routerLink]="isFullPage ? undefined : '/model/' + model.id">
+    <h3>Model {{ model.id }}</h3>
+    <h3 style="margin-top: 0">
+      {{ translationService.translations.model.size }}: {{ model.length }}×{{ model.width }} m
+    </h3>
     <h4 class="price">
       {{ regionService.formatPrice(model) }}
     </h4>

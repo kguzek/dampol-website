@@ -3,8 +3,7 @@ import { GeolocationService } from "@ng-web-apis/geolocation";
 import { CookieService } from "ngx-cookie-service";
 import { take } from "rxjs";
 
-import type { Model } from "@/components/model/model.data";
-
+import type { Model } from "../model/model.service";
 import type { Translation } from "../translation/translation.service";
 import { PlatformService } from "../platform/platform.service";
 import { ScrollService } from "../scroll/scroll.service";
@@ -140,10 +139,10 @@ export class RegionService {
       return value;
     }
     return this.region === "pl"
-      ? (value.price.pln ?? this.localisePricePLN(value.price.eur))
+      ? (value.price_pln ?? this.localisePricePLN(value.price_eur))
       : this.region === "gb"
-        ? (value.price.gbp ?? value.price.eur)
-        : value.price.eur;
+        ? (value.price_gbp ?? value.price_eur)
+        : value.price_eur;
   }
 
   /** Formats the given numeric value as a price according to the selected region.

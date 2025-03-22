@@ -1,5 +1,5 @@
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { inject, NgModule, provideAppInitializer } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 import { BrowserModule, DomSanitizer, provideClientHydration, withEventReplay } from "@angular/platform-browser";
@@ -24,6 +24,7 @@ import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.c
 import { HomeComponent } from "./routes/home/home.component";
 import { ModelComponent } from "./routes/model/model.component";
 import { NotFoundComponent } from "./routes/not-found/not-found.component";
+import { ModelService } from "./services/model/model.service";
 import { PlatformService } from "./services/platform/platform.service";
 import { RegionService } from "./services/region/region.service";
 import { ScrollService } from "./services/scroll/scroll.service";
@@ -65,9 +66,14 @@ import { TranslationService } from "./services/translation/translation.service";
     TranslationService,
     RegionService,
     ScrollService,
+    ModelService,
     FormBuilder,
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
     provideClientHydration(withEventReplay()),
+    provideAppInitializer(() => {
+      const modelService = inject(ModelService);
+      return modelService.initialiseModels();
+    }),
   ],
 })
 export class AppModule {

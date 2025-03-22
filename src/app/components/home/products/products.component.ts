@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { MODELS } from "@/components/model/model.data";
+import { ModelService } from "@/services/model/model.service";
 import { TranslationService } from "@/services/translation/translation.service";
 
 @Component({
@@ -10,7 +10,8 @@ import { TranslationService } from "@/services/translation/translation.service";
   standalone: false,
 })
 export class ProductsComponent {
-  constructor(protected translationService: TranslationService) {}
-
-  models = MODELS;
+  constructor(
+    protected translationService: TranslationService,
+    protected modelService: ModelService,
+  ) {}
 }
