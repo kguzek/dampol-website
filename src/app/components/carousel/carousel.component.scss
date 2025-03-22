@@ -1,0 +1,72 @@
+@use "variables.scss";
+
+.image-carousel {
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.carousel-item {
+  max-width: 100%;
+  flex: 1 0 100%;
+  scroll-snap-align: start;
+  object-fit: scale-down;
+}
+
+.image-scroller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  // background-color: variables.$color-text-secondary;
+  border-radius: 0 0 10px 10px;
+  padding: 1.5rem;
+
+  .btn-image-scroller {
+    opacity: 0.5;
+    margin: 0 0.5rem;
+
+    mat-icon {
+      transform: scale(2);
+    }
+  }
+
+  .indicator {
+    transition: opacity 200ms ease;
+    opacity: 0.5;
+
+    mat-icon {
+      transform: scale(0.75);
+      transition: transform 400ms ease;
+    }
+
+    &.active mat-icon {
+      transform: none;
+    }
+  }
+
+  button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    padding: 0;
+    background: none;
+    color: unset;
+    cursor: pointer;
+    transition: opacity 200ms ease;
+
+    &:hover,
+    &.active {
+      opacity: 1;
+    }
+  }
+}

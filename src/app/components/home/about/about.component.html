@@ -1,8 +1,10 @@
 <section>
-  <h2 id="about">
-    {{ translationService.translations.about.header }} <i>Dampol</i>,
-    {{ translationService.translations.about.companyDescription }}
-  </h2>
+  <app-carousel [media]="showcaseMedia">
+    <h2 id="about">
+      {{ translationService.translations.about.header }} <i>Dampol</i>,
+      {{ translationService.translations.about.companyDescription }}
+    </h2>
+  </app-carousel>
   <p *ngFor="let paragraph of translationService.translations.about.paragraphs">
     {{ paragraph }}
   </p>

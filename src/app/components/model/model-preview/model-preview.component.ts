@@ -1,7 +1,7 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
+import type { Media } from "@/components/carousel/carousel.component";
 import { Model, MODELS } from "@/components/model/model.data";
-import { PlatformService } from "@/services/platform/platform.service";
 import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
 
@@ -15,55 +15,19 @@ export class ModelPreviewComponent implements OnInit {
   constructor(
     protected translationService: TranslationService,
     protected regionService: RegionService,
-    private platformService: PlatformService,
   ) {}
 
   @Input({ required: true }) modelNumber!: number;
   @Input() isFullPage = false;
-  @ViewChild("imageCarousel") imageCarousel!: ElementRef;
 
-  selectedImage!: number;
   model!: Model;
-  images!: number[];
+  modelImages!: Media[];
 
   ngOnInit() {
     this.model = MODELS[this.modelNumber - 1];
-    this.images = Array.from({ length: this.model.numImages }, (_, i) => i + 1);
-  }
-
-  ngAfterViewInit() {
-    this.selectedImage = this.getSelectedImage();
-  }
-
-  getSelectedImage() {
-    const target = this.imageCarousel.nativeElement;
-    const imageWidth = target.scrollWidth / this.model.numImages;
-    return Math.round(target.scrollLeft / imageWidth) + 1;
-  }
-
-  scrollToImage(imageNumber: number) {
-    if (this.platformService.isServer) return;
-    const imageId = `model-${this.modelNumber}-image-${imageNumber}`;
-    document.getElementById(imageId)?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
-  }
-
-  nextImage() {
-    if (this.selectedImage >= this.model.numImages) {
-      this.scrollToImage(1);
-    } else {
-      this.scrollToImage(this.selectedImage + 1);
-    }
-  }
-
-  previousImage() {
-    if (this.selectedImage <= 1) {
-      this.scrollToImage(this.model.numImages);
-    } else {
-      this.scrollToImage(this.selectedImage - 1);
-    }
+    this.modelImages = Array.from({ length: this.model.numImages }, (_, i) => ({
+      src: `models/${this.modelNumber}/image-${i + 1}.jpg`,
+      alt: `Model ${this.modelNumber} Image ${i + 1}`,
+    }));
   }
 }

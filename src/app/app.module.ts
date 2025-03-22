@@ -6,6 +6,7 @@ import { BrowserModule, DomSanitizer, provideClientHydration, withEventReplay } 
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { CarouselComponent } from "./components/carousel/carousel.component";
 import { AboutComponent } from "./components/home/about/about.component";
 import { FooterComponent } from "./components/home/footer/footer.component";
 import { HeaderComponent } from "./components/home/landing-page/landing-page.component";
@@ -57,6 +58,7 @@ import { TranslationService } from "./services/translation/translation.service";
     LanguageSelectComponent,
     RegionPopupComponent,
     RegionSelectComponent,
+    CarouselComponent,
   ],
   providers: [
     PlatformService,

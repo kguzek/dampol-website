@@ -1,0 +1,45 @@
+<ng-container (keydown.ArrowRight)="nextImage()" (keydown.ArrowLeft)="previousImage()">
+  <ng-content></ng-content>
+  <div class="image-carousel" (scroll)="selectedImageIndex = getSelectedImageIndex()" #carousel>
+    @for (mediaItem of media; track $index) {
+      @if (mediaItem.video) {
+        <video [id]="getMediaId($index)" class="carousel-item" muted autoplay loop playsinline>
+          <source src="assets/videos/{{ mediaItem.src }}" [type]="mediaItem.type" />
+        </video>
+      } @else {
+        <img
+          [id]="getMediaId($index)"
+          class="carousel-item"
+          loading="lazy"
+          src="assets/images/{{ mediaItem.src }}"
+          [alt]="mediaItem.alt"
+        />
+      }
+    }
+  </div>
+  <div class="image-scroller">
+    <button
+      class="btn-image-scroller"
+      (click)="previousImage()"
+      title="{{ translationService.translations.products.prev }} {{ translationService.translations.products.image }}"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    @for (_ of media; track $index) {
+      <button
+        class="indicator{{ $index === (selectedImageIndex || 0) ? ' active' : '' }}"
+        (click)="scrollToImage($index)"
+        title="{{ translationService.translations.products.image }} {{ $index + 1 }}"
+      >
+        <mat-icon>fiber_manual_record</mat-icon>
+      </button>
+    }
+    <button
+      class="btn-image-scroller"
+      (click)="nextImage()"
+      title="{{ translationService.translations.products.next }} {{ translationService.translations.products.image }}"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</ng-container>
