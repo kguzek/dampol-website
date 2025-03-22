@@ -60,4 +60,5 @@ services:
       WEBSOCKETS_ENABLED: "true"
       PUBLIC_URL: ${DIRECTUS_PUBLIC_URL}
       CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC: "https://modern-container.com"
+      CORS_ENABLED: true
       CORS_ORIGIN: "http://localhost:3000,https://modern-container.com"
