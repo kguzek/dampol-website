@@ -136,7 +136,7 @@ export class ModelComponent {
     for (const [featureName, featureValue] of Object.entries(value.features ?? {})) {
       if (!featureValue?.base) continue;
       const featureKey = featureName as keyof typeof FEATURE_DESCRIPTIONS;
-      const featureDetail = FEATURE_DESCRIPTIONS[featureKey].replace(" ", "%20");
+      const featureDetail = encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]);
       featureDescriptions.push(`${featureName}%20${featureValue.extra ? "with" : "without"}%20${featureDetail}`);
     }
     const encodedSpecialFeatures = encodeURIComponent(value.specialFeatures || "none");
