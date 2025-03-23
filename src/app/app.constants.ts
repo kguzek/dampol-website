@@ -1,4 +1,6 @@
 export const DIRECTUS_API_URL = "https://cms.modern-container.com";
+export const LOGO_URL_BLACK = `${DIRECTUS_API_URL}/assets/f4a21138-db6a-4caa-85a1-6bb6b441933c`;
+export const LOGO_URL_WHITE = `${DIRECTUS_API_URL}/assets/5defaec4-0762-4892-a7fe-0e05422f05f0`;
 
 export const LARGE_SCREEN_SIZE_PX = 1600;
 export const MEDIUM_SCREEN_SIZE_PX = 1140;

@@ -1,5 +1,7 @@
 <div class="background">
-  <h1 class="serif">Dampol</h1>
+  <h1 class="serif">
+    <img class="logo" [src]="logoUrl" [alt]="translationService.translations.alt.dampolLogo" />
+  </h1>
   <a class="btn get-started" routerLink="/" fragment="products">
     <h3>
       {{ translationService.translations.header.getStarted }}

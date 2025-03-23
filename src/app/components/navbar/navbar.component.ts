@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 
 import { originalOrder } from "@/app.component";
-import { SMALL_SCREEN_SIZE_PX, TINY_SCREEN_SIZE_PX } from "@/app.constants";
+import { LOGO_URL_WHITE } from "@/app.constants";
 import { TranslationService } from "@/services/translation/translation.service";
 
 @Component({
@@ -17,14 +17,7 @@ export class NavbarComponent {
   @Input({ required: true }) showDarkHamburger!: boolean;
 
   isMenuOpen = false;
+  logoUrl = LOGO_URL_WHITE;
 
   originalOrder = originalOrder;
-
-  shouldShowProductsLink() {
-    try {
-      return window.innerWidth <= TINY_SCREEN_SIZE_PX || window.innerWidth > SMALL_SCREEN_SIZE_PX;
-    } catch {
-      return true;
-    }
-  }
 }
