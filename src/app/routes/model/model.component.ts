@@ -52,7 +52,7 @@ export class ModelComponent {
     private platformService: PlatformService,
     modelService: ModelService,
   ) {
-    this.model = modelService.models[this.modelNumber - 1];
+    this.model = modelService.modelsById[this.modelNumber];
     this.form = this.formBuilder.group({
       dimensions: this.formBuilder.group({
         length: [this.model.length],

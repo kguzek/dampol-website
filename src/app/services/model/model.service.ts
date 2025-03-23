@@ -31,10 +31,15 @@ async function fetchModels() {}
 @Injectable()
 export class ModelService {
   models: Model[] = [];
+  modelsById: Record<number, Model> = {};
 
   async initialiseModels() {
     const response = await fetch(`${DIRECTUS_API_URL}/items/model?fields=*,images.directus_files_id`);
     const { data } = (await response.json()) as { data: Model[] };
-    this.models = data.map((model) => ({ ...model, images: model.images.reverse() }));
+    this.models = data.map((model) => {
+      model.images.reverse();
+      this.modelsById[model.id] = model;
+      return model;
+    });
   }
 }

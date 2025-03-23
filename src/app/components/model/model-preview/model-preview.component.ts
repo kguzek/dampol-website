@@ -25,7 +25,7 @@ export class ModelPreviewComponent {
 
   modelImages!: Media[];
   ngOnInit() {
-    this.model = this.modelService.models[this.model.id - 1];
+    this.model = this.modelService.modelsById[this.model.id];
     this.modelImages = this.model.images.map((image, i) => ({
       src: `${DIRECTUS_API_URL}/assets/${image.directus_files_id}`,
       alt: `Model ${this.model.id} Image ${i + 1}`,
