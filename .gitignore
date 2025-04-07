@@ -16,3 +16,4 @@
 /.angular/cache
 .env
 /directus
+prerender-routes.txt
