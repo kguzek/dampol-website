@@ -25,9 +25,11 @@ export class ModelPreviewComponent {
 
   modelImages!: Media[];
   ngOnInit() {
+    const width = this.isFullPage ? 1000 : 520;
+    const quality = this.isFullPage ? 100 : 60;
     this.model = this.modelService.modelsById[this.model.id];
     this.modelImages = this.model.images.map((image, i) => ({
-      src: `${DIRECTUS_API_URL}/assets/${image.directus_files_id}`,
+      src: `${DIRECTUS_API_URL}/assets/${image.directus_files_id}?width=${width}&format=webp&quality=${quality}`,
       alt: `Model ${this.model.id} Image ${i + 1}`,
     }));
   }
