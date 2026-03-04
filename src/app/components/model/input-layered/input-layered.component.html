@@ -2,14 +2,16 @@
   <label>
     <div>
       {{ outerLabel }}
-      <span *ngIf="outerValue" class="price">{{ formatPrice(getPrice()) }}</span>
+      @if (outerValue) {
+        <span class="price">{{ formatPrice(getPrice()) }}</span>
+      }
     </div>
     <input
       type="checkbox"
       [ngModel]="outerValue"
       [checked]="outerValue"
       (click)="outerValue = !outerValue; onChange()"
-    />
+      />
   </label>
   <label [class]="outerValue ? '' : 'disabled'">
     <div>+ {{ innerLabel }}</div>
@@ -19,6 +21,6 @@
       [checked]="innerValue"
       (click)="innerValue = !innerValue; onChange()"
       [disabled]="!outerValue"
-    />
+      />
   </label>
 </div>
