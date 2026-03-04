@@ -33,3 +33,7 @@ jobs:
       - name: Typecheck
         run: npm run types:check
         if: always()
+
+      - name: Build Angular app
+        run: npm run build
+        if: always()
