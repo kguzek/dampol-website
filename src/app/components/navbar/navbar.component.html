@@ -7,14 +7,14 @@
       </a>
     </li>
     <div class="links">
-      <ng-container *ngFor="let link of translationService.translations.navbar | keyvalue: originalOrder">
+      @for (link of translationService.translations.navbar | keyvalue: originalOrder; track link) {
         <app-navbar-link
           [link]="link.key"
           [label]="link.value"
           (click)="isMenuOpen = false"
           [isButton]="link.key === 'products'"
         ></app-navbar-link>
-      </ng-container>
+      }
       <app-language-select></app-language-select>
     </div>
   </ul>

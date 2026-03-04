@@ -5,7 +5,9 @@
       {{ translationService.translations.about.companyDescription }}
     </h2>
   </app-carousel>
-  <p *ngFor="let paragraph of translationService.translations.about.paragraphs">
-    {{ paragraph }}
-  </p>
+  @for (paragraph of translationService.translations.about.paragraphs; track paragraph) {
+    <p>
+      {{ paragraph }}
+    </p>
+  }
 </section>
