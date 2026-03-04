@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: "directus"
       POSTGRES_DB: "directus"
     healthcheck:
-      test: [ "CMD", "pg_isready", "--host=localhost", "--username=directus" ]
+      test: ["CMD", "pg_isready", "--host=localhost", "--username=directus"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -20,7 +20,7 @@ services:
     image: redis:6
     restart: always
     healthcheck:
-      test: [ "CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]" ]
+      test: ["CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]"]
       interval: 10s
       timeout: 5s
       retries: 5

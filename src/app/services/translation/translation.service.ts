@@ -3,8 +3,8 @@ import { isPlatformBrowser } from "@angular/common";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 
-import { TRANSLATIONS_DK } from "./translations.dk";
 import { TRANSLATIONS_DE } from "./translations.de";
+import { TRANSLATIONS_DK } from "./translations.dk";
 import { TRANSLATIONS_EN } from "./translations.en";
 import { TRANSLATIONS_NL } from "./translations.nl";
 import { TRANSLATIONS_PL } from "./translations.pl";
