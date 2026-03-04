@@ -11,7 +11,7 @@
       [ngModel]="outerValue"
       [checked]="outerValue"
       (click)="outerValue = !outerValue; onChange()"
-      />
+    />
   </label>
   <label [class]="outerValue ? '' : 'disabled'">
     <div>+ {{ innerLabel }}</div>
@@ -21,6 +21,6 @@
       [checked]="innerValue"
       (click)="innerValue = !innerValue; onChange()"
       [disabled]="!outerValue"
-      />
+    />
   </label>
 </div>
