@@ -108,7 +108,6 @@ export const TRANSLATIONS_PL = {
     placeholderPhoneNumber: "+48 123 456 789",
     customisation: "Dostosowanie",
     priceDecorators: {
-      from: "od",
       each: "szt.",
     },
     externalShutters: "Rolety zewnętrzne",
@@ -120,7 +119,6 @@ export const TRANSLATIONS_PL = {
     specialFeatureHeader: "Oferujemy również następujące specjalne funkcje:",
     specialFeatures: {
       stopSolGlazing: "Przeszklenie Stop Sol",
-      externalRollerShutters: "Zewnętrzne rolety",
       slidingWindows: "Okna przesuwne",
       gutter: "Rynna",
       terraceDoors: "Drzwi tarasowe",

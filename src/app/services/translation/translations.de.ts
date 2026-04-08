@@ -109,7 +109,6 @@ export const TRANSLATIONS_DE = {
     placeholderPhoneNumber: "+49 170 123 4567",
     customisation: "Anpassung",
     priceDecorators: {
-      from: "ab",
       each: "Stk.",
     },
     externalShutters: "Externe Jalousien",
@@ -121,7 +120,6 @@ export const TRANSLATIONS_DE = {
     specialFeatureHeader: "Wir bieten auch folgende Sonderausstattungen an:",
     specialFeatures: {
       stopSolGlazing: "Stop-Sol-Verglasung",
-      externalRollerShutters: "Außenrollläden",
       slidingWindows: "Schiebefenster",
       gutter: "Dachrinne",
       terraceDoors: "Terrassentüren",

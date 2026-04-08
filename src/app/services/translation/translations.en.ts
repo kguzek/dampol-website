@@ -109,7 +109,6 @@ export const TRANSLATIONS_EN = {
     placeholderPhoneNumber: "+44 7300 123 123",
     customisation: "Customisation",
     priceDecorators: {
-      from: "from",
       each: "ea.",
     },
     externalShutters: "External shutters",
@@ -121,7 +120,6 @@ export const TRANSLATIONS_EN = {
     specialFeatureHeader: "We also offer the following special features:",
     specialFeatures: {
       stopSolGlazing: "Stop Sol Glazing",
-      externalRollerShutters: "External Roller Shutters",
       slidingWindows: "Sliding windows",
       gutter: "Gutter",
       terraceDoors: "Terrace Doors",

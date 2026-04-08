@@ -71,8 +71,6 @@ interface Window {
   glazure: "double" | "triple" | "";
 }
 
-const FEATURE_KEYS = Object.keys(MODEL_COMPONENT_PRICES.features);
-
 @Component({
   selector: "app-model",
   templateUrl: "./model.component.html",
@@ -95,9 +93,7 @@ export class ModelComponent {
         width: [this.model.width],
       }),
       features: this.formBuilder.group({
-        // Layered features
         ...Object.fromEntries(LAYERED_FEATURES.map((feature) => [feature, [DEFAULT_LAYERED_INPUT_VALUE]])),
-        // Single features
         ...Object.fromEntries(SINGLE_FEATURES.map((feature) => [feature, [DEFAULT_FEATURE_INPUT_VALUE]])),
       }),
       specialFeatures: "",
@@ -190,16 +186,13 @@ export class ModelComponent {
     for (const [featureName, featureValue] of Object.entries(value.features ?? {})) {
       const featureKey = featureName as FeatureKey;
 
-      // Handle layered features
       if (LAYERED_FEATURES.includes(featureKey)) {
         const layeredValue = featureValue as LayeredInput;
         if (layeredValue?.base) {
           const featureDetail = encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]);
           featureDescriptions.push(`${featureName}%20${layeredValue.extra ? "with" : "without"}%20${featureDetail}`);
         }
-      }
-      // Handle single features
-      else if (SINGLE_FEATURES.includes(featureKey)) {
+      } else if (SINGLE_FEATURES.includes(featureKey)) {
         const singleValue = featureValue as FeatureInput;
         if (singleValue?.selected) {
           featureDescriptions.push(encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]));

@@ -107,7 +107,6 @@ export const TRANSLATIONS_DK = {
     placeholderPhoneNumber: "+45 50 00 12 34",
     customisation: "Tilpasning",
     priceDecorators: {
-      from: "fra",
       each: "stk.",
     },
     externalShutters: "Eksterne skodder",
@@ -119,7 +118,6 @@ export const TRANSLATIONS_DK = {
     specialFeatureHeader: "Vi tilbyder også følgende specielle funktioner:",
     specialFeatures: {
       stopSolGlazing: "Stop Sol Glazing",
-      externalRollerShutters: "Eksterne rulleskodder",
       slidingWindows: "Skydevinduer",
       gutter: "Tagrende",
     },

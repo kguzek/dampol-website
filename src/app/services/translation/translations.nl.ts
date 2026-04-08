@@ -107,7 +107,6 @@ export const TRANSLATIONS_NL = {
     placeholderPhoneNumber: "+31 6 12345678",
     customisation: "Aanpassing",
     priceDecorators: {
-      from: "vanaf",
       each: "st.",
     },
     externalShutters: "Externe jaloezieën",
@@ -119,7 +118,6 @@ export const TRANSLATIONS_NL = {
     specialFeatureHeader: "We bieden ook de volgende speciale kenmerken:",
     specialFeatures: {
       stopSolGlazing: "Stop Sol Beglazing",
-      externalRollerShutters: "Externe Rolluiken",
       slidingWindows: "Schuiframen",
       gutter: "Dakgoot",
       terraceDoors: "Terrasdeuren",
