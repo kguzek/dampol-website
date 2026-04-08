@@ -123,6 +123,7 @@ export const TRANSLATIONS_EN = {
       slidingWindows: "Sliding windows",
       gutter: "Gutter",
       terraceDoors: "Terrace Doors",
+      ownFeature: "... or your own feature",
     },
     placeholderSpecialFeatures: "Additional doors and windows, materials, etc.",
   },

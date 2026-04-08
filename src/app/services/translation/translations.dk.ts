@@ -120,6 +120,7 @@ export const TRANSLATIONS_DK = {
       stopSolGlazing: "Stop Sol Glazing",
       slidingWindows: "Skydevinduer",
       gutter: "Tagrende",
+      ownFeature: "... eller dit eget ønske",
     },
     placeholderSpecialFeatures: "Yderligere døre og vinduer, materialer, etc.",
   },

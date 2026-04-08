@@ -123,6 +123,7 @@ export const TRANSLATIONS_DE = {
       slidingWindows: "Schiebefenster",
       gutter: "Dachrinne",
       terraceDoors: "Terrassentüren",
+      ownFeature: "... oder Ihre eigene Idee",
     },
     placeholderSpecialFeatures: "Zusätzliche Türen und Fenster, Materialien, usw.",
   },
