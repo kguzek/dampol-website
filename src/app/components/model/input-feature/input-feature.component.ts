@@ -88,9 +88,11 @@ export class InputFeatureComponent implements ControlValueAccessor, OnInit {
   getPriceDecoratorText(): string {
     switch (this.priceDecorator) {
       case "from":
-        return "≥ ";
-      case "each":
-        return this.translationService.translations.model.priceDecorators?.each ?? "ea.";
+        return "(min.) ";
+      case "each": {
+        const each = this.translationService.translations.model.priceDecorators?.each ?? "ea.";
+        return `(${each})`;
+      }
       default:
         return "";
     }
