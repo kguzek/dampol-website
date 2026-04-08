@@ -121,6 +121,7 @@ export const TRANSLATIONS_NL = {
       slidingWindows: "Schuiframen",
       gutter: "Dakgoot",
       terraceDoors: "Terrasdeuren",
+      ownFeature: "... of uw eigen idee",
     },
     placeholderSpecialFeatures: "Extra deuren en ramen, materialen, etc.",
   },

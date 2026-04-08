@@ -122,6 +122,7 @@ export const TRANSLATIONS_PL = {
       slidingWindows: "Okna przesuwne",
       gutter: "Rynna",
       terraceDoors: "Drzwi tarasowe",
+      ownFeature: "... lub własny pomysł",
     },
     placeholderSpecialFeatures: "Dodatkowe drzwi i okna, materiały itp.",
   },

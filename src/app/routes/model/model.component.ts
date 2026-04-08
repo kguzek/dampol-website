@@ -47,7 +47,7 @@ const SINGLE_FEATURES: FeatureKey[] = [
 ];
 
 const FEATURE_DESCRIPTIONS: Record<FeatureKey, string> = {
-  airConditioning: "air conditioning",
+  airConditioning: "large variant",
   toilet: "shower",
   kitchenStandard: "separation wall",
   kitchenLuxury: "separation wall",
@@ -59,6 +59,21 @@ const FEATURE_DESCRIPTIONS: Record<FeatureKey, string> = {
   softClose: "soft close",
   externalLedLamp: "external LED lamp",
   extraSocket: "extra socket",
+};
+
+const FEATURE_LABELS: Record<FeatureKey, string> = {
+  airConditioning: "Air conditioning",
+  toilet: "Toilet",
+  kitchenStandard: "Standard kitchen annexe",
+  kitchenLuxury: "Luxury kitchen annexe",
+  partitionWall: "Partition wall",
+  doubleDoor: "Double door",
+  externalShutters: "External shutters",
+  pirInsulation: "PIR insulation",
+  stainlessSteelHandle: "Stainless steel handle",
+  softClose: "Soft close",
+  externalLedLamp: "External LED lamp",
+  extraSocket: "Extra socket",
 };
 
 const PATH_REGEXP = /\/model\/(?<modelNumber>\d+)(?:#.+)?/;
@@ -140,6 +155,9 @@ export class ModelComponent {
   /** Returns '?' if the value is `undefined`, else formats it to one decimal place and adds 'm' unit. */
   formatDimension = (value?: number | null) => (value ?? 0).toFixed(1) + " m";
 
+  /** Preserves the original order of keys when using the keyvalue pipe. */
+  preserveOrder = () => 0;
+
   formatMultiplier(multiplier: number) {
     if (isNaN(multiplier) || multiplier === 1) return "";
     const result = (multiplier - 1) * 100;
@@ -182,45 +200,59 @@ export class ModelComponent {
       dateStyle: "short",
       timeStyle: "long",
     });
-    const featureDescriptions: string[] = [];
-    for (const [featureName, featureValue] of Object.entries(value.features ?? {})) {
-      const featureKey = featureName as FeatureKey;
 
-      if (LAYERED_FEATURES.includes(featureKey)) {
-        const layeredValue = featureValue as LayeredInput;
-        if (layeredValue?.base) {
-          const featureDetail = encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]);
-          featureDescriptions.push(`${featureName}%20${layeredValue.extra ? "with" : "without"}%20${featureDetail}`);
+    const featureDescriptions = Object.entries(value.features ?? {})
+      .map(([featureName, featureValue]) => {
+        const featureKey = featureName as FeatureKey;
+
+        if (LAYERED_FEATURES.includes(featureKey)) {
+          const layeredValue = featureValue as LayeredInput;
+          if (layeredValue?.base) {
+            const extraText = layeredValue.extra ? "with" : "without";
+            return `${FEATURE_LABELS[featureKey]} ${extraText} ${FEATURE_DESCRIPTIONS[featureKey]}`;
+          }
+        } else if (SINGLE_FEATURES.includes(featureKey)) {
+          const singleValue = featureValue as FeatureInput;
+          if (singleValue?.selected) {
+            return FEATURE_DESCRIPTIONS[featureKey];
+          }
         }
-      } else if (SINGLE_FEATURES.includes(featureKey)) {
-        const singleValue = featureValue as FeatureInput;
-        if (singleValue?.selected) {
-          featureDescriptions.push(encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]));
-        }
-      }
-    }
-    const encodedSpecialFeatures = encodeURIComponent(value.specialFeatures || "none");
-    const encodedName = encodeURIComponent(value.customerInformation?.name || "none");
-    const encodedPhoneNumber = encodeURIComponent((value.customerInformation?.phoneNumber as PhoneNumber).value);
-    const encodedPrice = encodeURIComponent(this.regionService.formatPrice(this.totalPrice));
+        return null;
+      })
+      .filter((desc): desc is string => desc !== null);
+
+    const name = value.customerInformation?.name || "none";
+    const phoneNumber = (value.customerInformation?.phoneNumber as PhoneNumber).value;
     const region = this.regionService.region
       ? TRANSLATIONS.en.region.regions[this.regionService.region]
-      : "unknown%20region";
+      : "unknown region";
     const language = TRANSLATIONS[this.translationService.translations.code].language;
-    return `${this.baseHref}?subject=Online%20container%20order%20-%20${encodedName}&body=\
-Order%20Information%0D%0AModel%20number%3A%20Model%20${this.modelNumber}%0D%0A\
-I.%20Dimensions%3A%20${value.dimensions?.length}%20m%20×%20${value.dimensions?.width}%20m%0D%0A\
-II.%20Features%3A%20${featureDescriptions.join("%2C%20") || "none"}%0D%0A\
-III.%20Special%20features%3A%0D%0A${encodedSpecialFeatures}%0D%0A\
-%0D%0A\
-IV.%20Customer%20information%3A%0D%0A\
-Name%3A%20${encodedName}%0D%0A\
-Phone%20number%3A%20${encodedPhoneNumber}%0D%0A\
-Language%3A%20${language}%0D%0A\
-Delivery%20region%3A%20${region}%0D%0A\
-%0D%0A\
-Estimated%20price%3A%20${encodedPrice}%0D%0A\
-%0D%0A\
-Order%20timestamp%3A%20${orderTimestamp}`;
+
+    const bodyLines = [
+      "Order Information",
+      `Model number: Model ${this.modelNumber}`,
+      "",
+      `I. Dimensions: ${value.dimensions?.length} m × ${value.dimensions?.width} m`,
+      `II. Features: ${featureDescriptions.join(", ") || "none"}`,
+      "III. Special features:",
+      value.specialFeatures || "none",
+      "",
+      "IV. Customer information:",
+      `Name: ${name}`,
+      `Phone number: ${phoneNumber}`,
+      `Language: ${language}`,
+      `Delivery region: ${region}`,
+      "",
+      `Estimated price: ${this.regionService.formatPrice(this.totalPrice)}`,
+      "",
+      `Order timestamp: ${orderTimestamp}`,
+    ];
+
+    const params = new URLSearchParams({
+      subject: `Online container order - ${name}`,
+      body: bodyLines.join("\r\n"),
+    });
+
+    return `${this.baseHref}?${params.toString()}`;
   }
 }

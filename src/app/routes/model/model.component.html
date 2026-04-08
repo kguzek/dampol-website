@@ -103,7 +103,10 @@
               {{ translationService.translations.model.specialFeatureHeader }}
               <ul style="list-style-type: none">
                 <!-- iterate through object values -->
-                @for (feature of translationService.translations.model.specialFeatures | keyvalue; track feature) {
+                @for (
+                  feature of translationService.translations.model.specialFeatures | keyvalue: preserveOrder;
+                  track feature
+                ) {
                   <li>
                     <mat-icon>check</mat-icon>
                     {{ feature.value }}
