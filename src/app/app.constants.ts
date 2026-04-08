@@ -28,6 +28,7 @@ export const MODEL_COMPONENT_PRICES = {
     kitchenStandard: [950, 450],
     kitchenLuxury: [2300, 450],
     partitionWall: [{ price: 650, approximate: true } satisfies Price, 100],
+    doubleDoor: [600, 300],
   },
   doors: {
     aluminium: 900,
