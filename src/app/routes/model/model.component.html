@@ -27,6 +27,7 @@
               <legend>
                 {{ translationService.translations.model.features }}
               </legend>
+              <!-- Layered features -->
               <app-input-layered
                 formControlName="airConditioning"
                 [outerLabel]="translationService.translations.model.airConditioning"
@@ -63,6 +64,37 @@
                 [innerLabel]="translationService.translations.model.tintedGlass"
               >
               </app-input-layered>
+              <!-- Single features -->
+              <app-input-feature
+                formControlName="externalShutters"
+                [label]="translationService.translations.model.externalShutters"
+                priceDecorator="each"
+              >
+              </app-input-feature>
+              <app-input-feature
+                formControlName="pirInsulation"
+                [label]="translationService.translations.model.pirInsulation"
+                priceDecorator="from"
+              >
+              </app-input-feature>
+              <app-input-feature
+                formControlName="stainlessSteelHandle"
+                [label]="translationService.translations.model.stainlessSteelHandle"
+              >
+              </app-input-feature>
+              <app-input-feature formControlName="softClose" [label]="translationService.translations.model.softClose">
+              </app-input-feature>
+              <app-input-feature
+                formControlName="externalLedLamp"
+                [label]="translationService.translations.model.externalLedLamp"
+              >
+              </app-input-feature>
+              <app-input-feature
+                formControlName="extraSocket"
+                [label]="translationService.translations.model.extraSocket"
+                priceDecorator="each"
+              >
+              </app-input-feature>
             </fieldset>
           </li>
           <li id="customise">

@@ -29,6 +29,12 @@ export const MODEL_COMPONENT_PRICES = {
     kitchenLuxury: [2300, 450],
     partitionWall: [{ price: 650, approximate: true } satisfies Price, 100],
     doubleDoor: [600, 300],
+    externalShutters: [400],
+    pirInsulation: [{ price: 600, approximate: true } satisfies Price],
+    stainlessSteelHandle: [300],
+    softClose: [200],
+    externalLedLamp: [150],
+    extraSocket: [100],
   },
   doors: {
     aluminium: 900,
@@ -45,4 +51,6 @@ export const MODEL_COMPONENT_PRICES = {
     },
     tripleGlazedMultiplier: 1, //TODO: Update
   },
-};
+} as const;
+
+export type FeatureKey = keyof typeof MODEL_COMPONENT_PRICES.features;
