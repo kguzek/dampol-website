@@ -78,6 +78,8 @@ export const TRANSLATIONS_PL = {
     separationWall: "Ścianka działowa kuchenna",
     partitionWall: "Ścianka działowa",
     internalDoor: "Drzwi wewnętrzne",
+    doubleDoor: "Drzwi podwójne",
+    tintedGlass: "Szyba przyciemniana",
     doors: "Drzwi",
     location: "Lokalizacja",
     doorLocations: ["Przód", "Tył", "Lewo", "Prawo"],

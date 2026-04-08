@@ -26,6 +26,7 @@ const FEATURE_DESCRIPTIONS = {
   kitchenStandard: "separation wall",
   kitchenLuxury: "separation wall",
   partitionWall: "internal door",
+  doubleDoor: "tinted glass",
 };
 
 const PATH_REGEXP = /\/model\/(?<modelNumber>\d+)(?:#.+)?/;
@@ -65,6 +66,7 @@ export class ModelComponent {
         kitchenStandard: [DEFAULT_LAYERED_INPUT_VALUE],
         kitchenLuxury: [DEFAULT_LAYERED_INPUT_VALUE],
         partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
+        doubleDoor: [DEFAULT_LAYERED_INPUT_VALUE],
       }),
       specialFeatures: "",
       customerInformation: this.formBuilder.group({

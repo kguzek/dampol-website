@@ -77,6 +77,8 @@ export const TRANSLATIONS_NL = {
     separationWall: "Scheidingswand",
     partitionWall: "Tussenwand",
     internalDoor: "Binnendeur",
+    doubleDoor: "Dubbele deur",
+    tintedGlass: "Getint glas",
     doors: "Deuren",
     location: "Locatie",
     doorLocations: ["Voor", "Achter", "Links", "Rechts"],

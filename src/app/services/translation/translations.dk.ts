@@ -77,6 +77,8 @@ export const TRANSLATIONS_DK = {
     separationWall: "Køkken skillevæg",
     partitionWall: "Skillevæg",
     internalDoor: "Indvendig dør",
+    doubleDoor: "Dobbeltdør",
+    tintedGlass: "Tonet glas",
     doors: "Døre",
     location: "Beliggenhed",
     doorLocations: ["Foran", "Bag", "Venstre", "Højre"],

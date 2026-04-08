@@ -79,6 +79,8 @@ export const TRANSLATIONS_EN = {
     separationWall: "Separation wall",
     partitionWall: "Partition wall",
     internalDoor: "Internal door",
+    doubleDoor: "Double door",
+    tintedGlass: "Tinted glass",
     doors: "Doors",
     location: "Location",
     doorLocations: DOOR_LOCATIONS,
