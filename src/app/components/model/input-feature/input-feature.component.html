@@ -1,0 +1,11 @@
+<div class="input-feature">
+  <label>
+    <div>
+      {{ label }}
+      @if (value) {
+        <span class="price">{{ formatPrice(getPrice()) }} {{ getPriceDecoratorText() }}</span>
+      }
+    </div>
+    <input type="checkbox" [ngModel]="value" [checked]="value" (click)="value = !value; onChange()" />
+  </label>
+</div>

@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-import type { Price } from "@/app.constants";
+import type { FeatureKey, Price } from "@/app.constants";
 import { MODEL_COMPONENT_PRICES } from "@/app.constants";
 import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
@@ -35,7 +35,7 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
     private regionService: RegionService,
   ) {}
 
-  @Input({ required: true }) formControlName!: keyof typeof MODEL_COMPONENT_PRICES.features;
+  @Input({ required: true }) formControlName!: FeatureKey;
   @Input({ required: true }) outerLabel!: string;
   @Input({ required: true }) innerLabel!: string;
 
@@ -48,7 +48,7 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit(): void {
     const feature = this.formControlName;
-    this.prices = MODEL_COMPONENT_PRICES.features[feature];
+    this.prices = [...MODEL_COMPONENT_PRICES.features[feature]];
   }
 
   registerOnChange(fn: (value: LayeredInput) => void): void {
@@ -88,6 +88,6 @@ export class InputLayeredComponent implements ControlValueAccessor, OnInit {
 
   formatPrice(value: Price) {
     const formattedPrice = this.regionService.formatPrice(value.price, false);
-    return `${value.approximate ? "⨤" : "+"} ${formattedPrice}`;
+    return `+ ${formattedPrice}`;
   }
 }

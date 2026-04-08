@@ -1,0 +1,14 @@
+@use "variables.scss";
+@use "mixins.scss";
+
+.input-feature {
+  padding-right: 0.5rem;
+
+  label {
+    @include mixins.radiobutton-checkbox-label();
+  }
+}
+
+.price {
+  white-space: nowrap;
+}

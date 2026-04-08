@@ -2,7 +2,10 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 
+import type { FeatureKey } from "@/app.constants";
 import type { Model } from "@/services/model/model.service";
+import { MODEL_COMPONENT_PRICES } from "@/app.constants";
+import { FeatureInput } from "@/components/model/input-feature/input-feature.component";
 import { LayeredInput } from "@/components/model/input-layered/input-layered.component";
 import {
   DEFAULT_PHONE_NUMBER_VALUE,
@@ -20,13 +23,42 @@ const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
   price: { price: 0, approximate: false },
 };
 
-const FEATURE_DESCRIPTIONS = {
+const DEFAULT_FEATURE_INPUT_VALUE: FeatureInput = {
+  selected: false,
+  price: { price: 0, approximate: false },
+};
+
+const LAYERED_FEATURES: FeatureKey[] = [
+  "airConditioning",
+  "toilet",
+  "kitchenStandard",
+  "kitchenLuxury",
+  "partitionWall",
+  "doubleDoor",
+];
+
+const SINGLE_FEATURES: FeatureKey[] = [
+  "externalShutters",
+  "pirInsulation",
+  "stainlessSteelHandle",
+  "softClose",
+  "externalLedLamp",
+  "extraSocket",
+];
+
+const FEATURE_DESCRIPTIONS: Record<FeatureKey, string> = {
   airConditioning: "air conditioning",
   toilet: "shower",
   kitchenStandard: "separation wall",
   kitchenLuxury: "separation wall",
   partitionWall: "internal door",
   doubleDoor: "tinted glass",
+  externalShutters: "external shutters",
+  pirInsulation: "PIR insulation",
+  stainlessSteelHandle: "stainless steel handle",
+  softClose: "soft close",
+  externalLedLamp: "external LED lamp",
+  extraSocket: "extra socket",
 };
 
 const PATH_REGEXP = /\/model\/(?<modelNumber>\d+)(?:#.+)?/;
@@ -38,6 +70,8 @@ interface Window {
   material: "aluminium" | "pcv" | "fixed" | "";
   glazure: "double" | "triple" | "";
 }
+
+const FEATURE_KEYS = Object.keys(MODEL_COMPONENT_PRICES.features);
 
 @Component({
   selector: "app-model",
@@ -61,12 +95,10 @@ export class ModelComponent {
         width: [this.model.width],
       }),
       features: this.formBuilder.group({
-        airConditioning: [DEFAULT_LAYERED_INPUT_VALUE],
-        toilet: [DEFAULT_LAYERED_INPUT_VALUE],
-        kitchenStandard: [DEFAULT_LAYERED_INPUT_VALUE],
-        kitchenLuxury: [DEFAULT_LAYERED_INPUT_VALUE],
-        partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
-        doubleDoor: [DEFAULT_LAYERED_INPUT_VALUE],
+        // Layered features
+        ...Object.fromEntries(LAYERED_FEATURES.map((feature) => [feature, [DEFAULT_LAYERED_INPUT_VALUE]])),
+        // Single features
+        ...Object.fromEntries(SINGLE_FEATURES.map((feature) => [feature, [DEFAULT_FEATURE_INPUT_VALUE]])),
       }),
       specialFeatures: "",
       customerInformation: this.formBuilder.group({
@@ -92,6 +124,9 @@ export class ModelComponent {
   modelNumber = this.getModelNumber();
   model: Model;
   form;
+
+  layeredFeatures = LAYERED_FEATURES;
+  singleFeatures = SINGLE_FEATURES;
 
   createDoor = (location: number = 0, material: string = "") =>
     this.formBuilder.group({
@@ -153,10 +188,23 @@ export class ModelComponent {
     });
     const featureDescriptions: string[] = [];
     for (const [featureName, featureValue] of Object.entries(value.features ?? {})) {
-      if (!featureValue?.base) continue;
-      const featureKey = featureName as keyof typeof FEATURE_DESCRIPTIONS;
-      const featureDetail = encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]);
-      featureDescriptions.push(`${featureName}%20${featureValue.extra ? "with" : "without"}%20${featureDetail}`);
+      const featureKey = featureName as FeatureKey;
+
+      // Handle layered features
+      if (LAYERED_FEATURES.includes(featureKey)) {
+        const layeredValue = featureValue as LayeredInput;
+        if (layeredValue?.base) {
+          const featureDetail = encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]);
+          featureDescriptions.push(`${featureName}%20${layeredValue.extra ? "with" : "without"}%20${featureDetail}`);
+        }
+      }
+      // Handle single features
+      else if (SINGLE_FEATURES.includes(featureKey)) {
+        const singleValue = featureValue as FeatureInput;
+        if (singleValue?.selected) {
+          featureDescriptions.push(encodeURIComponent(FEATURE_DESCRIPTIONS[featureKey]));
+        }
+      }
     }
     const encodedSpecialFeatures = encodeURIComponent(value.specialFeatures || "none");
     const encodedName = encodeURIComponent(value.customerInformation?.name || "none");

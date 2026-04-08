@@ -11,6 +11,7 @@ import { AboutComponent } from "./components/home/about/about.component";
 import { FooterComponent } from "./components/home/footer/footer.component";
 import { HeaderComponent } from "./components/home/landing-page/landing-page.component";
 import { ProductsComponent } from "./components/home/products/products.component";
+import { InputFeatureComponent } from "./components/model/input-feature/input-feature.component";
 import { InputLayeredComponent } from "./components/model/input-layered/input-layered.component";
 import { InputTelComponent } from "./components/model/input-tel/input-tel.component";
 import { ModelPreviewComponent } from "./components/model/model-preview/model-preview.component";
@@ -46,6 +47,7 @@ import { TranslationService } from "./services/translation/translation.service";
     HomeComponent,
     NotFoundComponent,
     InputLayeredComponent,
+    InputFeatureComponent,
     InputTelComponent,
   ],
   exports: [MatIconModule],
