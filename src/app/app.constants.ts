@@ -23,10 +23,11 @@ export const MODEL_COMPONENT_PRICES = {
     additionalContainerWidthPrice: 2500,
   },
   features: {
-    airConditioning: [1000, 600],
-    toilet: [1200, 650],
-    kitchen: [800, 450],
-    partitionWall: [{ price: 500, approximate: true } satisfies Price, 200],
+    airConditioning: [1100, 600],
+    toilet: [1500, 1000],
+    kitchenStandard: [950, 450],
+    kitchenLuxury: [2300, 450],
+    partitionWall: [{ price: 650, approximate: true } satisfies Price, 100],
   },
   doors: {
     aluminium: 900,

@@ -40,8 +40,14 @@
               >
               </app-input-layered>
               <app-input-layered
-                formControlName="kitchen"
-                [outerLabel]="translationService.translations.model.kitchenAnnexe"
+                formControlName="kitchenStandard"
+                [outerLabel]="translationService.translations.model.kitchenStandardAnnexe"
+                [innerLabel]="translationService.translations.model.separationWall"
+              >
+              </app-input-layered>
+              <app-input-layered
+                formControlName="kitchenLuxury"
+                [outerLabel]="translationService.translations.model.kitchenLuxuryAnnexe"
                 [innerLabel]="translationService.translations.model.separationWall"
               >
               </app-input-layered>

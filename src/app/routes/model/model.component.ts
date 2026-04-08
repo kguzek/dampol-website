@@ -23,7 +23,8 @@ const DEFAULT_LAYERED_INPUT_VALUE: LayeredInput = {
 const FEATURE_DESCRIPTIONS = {
   airConditioning: "air conditioning",
   toilet: "shower",
-  kitchen: "separation wall",
+  kitchenStandard: "separation wall",
+  kitchenLuxury: "separation wall",
   partitionWall: "internal door",
 };
 
@@ -61,7 +62,8 @@ export class ModelComponent {
       features: this.formBuilder.group({
         airConditioning: [DEFAULT_LAYERED_INPUT_VALUE],
         toilet: [DEFAULT_LAYERED_INPUT_VALUE],
-        kitchen: [DEFAULT_LAYERED_INPUT_VALUE],
+        kitchenStandard: [DEFAULT_LAYERED_INPUT_VALUE],
+        kitchenLuxury: [DEFAULT_LAYERED_INPUT_VALUE],
         partitionWall: [DEFAULT_LAYERED_INPUT_VALUE],
       }),
       specialFeatures: "",
