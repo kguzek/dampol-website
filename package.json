@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@angular/build": "^20.3.23",
-    "@angular/cli": "~20.3.22",
+    "@angular/cli": "~20.3.23",
     "@angular/compiler-cli": "^20.3.18",
     "@angular/localize": "^20.3.18",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
