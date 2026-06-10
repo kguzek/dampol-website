@@ -28,7 +28,7 @@
     "@angular/router": "^20.3.24",
     "@angular/ssr": "^20.3.27",
     "@ng-web-apis/common": "^4.14.1",
-    "@ng-web-apis/geolocation": "^4.14.0",
+    "@ng-web-apis/geolocation": "^4.14.1",
     "express": "^4.22.2",
     "flag-icons": "^6.15.0",
     "intl-tel-input": "^18.5.3",
