@@ -26,7 +26,7 @@
     "@angular/platform-browser-dynamic": "^20.3.25",
     "@angular/platform-server": "^20.3.25",
     "@angular/router": "^20.3.25",
-    "@angular/ssr": "^20.3.28",
+    "@angular/ssr": "^20.3.29",
     "@ng-web-apis/common": "^4.14.1",
     "@ng-web-apis/geolocation": "^4.14.1",
     "express": "^4.22.2",
@@ -40,8 +40,8 @@
     "zone.js": "^0.16.2"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.28",
-    "@angular/cli": "~20.3.28",
+    "@angular/build": "^20.3.29",
+    "@angular/cli": "~20.3.29",
     "@angular/compiler-cli": "^20.3.25",
     "@angular/localize": "^20.3.25",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
