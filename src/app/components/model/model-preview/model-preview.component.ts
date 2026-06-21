@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 
 import type { Media } from "@/components/carousel/carousel.component";
 import type { Model } from "@/services/model/model.service";
@@ -11,6 +11,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-model-preview",
   templateUrl: "./model-preview.component.html",
   styleUrls: ["./model-preview.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModelPreviewComponent {

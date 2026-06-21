@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 import { ModelService } from "@/services/model/model.service";
 import { TranslationService } from "@/services/translation/translation.service";
@@ -7,6 +7,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-products",
   templateUrl: "./products.component.html",
   styleUrls: ["./products.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProductsComponent {

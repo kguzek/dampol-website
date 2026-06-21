@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { TranslationService } from "@/services/translation/translation.service";
@@ -7,6 +7,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-not-found",
   templateUrl: "./not-found.component.html",
   styleUrls: ["./not-found.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class NotFoundComponent {

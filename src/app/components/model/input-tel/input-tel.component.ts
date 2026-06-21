@@ -1,6 +1,6 @@
 // TODO: Make this component an Angular library
 
-import { Component, ElementRef, forwardRef, Input, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, ViewChild } from "@angular/core";
 import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 import intlTelInput from "intl-tel-input";
 
@@ -31,6 +31,7 @@ const TEL_INPUT_OPTIONS = {
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class InputTelComponent {

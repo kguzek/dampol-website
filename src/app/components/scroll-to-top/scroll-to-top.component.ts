@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { PlatformService } from "@/services/platform/platform.service";
@@ -8,6 +8,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-scroll-to-top",
   templateUrl: "./scroll-to-top.component.html",
   styleUrls: ["./scroll-to-top.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ScrollToTopComponent {

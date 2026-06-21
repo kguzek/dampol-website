@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 
 import type { LanguageCode, Translation } from "@/services/translation/translation.service";
@@ -10,6 +10,7 @@ const TRANSLATION_ENTRIES = Object.entries(TRANSLATIONS) as [LanguageCode, Trans
   imports: [MatIcon],
   selector: "app-language-select",
   templateUrl: "./language-select.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ["./language-select.component.scss"],
 })
 export class LanguageSelectComponent {

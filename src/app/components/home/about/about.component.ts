@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 import type { Media } from "@/components/carousel/carousel.component";
 import { TranslationService } from "@/services/translation/translation.service";
@@ -7,6 +7,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-about",
   templateUrl: "./about.component.html",
   styleUrls: ["./about.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AboutComponent {

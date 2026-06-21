@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import type { FeatureKey, Price } from "@/app.constants";
@@ -24,6 +24,7 @@ export interface FeatureInput {
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class InputFeatureComponent implements ControlValueAccessor, OnInit {

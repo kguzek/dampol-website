@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -90,6 +90,7 @@ interface Window {
   selector: "app-model",
   templateUrl: "./model.component.html",
   styleUrls: ["./model.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModelComponent {
