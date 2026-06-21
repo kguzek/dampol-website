@@ -1,12 +1,14 @@
-name: Dependabot auto-approve & merge
-on: pull_request
+name: Auto-merge Dependabot PRs
 
 permissions:
   contents: write
   pull-requests: write
 
+on:
+  pull_request:
+
 jobs:
-  dependabot:
+  automerge:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:

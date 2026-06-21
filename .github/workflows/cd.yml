@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: CD
 
 permissions:
   contents: read
