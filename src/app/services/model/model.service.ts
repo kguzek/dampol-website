@@ -34,7 +34,7 @@ export class ModelService {
   modelsById: Record<number, Model> = {};
 
   async initialiseModels() {
-    const response = await fetch(`${DIRECTUS_API_URL}/items/model?fields=*,images.directus_files_id`);
+    const response = await fetch(`${DIRECTUS_API_URL}/items/model?fields=*,images.directus_files_id&sort=price_eur`);
     const { data } = (await response.json()) as { data: Model[] };
     this.models = data.map((model) => {
       model.images.reverse();
