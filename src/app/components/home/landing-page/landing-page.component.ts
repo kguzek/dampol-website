@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 import { LOGO_URL_BLACK, LOGO_URL_WHITE, TINY_SCREEN_SIZE_PX } from "@/app.constants";
 import { TranslationService } from "@/services/translation/translation.service";
@@ -7,6 +7,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-landing-page",
   templateUrl: "./landing-page.component.html",
   styleUrls: ["./landing-page.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HeaderComponent {

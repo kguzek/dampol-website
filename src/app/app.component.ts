@@ -1,5 +1,5 @@
 import { KeyValue } from "@angular/common";
-import { Component, HostListener, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, HostListener, ViewChild } from "@angular/core";
 import { ActivatedRoute, EventType, Router } from "@angular/router";
 
 import { ScrollToTopComponent } from "./components/scroll-to-top/scroll-to-top.component";
@@ -14,6 +14,7 @@ export const originalOrder = (_a: KeyValue<string, string>, _b: KeyValue<string,
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent {

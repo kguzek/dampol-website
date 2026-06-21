@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 import { RegionService } from "@/services/region/region.service";
 import { TranslationService } from "@/services/translation/translation.service";
@@ -7,6 +7,7 @@ import { TranslationService } from "@/services/translation/translation.service";
   selector: "app-region-select",
   imports: [],
   templateUrl: "./region-select.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: "./region-select.component.scss",
 })
 export class RegionSelectComponent {

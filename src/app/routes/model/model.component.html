@@ -12,12 +12,12 @@
               </legend>
               <label>
                 {{ translationService.translations.model.length }}:
-                {{ formatDimension(form.value.dimensions?.length) }}
+                {{ formatDimension($safeNavigationMigration(form.value.dimensions?.length)) }}
                 <input formControlName="length" type="range" min="2" max="12" step="0.5" />
               </label>
               <label>
                 {{ translationService.translations.model.width }}:
-                {{ formatDimension(form.value.dimensions?.width) }}
+                {{ formatDimension($safeNavigationMigration(form.value.dimensions?.width)) }}
                 <input formControlName="width" type="range" min="2" max="9" step="0.5" />
               </label>
             </fieldset>

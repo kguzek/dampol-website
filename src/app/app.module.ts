@@ -2,7 +2,13 @@ import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/c
 import { inject, NgModule, provideAppInitializer } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
-import { BrowserModule, DomSanitizer, provideClientHydration, withEventReplay } from "@angular/platform-browser";
+import {
+  BrowserModule,
+  DomSanitizer,
+  provideClientHydration,
+  withEventReplay,
+  withNoIncrementalHydration,
+} from "@angular/platform-browser";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -71,7 +77,7 @@ import { TranslationService } from "./services/translation/translation.service";
     ModelService,
     FormBuilder,
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
     provideAppInitializer(() => {
       const modelService = inject(ModelService);
       return modelService.initialiseModels();

@@ -1,5 +1,5 @@
 import type { AfterViewInit, ElementRef } from "@angular/core";
-import { Component, Input, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import { v4 as uuidv4 } from "uuid";
 
@@ -22,6 +22,7 @@ export type Media = Image | Video;
   selector: "app-carousel",
   imports: [MatIcon],
   templateUrl: "./carousel.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: "./carousel.component.scss",
 })
 export class CarouselComponent implements AfterViewInit {
