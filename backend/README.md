@@ -15,16 +15,17 @@ Small internal Go service for Directus Flows. It accepts offer data, renders `te
   "to": "customer@example.com",
   "subject": "Oferta Dampol",
   "text": "W załączniku przesyłamy ofertę.",
-  "offer": {
+  "payload": {
     "event": "offer.items.create",
-    "payload": {},
     "key": "offer-id",
-    "collection": "offer"
+    "keys": null,
+    "collection": "offer",
+    "offer": {}
   }
 }
 ```
 
-Directus can also post `event`, `payload`, `key`, and `collection` at the top level if `to`, `subject`, and `text` are included alongside them.
+`payload.offer.windows` should contain the deep-fetched window rows used in the PDF.
 
 If `WEBHOOK_TOKEN` is set, include either `Authorization: Bearer <token>` or `X-Webhook-Token: <token>`.
 

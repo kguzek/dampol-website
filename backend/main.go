@@ -45,15 +45,18 @@ type server struct {
 }
 
 type webhookRequest struct {
-	To      string          `json:"to"`
-	Subject string          `json:"subject"`
-	Text    string          `json:"text"`
-	Offer   json.RawMessage `json:"offer"`
+	To      string         `json:"to"`
+	Subject string         `json:"subject"`
+	Text    string         `json:"text"`
+	Payload webhookPayload `json:"payload"`
+}
 
+type webhookPayload struct {
 	Event      string          `json:"event"`
-	Payload    json.RawMessage `json:"payload"`
-	Key        string          `json:"key"`
+	Key        nullableString  `json:"key"`
+	Keys       stringList      `json:"keys"`
 	Collection string          `json:"collection"`
+	Offer      json.RawMessage `json:"offer"`
 }
 
 type directusOffer struct {
@@ -66,7 +69,7 @@ type directusOffer struct {
 type offerPayload struct {
 	Language      string          `json:"language"`
 	Doors         []string        `json:"doors"`
-	Windows       windowsChange   `json:"windows"`
+	Windows       []windowItem    `json:"windows"`
 	DoorPump      bool            `json:"door_pump"`
 	SteelHandle   bool            `json:"steel_handle"`
 	TintedGlass   bool            `json:"tinted_glass"`
@@ -85,15 +88,56 @@ type offerPayload struct {
 	Extra         json.RawMessage `json:"-"`
 }
 
-type windowsChange struct {
-	Create []windowItem      `json:"create"`
-	Update []json.RawMessage `json:"update"`
-	Delete []json.RawMessage `json:"delete"`
-}
-
 type windowItem struct {
 	Material string `json:"material"`
 	Size     string `json:"size"`
+}
+
+type nullableString string
+
+func (s *nullableString) UnmarshalJSON(data []byte) error {
+	trimmed := strings.TrimSpace(string(data))
+	if trimmed == "" || trimmed == "null" {
+		*s = ""
+		return nil
+	}
+
+	var value string
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	if value == "undefined" || value == "null" {
+		value = ""
+	}
+	*s = nullableString(value)
+	return nil
+}
+
+type stringList []string
+
+func (s *stringList) UnmarshalJSON(data []byte) error {
+	trimmed := strings.TrimSpace(string(data))
+	if trimmed == "" || trimmed == "null" {
+		*s = nil
+		return nil
+	}
+
+	var values []string
+	if err := json.Unmarshal(data, &values); err == nil {
+		*s = filterStrings(values)
+		return nil
+	}
+
+	var value string
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	if value == "" || value == "undefined" || value == "null" {
+		*s = nil
+		return nil
+	}
+	*s = []string{value}
+	return nil
 }
 
 type templateData struct {
@@ -270,34 +314,45 @@ func (s server) authorize(r *http.Request) error {
 }
 
 func (r webhookRequest) directusOffer() (directusOffer, error) {
-	if len(r.Offer) > 0 && string(r.Offer) != "null" {
-		var wrapped directusOffer
-		if err := json.Unmarshal(r.Offer, &wrapped); err == nil && len(wrapped.Payload.Language) > 0 {
-			return wrapped, nil
-		}
-
-		var payload offerPayload
-		if err := json.Unmarshal(r.Offer, &payload); err != nil {
-			return directusOffer{}, fmt.Errorf("invalid offer: %w", err)
-		}
-		return directusOffer{Payload: payload}, nil
-	}
-
-	if len(r.Payload) == 0 || string(r.Payload) == "null" {
+	if len(r.Payload.Offer) == 0 || string(r.Payload.Offer) == "null" {
 		return directusOffer{}, errors.New("missing offer payload")
 	}
 
 	var payload offerPayload
-	if err := json.Unmarshal(r.Payload, &payload); err != nil {
-		return directusOffer{}, fmt.Errorf("invalid payload: %w", err)
+	if err := unmarshalObjectOrSingleItem(r.Payload.Offer, &payload); err != nil {
+		return directusOffer{}, fmt.Errorf("invalid payload.offer: %w", err)
+	}
+
+	key := string(r.Payload.Key)
+	if key == "" && len(r.Payload.Keys) > 0 {
+		key = r.Payload.Keys[0]
 	}
 
 	return directusOffer{
-		Event:      r.Event,
+		Event:      r.Payload.Event,
 		Payload:    payload,
-		Key:        r.Key,
-		Collection: r.Collection,
+		Key:        key,
+		Collection: r.Payload.Collection,
 	}, nil
+}
+
+func unmarshalObjectOrSingleItem(data []byte, target any) error {
+	trimmed := bytes.TrimSpace(data)
+	if len(trimmed) == 0 || bytes.Equal(trimmed, []byte("null")) {
+		return errors.New("missing object")
+	}
+	if trimmed[0] != '[' {
+		return json.Unmarshal(trimmed, target)
+	}
+
+	var items []json.RawMessage
+	if err := json.Unmarshal(trimmed, &items); err != nil {
+		return err
+	}
+	if len(items) == 0 {
+		return errors.New("empty array")
+	}
+	return json.Unmarshal(items[0], target)
 }
 
 func validateEmailRequest(req webhookRequest) error {
@@ -326,12 +381,15 @@ func normalizeOffer(offer directusOffer) templateData {
 		OfferID:      offer.Key,
 		Labels:       labels[lang],
 		Doors:        translateList(t.doors, offer.Payload.Doors),
+		Windows:      []windowView{},
+		Options:      []optionView{},
+		Notes:        []noteView{},
 		DeliveryDate: offer.Payload.DeliveryDate,
 		Price:        offer.Payload.Price,
 		Raw:          offer.Payload,
 	}
 
-	for _, item := range offer.Payload.Windows.Create {
+	for _, item := range offer.Payload.Windows {
 		data.Windows = append(data.Windows, windowView{
 			Material: translate(t.windowMaterials, item.Material),
 			Size:     item.Size,
@@ -578,7 +636,7 @@ func sampleOffer() directusOffer {
 		Payload: offerPayload{
 			Language:      "pl",
 			Doors:         []string{"glass", "full", "double"},
-			Windows:       windowsChange{Create: []windowItem{{Material: "pcv", Size: "100x60"}, {Material: "aluminium", Size: "97x210"}}},
+			Windows:       []windowItem{{Material: "pcv", Size: "100x60"}, {Material: "aluminium", Size: "97x210"}},
 			DoorPump:      true,
 			SteelHandle:   true,
 			TintedGlass:   true,
@@ -722,6 +780,17 @@ func translate(dict map[string]string, value string) string {
 		return translated
 	}
 	return value
+}
+
+func filterStrings(values []string) []string {
+	filtered := make([]string, 0, len(values))
+	for _, value := range values {
+		if value == "" || value == "undefined" || value == "null" {
+			continue
+		}
+		filtered = append(filtered, value)
+	}
+	return filtered
 }
 
 func getEnv(key, fallback string) string {
