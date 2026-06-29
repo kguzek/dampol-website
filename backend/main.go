@@ -69,6 +69,7 @@ type directusOffer struct {
 type offerPayload struct {
 	Size          string          `json:"size"`
 	Date          string          `json:"date"`
+	SendToAddress string          `json:"send_to_address"`
 	Language      string          `json:"language"`
 	Doors         []string        `json:"doors"`
 	Windows       []windowItem    `json:"windows"`
@@ -258,6 +259,14 @@ func (s server) offerWebhook(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	recipient := strings.TrimSpace(offer.Payload.SendToAddress)
+	if recipient == "" {
+		recipient = strings.TrimSpace(req.To)
+	}
+	if _, err := mail.ParseAddress(recipient); err != nil {
+		http.Error(w, "invalid offer.send_to_address", http.StatusBadRequest)
+		return
+	}
 
 	pdf, err := s.renderPDF(normalizeOffer(offer))
 	if err != nil {
@@ -271,7 +280,7 @@ func (s server) offerWebhook(w http.ResponseWriter, r *http.Request) {
 		filename = "offer-" + sanitizeFilename(offer.Key) + ".pdf"
 	}
 
-	if err := s.sendMail(req.To, req.Subject, req.Text, filename, pdf); err != nil {
+	if err := s.sendMail(recipient, req.Subject, req.Text, filename, pdf); err != nil {
 		log.Printf("mail failed: %v", err)
 		http.Error(w, "failed to send email", http.StatusInternalServerError)
 		return
@@ -379,9 +388,6 @@ func unmarshalObjectOrSingleItem(data []byte, target any) error {
 }
 
 func validateEmailRequest(req webhookRequest) error {
-	if _, err := mail.ParseAddress(req.To); err != nil {
-		return fmt.Errorf("invalid to address: %w", err)
-	}
 	if strings.TrimSpace(req.Subject) == "" {
 		return errors.New("missing subject")
 	}

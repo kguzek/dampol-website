@@ -12,7 +12,6 @@ Small internal Go service for Directus Flows. It accepts offer data, renders `te
 
 ```json
 {
-  "to": "customer@example.com",
   "subject": "Oferta Dampol",
   "text": "W załączniku przesyłamy ofertę.",
   "payload": {
@@ -20,12 +19,15 @@ Small internal Go service for Directus Flows. It accepts offer data, renders `te
     "key": "offer-id",
     "keys": null,
     "collection": "offer",
-    "offer": {}
+    "offer": {
+      "send_to_address": "customer@example.com"
+    }
   }
 }
 ```
 
 `payload.offer.windows` should contain the deep-fetched window rows used in the PDF.
+Email is sent to `payload.offer.send_to_address`. The top-level `to` field is only used as a fallback.
 
 If `WEBHOOK_TOKEN` is set, include either `Authorization: Bearer <token>` or `X-Webhook-Token: <token>`.
 
