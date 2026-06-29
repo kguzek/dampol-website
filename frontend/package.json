@@ -1,6 +1,6 @@
 {
   "name": "dampol-website",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --port=3000",
@@ -57,5 +57,20 @@
     "karma-jasmine-html-reporter": "~2.2.0",
     "typescript": "~6.0.3"
   },
-  "packageManager": "npm@11.17.0"
+  "packageManager": "npm@11.17.0",
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "esbuild": false,
+    "fsevents": false,
+    "lmdb": false,
+    "msgpackr-extract": false
+  },
+  "engines": {
+    "node": "^26.4.0",
+    "npm": "^11.18.0"
+  },
+  "volta": {
+    "node": "26.4.0",
+    "npm": "11.18.0"
+  }
 }
