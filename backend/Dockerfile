@@ -7,7 +7,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/offer-m
 FROM alpine:3.21 AS typst
 ARG TYPST_VERSION=0.12.0
 ARG TARGETARCH
-RUN apk add --no-cache ca-certificates curl tar \
+RUN apk add --no-cache ca-certificates curl tar xz \
   && case "$TARGETARCH" in \
     amd64) typst_arch="x86_64-unknown-linux-musl" ;; \
     arm64) typst_arch="aarch64-unknown-linux-musl" ;; \
