@@ -1,0 +1,43 @@
+{
+  "to": "customer@example.com",
+  "subject": "Oferta Dampol",
+  "text": "Dzień dobry,\n\nW załączniku przesyłamy ofertę.\n\nPozdrawiamy,\nDampol Investment",
+  "offer": {
+    "event": "offer.items.create",
+    "payload": {
+      "language": "pl",
+      "doors": ["glass", "full", "double"],
+      "windows": {
+        "create": [
+          {
+            "material": "pcv",
+            "size": "100x60"
+          },
+          {
+            "material": "aluminium",
+            "size": "97x210"
+          }
+        ],
+        "update": [],
+        "delete": []
+      },
+      "door_pump": true,
+      "steel_handle": true,
+      "tinted_glass": true,
+      "shutters": true,
+      "window_notes": "testing this is a long text input",
+      "other": "testing this is another long text input",
+      "aircon": true,
+      "external_led": 4,
+      "kitchen": "premium",
+      "toilet": true,
+      "bathroom": true,
+      "partition_wall": true,
+      "external_decor": "front_and_sides",
+      "delivery_date": "4 tygodnie",
+      "price": "80 599 zł"
+    },
+    "key": "bf372199-a99c-4e1a-b4dc-a60e9f849b6d",
+    "collection": "offer"
+  }
+}
