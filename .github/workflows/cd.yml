@@ -13,14 +13,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          cache: "npm"
+          node-version: 26
+
       - name: Install dependencies
-        uses: ./.github/composite-actions/install
+        run: npm ci
 
       - name: Build Angular app
         id: build
@@ -30,7 +40,8 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: dist/dampol-website/browser/
+          path: frontend/dist/dampol-website/browser/
+
   deploy:
     needs: build
 

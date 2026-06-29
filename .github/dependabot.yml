@@ -16,3 +16,8 @@ updates:
         patterns:
           - "@angular/*"
           - "ngx-cookie-service"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
