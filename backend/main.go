@@ -67,9 +67,19 @@ type directusOffer struct {
 }
 
 type offerPayload struct {
+	Size          string          `json:"size"`
+	Date          string          `json:"date"`
 	Language      string          `json:"language"`
 	Doors         []string        `json:"doors"`
 	Windows       []windowItem    `json:"windows"`
+	Electricity   string          `json:"electricity"`
+	Structure     string          `json:"structure"`
+	Walls         string          `json:"walls"`
+	Roof          string          `json:"roof"`
+	Floor         string          `json:"floor"`
+	Gutter        bool            `json:"gutter"`
+	HydraulicOut  bool            `json:"hydraulic_output"`
+	CraneReach    int             `json:"crane_reach"`
 	DoorPump      bool            `json:"door_pump"`
 	SteelHandle   bool            `json:"steel_handle"`
 	TintedGlass   bool            `json:"tinted_glass"`
@@ -142,9 +152,17 @@ func (s *stringList) UnmarshalJSON(data []byte) error {
 
 type templateData struct {
 	GeneratedAt  string            `json:"generated_at"`
+	HeaderDate   string            `json:"header_date"`
 	Language     string            `json:"language"`
 	OfferID      string            `json:"offer_id"`
 	Labels       map[string]string `json:"labels"`
+	Intro        string            `json:"intro"`
+	Features     []string          `json:"features"`
+	TaxNotice    []string          `json:"tax_notice"`
+	ExtrasTitle  string            `json:"extras_title"`
+	Extras       []string          `json:"extras"`
+	Sections     []contentSection  `json:"sections"`
+	PriceSuffix  string            `json:"price_suffix"`
 	Doors        []string          `json:"doors"`
 	Windows      []windowView      `json:"windows"`
 	Options      []optionView      `json:"options"`
@@ -167,6 +185,11 @@ type optionView struct {
 type noteView struct {
 	Label string `json:"label"`
 	Text  string `json:"text"`
+}
+
+type contentSection struct {
+	Title      string   `json:"title"`
+	Paragraphs []string `json:"paragraphs"`
 }
 
 func main() {
@@ -374,12 +397,21 @@ func normalizeOffer(offer directusOffer) templateData {
 		lang = "pl"
 	}
 	t := translations[lang]
+	now := time.Now()
 
 	data := templateData{
-		GeneratedAt:  time.Now().Format("2006-01-02"),
+		GeneratedAt:  now.Format("2006-01-02"),
+		HeaderDate:   formatHeaderDate(lang, now),
 		Language:     lang,
 		OfferID:      offer.Key,
 		Labels:       labels[lang],
+		Intro:        labels[lang]["intro"],
+		Features:     []string{},
+		TaxNotice:    localizedTaxNotice(lang),
+		ExtrasTitle:  labels[lang]["extras_title"],
+		Extras:       optionalExtras(lang, offer.Payload),
+		Sections:     localizedSections(lang, offer.Payload),
+		PriceSuffix:  labels[lang]["price_suffix"],
 		Doors:        translateList(t.doors, offer.Payload.Doors),
 		Windows:      []windowView{},
 		Options:      []optionView{},
@@ -389,37 +421,7 @@ func normalizeOffer(offer directusOffer) templateData {
 		Raw:          offer.Payload,
 	}
 
-	for _, item := range offer.Payload.Windows {
-		data.Windows = append(data.Windows, windowView{
-			Material: translate(t.windowMaterials, item.Material),
-			Size:     item.Size,
-		})
-	}
-
-	addBoolOption(&data, offer.Payload.DoorPump, "door_pump")
-	addBoolOption(&data, offer.Payload.SteelHandle, "steel_handle")
-	addBoolOption(&data, offer.Payload.TintedGlass, "tinted_glass")
-	addBoolOption(&data, offer.Payload.Shutters, "shutters")
-	addBoolOption(&data, offer.Payload.Aircon, "aircon")
-	addBoolOption(&data, offer.Payload.Toilet, "toilet")
-	addBoolOption(&data, offer.Payload.Bathroom, "bathroom")
-	addBoolOption(&data, offer.Payload.PartitionWall, "partition_wall")
-
-	if offer.Payload.ExternalLED > 0 {
-		data.Options = append(data.Options, optionView{Label: labels[lang]["external_led"], Value: strconv.Itoa(offer.Payload.ExternalLED)})
-	}
-	if offer.Payload.Kitchen != "" {
-		data.Options = append(data.Options, optionView{Label: labels[lang]["kitchen"], Value: translate(t.kitchens, offer.Payload.Kitchen)})
-	}
-	if offer.Payload.ExternalDecor != "" {
-		data.Options = append(data.Options, optionView{Label: labels[lang]["external_decor"], Value: translate(t.externalDecor, offer.Payload.ExternalDecor)})
-	}
-	if strings.TrimSpace(offer.Payload.WindowNotes) != "" {
-		data.Notes = append(data.Notes, noteView{Label: labels[lang]["window_notes"], Text: offer.Payload.WindowNotes})
-	}
-	if strings.TrimSpace(offer.Payload.Other) != "" {
-		data.Notes = append(data.Notes, noteView{Label: labels[lang]["other"], Text: offer.Payload.Other})
-	}
+	data.Features = buildFeatures(lang, offer.Payload, t)
 
 	return data
 }
@@ -429,6 +431,244 @@ func addBoolOption(data *templateData, enabled bool, key string) {
 		return
 	}
 	data.Options = append(data.Options, optionView{Label: data.Labels[key], Value: data.Labels["yes"]})
+}
+
+func formatHeaderDate(lang string, value time.Time) string {
+	if lang == "en" {
+		return value.Format("01/02/2006")
+	}
+	return "dn. " + value.Format("01.02.2006") + " r."
+}
+
+func buildFeatures(lang string, payload offerPayload, t dictionary) []string {
+	features := make([]string, 0, 32)
+	external, internal := formattedDimensions(payload.Size)
+	if external != "" {
+		features = append(features, featureText(lang, "external_dimensions", external))
+	}
+	if internal != "" {
+		features = append(features, featureText(lang, "internal_dimensions", internal))
+	}
+	features = append(features, baseFeatures(lang, payload)...)
+
+	if len(payload.Doors) > 0 {
+		features = append(features, featureText(lang, "doors", strings.Join(translateList(t.doors, payload.Doors), ", ")))
+	}
+	for _, window := range payload.Windows {
+		features = append(features, featureText(lang, "window", translate(t.windowMaterials, window.Material), formatSize(window.Size)))
+	}
+	if payload.Electricity != "" {
+		features = append(features, featureText(lang, "electricity", translate(t.electricity, payload.Electricity)))
+	}
+	if payload.ExternalLED > 0 {
+		features = append(features, featureText(lang, "external_led_count", strconv.Itoa(payload.ExternalLED)))
+	}
+	if payload.Aircon {
+		features = append(features, featureText(lang, "aircon"))
+	}
+	if payload.Kitchen != "" && payload.Kitchen != "none" {
+		features = append(features, featureText(lang, "kitchen", translate(t.kitchens, payload.Kitchen)))
+	}
+	if payload.Toilet {
+		features = append(features, featureText(lang, "toilet"))
+	}
+	if payload.Bathroom {
+		features = append(features, featureText(lang, "bathroom"))
+	}
+	if payload.PartitionWall {
+		features = append(features, featureText(lang, "partition_wall"))
+	}
+	if payload.DoorPump {
+		features = append(features, featureText(lang, "door_pump"))
+	}
+	if payload.SteelHandle {
+		features = append(features, featureText(lang, "steel_handle"))
+	}
+	if payload.TintedGlass {
+		features = append(features, featureText(lang, "tinted_glass"))
+	}
+	if payload.Shutters {
+		features = append(features, featureText(lang, "shutters"))
+	}
+	if payload.Gutter {
+		features = append(features, featureText(lang, "gutter"))
+	}
+	if payload.HydraulicOut {
+		features = append(features, featureText(lang, "hydraulic_output"))
+	}
+	if payload.ExternalDecor != "" {
+		features = append(features, featureText(lang, "external_decor", translate(t.externalDecor, payload.ExternalDecor)))
+	}
+	if strings.TrimSpace(payload.WindowNotes) != "" {
+		features = append(features, featureText(lang, "window_notes", payload.WindowNotes))
+	}
+	if strings.TrimSpace(payload.Other) != "" {
+		features = append(features, featureText(lang, "other", payload.Other))
+	}
+	features = append(features, featureText(lang, "transport"))
+	features = append(features, featureText(lang, "unloading"))
+	features = append(features, featureText(lang, "warranty"))
+	return features
+}
+
+func baseFeatures(lang string, payload offerPayload) []string {
+	walls := translatePanelValue(payload.Walls)
+	roof := translatePanelValue(payload.Roof)
+	floor := translatePanelValue(payload.Floor)
+	if lang == "en" {
+		return []string{
+			"internal height 260 cm lowered to 250 cm",
+			"dimension tolerance 1.5%",
+			"WALLS made of sandwich panels with a " + walls + " core. The thermal transmittance is 0.22 W/m²K.",
+			"Exterior colour: graphite RAL 7016",
+			"ROOF made of sandwich panels with a " + roof + " core.",
+			"FLOOR made of sandwich panels with a " + floor + " core + OSB board 12 mm + PVC vinyl flooring.",
+			structureFeature(lang, payload.Structure),
+		}
+	}
+	return []string{
+		"Wysokość wewnętrzna 262 cm -> 252 cm (dach jednospadowy)",
+		"Tolerancja wymiarów 1.5%",
+		structureFeature(lang, payload.Structure),
+		"Podłoga wykonana z płyty warstwowej z rdzeniem " + floor + " + płyta OSB 12 mm + wykładzina PCV obiektowa. Przenikalność cieplna dla płyty wynosi 0.22 W/m²K",
+		"Ściany wykonane z płyty warstwowej z rdzeniem " + walls + ". Przenikalność cieplna wynosi 0.22 W/m²K. Kolor zewnętrzny: grafit RAL 7016",
+		"Dach wykonany z płyty warstwowej z rdzeniem " + roof + ".",
+	}
+}
+
+func structureFeature(lang, structure string) string {
+	profile := formatStructureProfile(structure)
+	if profile == "" {
+		profile = "50 cm x 50 cm"
+	}
+	if lang == "en" {
+		return "Steel structure - made of steel profile " + profile + " with truss, welded, including crane hooks on top of structure for transport and unloading."
+	}
+	return "Konstrukcja stalowa spawana, wykonana z profili zamkniętych " + profile + " z kratownicą wraz z zaczepami HDS do przewozu oraz rozładunku."
+}
+
+func formatStructureProfile(structure string) string {
+	base, _, ok := strings.Cut(strings.TrimSpace(structure), "-")
+	if !ok || base == "" {
+		return ""
+	}
+	if _, err := strconv.Atoi(base); err != nil {
+		return ""
+	}
+	return base + " cm x " + base + " cm"
+}
+
+func translatePanelValue(value string) string {
+	if value == "" {
+		return "PIR 100"
+	}
+	parts := strings.Split(strings.TrimSpace(value), "-")
+	if len(parts) != 2 {
+		return value
+	}
+	return strings.ToUpper(parts[0]) + " " + parts[1]
+}
+
+func featureText(lang, key string, values ...string) string {
+	format := featureFormats[lang][key]
+	if format == "" {
+		format = key
+	}
+	args := make([]any, len(values))
+	for i, value := range values {
+		args[i] = value
+	}
+	return fmt.Sprintf(format, args...)
+}
+
+func formattedDimensions(size string) (string, string) {
+	length, width, ok := parseSize(size)
+	if !ok {
+		return "", ""
+	}
+	return fmt.Sprintf("%d cm x %d cm", length, width), fmt.Sprintf("%d cm x %d cm", length-20, width-25)
+}
+
+func formatSize(size string) string {
+	length, width, ok := parseSize(size)
+	if !ok {
+		return size
+	}
+	return fmt.Sprintf("%d cm x %d cm", length, width)
+}
+
+func parseSize(size string) (int, int, bool) {
+	parts := strings.Split(strings.ToLower(strings.TrimSpace(size)), "x")
+	if len(parts) != 2 {
+		return 0, 0, false
+	}
+	length, err := strconv.Atoi(strings.TrimSpace(parts[0]))
+	if err != nil {
+		return 0, 0, false
+	}
+	width, err := strconv.Atoi(strings.TrimSpace(parts[1]))
+	if err != nil {
+		return 0, 0, false
+	}
+	return length, width, true
+}
+
+func optionalExtras(lang string, payload offerPayload) []string {
+	extras := append([]string{}, defaultExtras[lang]...)
+	for _, option := range boolExtras[lang] {
+		if !option.enabled(payload) {
+			extras = append(extras, option.text)
+		}
+	}
+	return extras
+}
+
+func localizedTaxNotice(lang string) []string {
+	if lang == "en" {
+		return []string{
+			"*Net price is for companies with a valid and active EU tax number (BE002...) For private customers, 21% tax applies.",
+		}
+	}
+	return []string{"Wszystkie ceny netto - należy doliczyć 23% podatku VAT"}
+}
+
+func localizedSections(lang string, payload offerPayload) []contentSection {
+	if lang == "en" {
+		return []contentSection{
+			{Title: "PAYMENT", Paragraphs: []string{"15% deposit by bank transfer to our account (downpayment)", "The remaining amount due on the day of delivery at the latest, before the container is unloaded - by bank transfer to our account. Cash upon delivery is also possible."}},
+			{Title: "DELIVERY DATE", Paragraphs: []string{deliveryDateText("en", payload), "The exact delivery date is to be arranged. Approximately 10-12 weeks from the receipt of deposit."}},
+			{Title: "DELIVERY AND UNLOADING", Paragraphs: []string{"The buyer is responsible for ensuring that there is enough space to drive in with a truck and set up the crane supports. Minimum width required: 3.50 m.", "Unloading with our auto-crane is only possible if there is a paved access road for a 28 tonne vehicle. Exceptions only after written agreement. Additionally, the direct access road must be free of trees, branches and wires in order not to damage the container. The height of the cabin with the container is 4 m. The container can be unloaded from the vehicle only from the right and left side. It is impossible to unload the container in front / or behind the vehicle. Hydraulic arm reach: " + craneReach(payload, "3.0") + " m.", "In the work area of the auto crane no wires/ trees/ branches can be present"}},
+			{Title: "FOUNDATION PREPARATION", Paragraphs: []string{"Customer is responsible for preparation of the foundation, where container is to be placed. The substrate must be prepared according to the specifications attached to the offer.", "Particular attention should be paid to the fact that the subsurface must be hardened, stable and, above all, even. The container can be placed on paving/concrete slabs, block paving, asphalt or concrete blocks."}},
+			{Title: "ATTENTION !", Paragraphs: []string{"The offer and price do not include any types of permits or approvals, as well as structural or engineering designs. The container is not intended for multi-storey buildings or the use of photovoltaic systems.", "Please read the 'Terms and Conditions of sale' and in particular the information contained therein about the guarantee and the use of the container. Payment of deposit is equivalent to understanding and full acceptance of the offer and its Terms and Conditions."}},
+		}
+	}
+	return []contentSection{
+		{Title: "DATA DOSTAWY", Paragraphs: []string{deliveryDateText("pl", payload), "Termin dostawy do uzgodnienia. Około 8-10 tygodni od daty wpływu zaliczki."}},
+		{Title: "PŁATNOŚĆ", Paragraphs: []string{"30% zaliczka przelewem. Pozostała kwota jest płatna najpóźniej w dniu dostawy pawilonu."}},
+		{Title: "DOSTAWA", Paragraphs: []string{"Kupujący jest odpowiedzialny za zapewnienie wystarczającej ilości miejsca do wjazdu 28-tonową ciężarówką i ustawienia podpór dźwigu. Droga dojazdowa: Minimalna wymagana szerokość dojazdu: 3.50 m.", "Dodatkowo droga dojazdowa musi być wolna od drzew, gałęzi i drutów, aby nie uszkodzić pawilonu. Wysokość kabiny z kontenerem to 4.0 m. Rozładunek: tylko na prawą lub lewą stronę samochodu. Maksymalny wysięg HDS to " + craneReach(payload, "1.00") + " m."}},
+		{Title: "PRZYGOTOWANIE PODŁOŻA", Paragraphs: []string{"Klient jest odpowiedzialny za przygotowanie podłoża, na którym ma stanąć kontener. Podłoże należy przygotować zgodnie ze specyfikacją załączoną do oferty.", "Szczególną uwagę należy zwrócić na to, aby podłoże było utwardzone, stabilne, a przede wszystkim wypoziomowane. Pawilon można ustawić na kostce brukowej, płytach betonowych, asfalcie lub bloczkach betonowych."}},
+		{Title: "UWAGA !", Paragraphs: []string{"Oferta i cena nie zawierają żadnego rodzaju pozwoleń i zezwoleń, a także projektów konstrukcyjnych i technicznych.", "Kontener nie jest przeznaczony do piętrowania ani do stosowania systemów fotowoltaicznych.", "Maksymalne obciążenie instalacji elektrycznej to 25A. Jeśli zapotrzebowanie na moc jest wyższe, należy rozważyć instalację trójfazową.", "Ze względu na brak możliwości sprawdzenia instalacji hydraulicznej oraz sprzętów w toalecie / kuchni - nie udzielamy na nie gwarancji. Szczelność instalacji jest sprawdzana jedynie sprężonym powietrzem. Sanitariaty montowane w pawilonach nie są przeznaczone do masowego użytku.", "Prosimy o zapoznanie się z warunkami sprzedaży, a w szczególności z zawartymi w nich informacjami dotyczącymi gwarancji i użytkowania pawilonu. Wpłata zaliczki jest równoznaczna ze zrozumieniem i pełną akceptacją oferty oraz jej warunków.", "Wszelkie zmiany w ofercie wymagają formy pisemnej, potwierdzonej przez obie strony. Po wpłacie zaliczki, zmiany w projekcie nie będą już możliwe."}},
+	}
+}
+
+func craneReach(payload offerPayload, fallback string) string {
+	if payload.CraneReach <= 0 {
+		return fallback
+	}
+	return fmt.Sprintf("%d.0", payload.CraneReach)
+}
+
+func deliveryDateText(lang string, payload offerPayload) string {
+	if payload.DeliveryDate == "" {
+		if lang == "en" {
+			return "Delivery date: to be arranged."
+		}
+		return "Termin dostawy: do uzgodnienia."
+	}
+	if lang == "en" {
+		return "Delivery date: " + payload.DeliveryDate + "."
+	}
+	return "Termin dostawy: " + payload.DeliveryDate + "."
 }
 
 func (s server) renderPDF(data templateData) ([]byte, error) {
@@ -659,28 +899,41 @@ func sampleOffer() directusOffer {
 type dictionary struct {
 	doors           map[string]string
 	windowMaterials map[string]string
+	electricity     map[string]string
 	kitchens        map[string]string
 	externalDecor   map[string]string
+}
+
+type optionalExtra struct {
+	text    string
+	enabled func(offerPayload) bool
 }
 
 var translations = map[string]dictionary{
 	"pl": {
 		doors: map[string]string{
-			"glass":  "przeszklone",
-			"full":   "pełne",
-			"double": "podwójne",
+			"glass":  "szklane",
+			"full":   "pełna",
+			"double": "dwuskrzydłowe",
 		},
 		windowMaterials: map[string]string{
 			"pcv":       "PCV",
 			"aluminium": "aluminiowe",
 		},
+		electricity: map[string]string{
+			"one":   "Jednofazowa",
+			"three": "Trójfazowa",
+		},
 		kitchens: map[string]string{
-			"standard": "standardowa",
-			"premium":  "premium",
+			"none":    "Brak",
+			"simple":  "Podstawowy",
+			"premium": "Premium",
 		},
 		externalDecor: map[string]string{
-			"front":           "front",
+			"all":             "wszystkie strony",
 			"front_and_sides": "front i boki",
+			"front_and_side":  "front i jeden bok",
+			"front_only":      "tylko front",
 			"none":            "brak",
 		},
 	},
@@ -694,13 +947,20 @@ var translations = map[string]dictionary{
 			"pcv":       "PVC",
 			"aluminium": "aluminium",
 		},
+		electricity: map[string]string{
+			"one":   "Single-phase",
+			"three": "Three-phase",
+		},
 		kitchens: map[string]string{
-			"standard": "standard",
-			"premium":  "premium",
+			"none":    "None",
+			"simple":  "Basic",
+			"premium": "Premium",
 		},
 		externalDecor: map[string]string{
-			"front":           "front",
+			"all":             "all sides",
 			"front_and_sides": "front and sides",
+			"front_and_side":  "front and one side",
+			"front_only":      "front only",
 			"none":            "none",
 		},
 	},
@@ -709,6 +969,10 @@ var translations = map[string]dictionary{
 var labels = map[string]map[string]string{
 	"pl": {
 		"title":          "Oferta na pawilon",
+		"intro":          "Oferta dotyczy pawilonu o parametrach:",
+		"contact":        "Kontakt",
+		"valid_for":      "Ważność oferty",
+		"valid_days":     "7 dni",
 		"date":           "Data",
 		"offer_no":       "Numer oferty",
 		"configuration":  "Konfiguracja",
@@ -719,7 +983,9 @@ var labels = map[string]map[string]string{
 		"options":        "Wyposażenie i opcje",
 		"notes":          "Uwagi",
 		"delivery_date":  "Termin realizacji",
-		"price":          "Cena łączna netto",
+		"price":          "CENA łączna",
+		"price_suffix":   "netto",
+		"extras_title":   "OPCJE DODATKOWEGO DOPOSAŻENIA : (dodatkowo płatne)",
 		"yes":            "tak",
 		"door_pump":      "samozamykacz drzwiowy",
 		"steel_handle":   "pochwyt stalowy",
@@ -738,6 +1004,10 @@ var labels = map[string]map[string]string{
 	},
 	"en": {
 		"title":          "Container offer",
+		"intro":          "This offer includes the following pavilion:",
+		"contact":        "Contact",
+		"valid_for":      "Offer Valid for",
+		"valid_days":     "7 days",
 		"date":           "Date",
 		"offer_no":       "Offer number",
 		"configuration":  "Configuration",
@@ -748,7 +1018,9 @@ var labels = map[string]map[string]string{
 		"options":        "Equipment and options",
 		"notes":          "Notes",
 		"delivery_date":  "Delivery date",
-		"price":          "Total net price",
+		"price":          "TOTAL",
+		"price_suffix":   "net",
+		"extras_title":   "OPTIONAL EXTRAS:",
 		"yes":            "yes",
 		"door_pump":      "door closer",
 		"steel_handle":   "steel handle",
@@ -764,6 +1036,105 @@ var labels = map[string]map[string]string{
 		"window_notes":   "Window notes",
 		"other":          "Other notes",
 		"footer":         "This offer is valid for 7 days. The presented information must be confirmed in the order.",
+	},
+}
+
+var featureFormats = map[string]map[string]string{
+	"pl": {
+		"external_dimensions": "Wymiar zewnętrzny %s",
+		"internal_dimensions": "Wymiar wewnętrzny %s",
+		"doors":               "Drzwi: %s",
+		"window":              "Stolarka %s %s",
+		"electricity":         "Instalacja elektryczna: %s, kompletna instalacja z lampami LED, gniazdami, włącznikiem, rozdzielnią elektryczną i przyłączem zewnętrznym",
+		"external_led_count":  "Zewnętrzne punkty LED: %s",
+		"aircon":              "Klimatyzacja Sinclair 3.4 kW z funkcją grzania i chłodzenia",
+		"kitchen":             "Aneks kuchenny: %s",
+		"toilet":              "Toaleta",
+		"bathroom":            "Kompletna łazienka",
+		"partition_wall":      "Ścianka działowa / osobne pomieszczenie zgodnie z planem",
+		"door_pump":           "Samozamykacz drzwiowy",
+		"steel_handle":        "Pochwyt stalowy",
+		"tinted_glass":        "Szyby przyciemniane",
+		"shutters":            "Rolety zewnętrzne",
+		"gutter":              "Orynnowanie",
+		"hydraulic_output":    "Wyprowadzenie hydrauliczne",
+		"external_decor":      "Elementy dekoracyjne: %s",
+		"window_notes":        "Uwagi do stolarki: %s",
+		"other":               "Pozostałe uwagi: %s",
+		"transport":           "Transport wliczony w cenę końcową",
+		"unloading":           "Rozładunek HDS",
+		"warranty":            "Gwarancja 12 miesięcy",
+	},
+	"en": {
+		"external_dimensions": "external dimensions %s",
+		"internal_dimensions": "internal dimensions %s",
+		"doors":               "Aluminium door: %s",
+		"window":              "%s window with tilt and turn function %s",
+		"electricity":         "Electrical wiring: %s, complete installation with sockets, LED lamps, light switch, fuse box and external power connection",
+		"external_led_count":  "external LED points: %s",
+		"aircon":              "Air conditioner Sinclair 3.4 kW with heat and cool options",
+		"kitchen":             "Kitchen annexe: %s",
+		"toilet":              "Toilet",
+		"bathroom":            "Complete bathroom: internal walls, WC compact, sink, tap, undersink storage, electric water heater, shower cabin, complete plumbing (no warranty for watertightness)",
+		"partition_wall":      "Separate room: internal wall with internal doors - as per plan",
+		"door_pump":           "Door closer",
+		"steel_handle":        "Steel handle",
+		"tinted_glass":        "Tinted glass",
+		"shutters":            "External roller shutters",
+		"gutter":              "Guttering",
+		"hydraulic_output":    "Hydraulic output",
+		"external_decor":      "External decoration: %s, galvanized metal decor",
+		"window_notes":        "Window notes: %s",
+		"other":               "Other notes: %s",
+		"transport":           "TRANSPORT included in the final price",
+		"unloading":           "Unloading with our auto-crane",
+		"warranty":            "12 MONTH WARRANTY",
+	},
+}
+
+var boolExtras = map[string][]optionalExtra{
+	"pl": {
+		{text: "Klimatyzacja Sinclair 3.4 kW z funkcją grzania, chłodzenia i jonizacji powietrza 3600 zł", enabled: func(p offerPayload) bool { return p.Aircon }},
+		{text: "Rolety elektryczne od 1400 zł/ szt (do 1m szerokości)", enabled: func(p offerPayload) bool { return p.Shutters }},
+		{text: "Toaleta", enabled: func(p offerPayload) bool { return p.Toilet }},
+		{text: "Łazienka", enabled: func(p offerPayload) bool { return p.Bathroom }},
+		{text: "Ścianka działowa", enabled: func(p offerPayload) bool { return p.PartitionWall }},
+		{text: "Samozamykacz drzwiowy", enabled: func(p offerPayload) bool { return p.DoorPump }},
+		{text: "Pochwyt stalowy", enabled: func(p offerPayload) bool { return p.SteelHandle }},
+		{text: "Szyby przyciemniane", enabled: func(p offerPayload) bool { return p.TintedGlass }},
+		{text: "Orynnowanie", enabled: func(p offerPayload) bool { return p.Gutter }},
+		{text: "Wyprowadzenie hydrauliczne", enabled: func(p offerPayload) bool { return p.HydraulicOut }},
+	},
+	"en": {
+		{text: "Air conditioner Sinclair 3.4 kW with heat and cool options", enabled: func(p offerPayload) bool { return p.Aircon }},
+		{text: "External roller shutters €400 each", enabled: func(p offerPayload) bool { return p.Shutters }},
+		{text: "Toilet", enabled: func(p offerPayload) bool { return p.Toilet }},
+		{text: "Complete bathroom", enabled: func(p offerPayload) bool { return p.Bathroom }},
+		{text: "Separate room: internal wall with internal doors", enabled: func(p offerPayload) bool { return p.PartitionWall }},
+		{text: "Door closer", enabled: func(p offerPayload) bool { return p.DoorPump }},
+		{text: "Steel handle", enabled: func(p offerPayload) bool { return p.SteelHandle }},
+		{text: "Tinted glass", enabled: func(p offerPayload) bool { return p.TintedGlass }},
+		{text: "Guttering", enabled: func(p offerPayload) bool { return p.Gutter }},
+		{text: "Hydraulic output", enabled: func(p offerPayload) bool { return p.HydraulicOut }},
+	},
+}
+
+var defaultExtras = map[string][]string{
+	"pl": {
+		"Klimatyzacja Sinclair 3.4 kW z funkcją grzania, chłodzenia i jonizacji powietrza 3600 zł",
+		"Dodatkowe Okno Rozwierno-uchylne 100x100 cm 1000 zł",
+		"Dodatkowe Okno Rozwierno-uchylne 100x210 cm 1800 zł",
+		"Dodatkowe gniazdo 230V: 250 zł",
+		"Rolety elektryczne od 1400 zł/ szt (do 1m szerokości)",
+		"Aneks kuchenny standard 120 cm ze zlewem i baterią 2400 zł",
+		"Aneks kuchenny premium 153 cm wraz z lodówką i płytą indukcyjną 7200 zł",
+	},
+	"en": {
+		"Additional window 100x210 cm with tilt and turn function €500",
+		"External roller shutters €400 each",
+		"Kitchen annexe: top cabinets, bottom cabinets, worktop 120 cm, sink, tap €800",
+		"Static structure - steel construction made of closed steel profile 100x100 mm, welded and sealed with anti-corrosion paint, including four crane hooks for transport/unloading €1800",
+		"External décor from €200 per linear meter",
 	},
 }
 

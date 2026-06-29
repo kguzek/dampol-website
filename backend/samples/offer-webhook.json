@@ -9,7 +9,16 @@
     "collection": "offer",
     "offer": {
       "id": "bf372199-a99c-4e1a-b4dc-a60e9f849b6d",
+      "size": "650x300",
       "language": "pl",
+      "electricity": "one",
+      "structure": "50-with",
+      "walls": "eps-100",
+      "roof": "eps-100",
+      "floor": "pir-100",
+      "gutter": false,
+      "hydraulic_output": false,
+      "crane_reach": 3,
       "doors": ["glass", "full", "double"],
       "windows": [
         {

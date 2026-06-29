@@ -2,100 +2,88 @@
 #let offer = json(data-path)
 #let labels = offer.labels
 
-#let field(label, value) = if value != none and value != "" [
-  #grid(columns: (38%, 62%), gutter: 8pt)[
-    #strong(label)
-  ][
-    #value
+#let check-item(item) = [
+  #grid(columns: (14pt, 1fr), gutter: 3pt)[#text(fill: rgb("15803d"), weight: "bold")[✓]][#item]
+  #v(3pt)
+]
+
+#let arrow-item(item) = [
+  #grid(columns: (14pt, 1fr), gutter: 3pt)[➢][#item]
+  #v(3pt)
+]
+
+#let section(title, paragraphs) = [
+  #v(11pt)
+  #text(weight: "bold")[#title]
+  #v(4pt)
+  #for paragraph in paragraphs [
+    #paragraph
+    #v(5pt)
   ]
 ]
 
-#let section(title, body) = [
-  #v(12pt)
-  #text(size: 13pt, weight: "bold")[#title]
-  #line(length: 100%, stroke: rgb("d8d8d8"))
-  #v(5pt)
-  #body
-]
-
 #set document(title: labels.title)
-#set page(
-  paper: "a4",
-  margin: (x: 22mm, y: 20mm),
-  footer: align(center)[#text(size: 8pt, fill: rgb("666666"))[#labels.footer]],
-)
+#set page(paper: "a4", margin: (x: 22mm, y: 18mm))
 #set text(font: "Liberation Sans", size: 10.5pt, lang: offer.language)
 #set par(justify: true, leading: 0.62em)
 
 #grid(columns: (1fr, auto), align: (left, right))[
   #text(size: 11pt, weight: "bold")[Dampol Investment Sp. z o.o.]\
   Ul. Gliwicka 20A\
-  42-677 Czekanów\
-  NIP 645 258 19 61
+  42-677 Czekanów, PL\
+  NIP 645 258 19 61\
+  #v(5pt)
+  #labels.contact: Karolina, Tel. +48 664457352\
+  #labels.valid_for: #labels.valid_days
 ][
-  #labels.date: #offer.generated_at\
-  #if offer.offer_id != "" [#labels.offer_no: #offer.offer_id]
+  Czekanów, PL\
+  #offer.header_date
 ]
 
 #v(18pt)
-#align(center)[#text(size: 20pt, weight: "bold")[#upper(labels.title)]]
-#v(16pt)
+#align(center)[#text(size: 18pt, weight: "bold")[#upper(labels.title)]]
+#v(14pt)
 
-#section(labels.configuration)[
-  #field(labels.doors, offer.doors.join(", "))
-  #field(labels.delivery_date, offer.delivery_date)
+#text(weight: "bold")[#offer.intro]
+#v(6pt)
+
+#for feature in offer.features [
+  #check-item(feature)
 ]
 
-#if offer.windows.len() > 0 [
-  #section(labels.windows)[
-    #table(
-      columns: (1fr, 1fr),
-      inset: 6pt,
-      stroke: rgb("dddddd"),
-      table.header(
-        [#strong(labels.material)],
-        [#strong(labels.size)],
-      ),
-      ..offer.windows.map(window => (
-        [#window.material],
-        [#window.size],
-      )).flatten(),
-    )
-  ]
-]
-
-#if offer.options.len() > 0 [
-  #section(labels.options)[
-    #table(
-      columns: (1fr, 1fr),
-      inset: 6pt,
-      stroke: rgb("dddddd"),
-      ..offer.options.map(option => (
-        [#option.label],
-        [#option.value],
-      )).flatten(),
-    )
-  ]
-]
-
-#if offer.notes.len() > 0 [
-  #section(labels.notes)[
-    #for note in offer.notes [
-      #strong(note.label): #note.text
-      #v(5pt)
-    ]
-  ]
-]
-
-#v(18pt)
+#v(14pt)
 #align(center)[
-  #block(inset: 12pt, fill: rgb("f4f4f4"), radius: 4pt)[
-    #text(size: 15pt, weight: "bold")[#labels.price: #offer.price]
+  #text(size: 15pt, weight: "bold", style: "italic")[#labels.price: #offer.price #offer.price_suffix]
+]
+
+#v(9pt)
+#for notice in offer.tax_notice [
+  #text(size: 9.5pt)[#notice]
+  #v(4pt)
+]
+
+#if offer.extras.len() > 0 [
+  #v(10pt)
+  #text(weight: "bold")[#offer.extras_title]
+  #v(5pt)
+  #for extra in offer.extras [
+    #arrow-item(extra)
   ]
 ]
 
-#v(24pt)
-#text(size: 9pt, fill: rgb("666666"))[
-  Przedstawiciel: Karolina\
-  Tel. +48 66 44 57 352
+#for item in offer.sections [
+  #section(item.title, item.paragraphs)
+]
+
+#v(12pt)
+#if offer.language == "pl" [
+  #text(size: 8.5pt, fill: rgb("777777"))[Jesteśmy uczestnikiem Programu]\
+  #text(fill: red, weight: "bold")[RZETELNA] #text(weight: "bold")[Firma]\
+  #text(size: 8.5pt, fill: rgb("777777"))[Sprawdź naszą rzetelność na]\
+  https://wizytowka.rzetelnafirma.pl/8P8S45HO
+] else [
+  #text(size: 8.5pt, fill: rgb("777777"))[We are a member of Reliable Company Programme]\
+  #text(fill: red, weight: "bold")[RZETELNA] #text(weight: "bold")[Firma]\
+  #text(size: 8.5pt, fill: rgb("777777"))[Verify our company here:]\
+  https://wizytowka.rzetelnafirma.pl/8P8S45HO
 ]
