@@ -35,6 +35,7 @@ type config struct {
 	SMTPUser               string
 	SMTPPassword           string
 	SMTPFrom               string
+	SMTPName               string
 	SMTPSecure             bool
 	SMTPIgnoreTLS          bool
 	SMTPInsecureSkipVerify bool
@@ -46,8 +47,9 @@ type server struct {
 
 type webhookRequest struct {
 	To      string         `json:"to"`
-	Subject string         `json:"subject"`
-	Text    string         `json:"text"`
+	ReplyTo string         `json:"replyTo"`
+	CC      []string       `json:"cc"`
+	BCC     []string       `json:"bcc"`
 	Payload webhookPayload `json:"payload"`
 }
 
@@ -67,6 +69,7 @@ type directusOffer struct {
 }
 
 type offerPayload struct {
+	ID            string          `json:"id"`
 	Size          string          `json:"size"`
 	Date          string          `json:"date"`
 	SendToAddress string          `json:"send_to_address"`
@@ -227,6 +230,7 @@ func loadConfig() config {
 		SMTPUser:               getFirstEnv("SMTP_USER", "EMAIL_SMTP_USER"),
 		SMTPPassword:           getFirstEnv("SMTP_PASSWORD", "EMAIL_SMTP_PASSWORD"),
 		SMTPFrom:               getFirstEnv("SMTP_FROM", "EMAIL_FROM"),
+		SMTPName:               getFirstEnv("SMTP_NAME", "EMAIL_SMTP_NAME"),
 		SMTPSecure:             parseBool(getFirstEnv("SMTP_SECURE", "EMAIL_SMTP_SECURE")),
 		SMTPIgnoreTLS:          parseBool(getFirstEnv("SMTP_IGNORE_TLS", "EMAIL_SMTP_IGNORE_TLS")),
 		SMTPInsecureSkipVerify: parseBool(getEnv("SMTP_INSECURE_SKIP_VERIFY", "false")),
@@ -249,15 +253,13 @@ func (s server) offerWebhook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := validateEmailRequest(req); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
 	offer, err := req.directusOffer()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
+	}
+	if offer.Key == "" {
+		offer.Key = offer.Payload.ID
 	}
 	recipient := strings.TrimSpace(offer.Payload.SendToAddress)
 	if recipient == "" {
@@ -265,6 +267,20 @@ func (s server) offerWebhook(w http.ResponseWriter, r *http.Request) {
 	}
 	if _, err := mail.ParseAddress(recipient); err != nil {
 		http.Error(w, "invalid offer.send_to_address", http.StatusBadRequest)
+		return
+	}
+	if err := validateReplyTo(req.ReplyTo); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	cc, err := parseAddressList("cc", req.CC)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	bcc, err := parseAddressList("bcc", req.BCC)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -280,7 +296,7 @@ func (s server) offerWebhook(w http.ResponseWriter, r *http.Request) {
 		filename = "offer-" + sanitizeFilename(offer.Key) + ".pdf"
 	}
 
-	if err := s.sendMail(recipient, req.Subject, req.Text, filename, pdf); err != nil {
+	if err := s.sendMail(recipient, req.ReplyTo, cc, bcc, offerSubject(offer), offerBody(offer.Payload.Language), filename, pdf); err != nil {
 		log.Printf("mail failed: %v", err)
 		http.Error(w, "failed to send email", http.StatusInternalServerError)
 		return
@@ -387,14 +403,57 @@ func unmarshalObjectOrSingleItem(data []byte, target any) error {
 	return json.Unmarshal(items[0], target)
 }
 
-func validateEmailRequest(req webhookRequest) error {
-	if strings.TrimSpace(req.Subject) == "" {
-		return errors.New("missing subject")
+func validateReplyTo(replyTo string) error {
+	if strings.TrimSpace(replyTo) == "" {
+		return nil
 	}
-	if strings.TrimSpace(req.Text) == "" {
-		return errors.New("missing text")
+	if _, err := mail.ParseAddress(replyTo); err != nil {
+		return fmt.Errorf("invalid replyTo address: %w", err)
 	}
 	return nil
+}
+
+func parseAddressList(field string, values []string) ([]mail.Address, error) {
+	addresses := make([]mail.Address, 0, len(values))
+	for _, value := range values {
+		value = strings.TrimSpace(value)
+		if value == "" {
+			continue
+		}
+		address, err := mail.ParseAddress(value)
+		if err != nil {
+			return nil, fmt.Errorf("invalid %s address %q: %w", field, value, err)
+		}
+		addresses = append(addresses, *address)
+	}
+	return addresses, nil
+}
+
+func offerSubject(offer directusOffer) string {
+	suffix := offerSubjectSuffix(offer.Key)
+	if offer.Payload.Language == "en" {
+		return "Dampol Offer #" + suffix
+	}
+	return "Oferta Dampol #" + suffix
+}
+
+func offerSubjectSuffix(key string) string {
+	clean := sanitizeFilename(key)
+	clean = strings.ReplaceAll(clean, "-", "")
+	if clean == "" {
+		return "offer"
+	}
+	if len(clean) <= 8 {
+		return clean
+	}
+	return clean[len(clean)-8:]
+}
+
+func offerBody(lang string) string {
+	if lang == "en" {
+		return "Good morning,\n\nPlease find the offer attached.\n\nBest regards,\n\nDampol Investment Sp. z o. o."
+	}
+	return "Dzień dobry,\n\nW załączniku przesyłamy ofertę.\n\nPozdrawiamy,\n\nDampol Investment Sp. z o. o."
 }
 
 func normalizeOffer(offer directusOffer) templateData {
@@ -708,7 +767,7 @@ func (s server) renderPDF(data templateData) ([]byte, error) {
 	return os.ReadFile(outPath)
 }
 
-func (s server) sendMail(to, subject, text, filename string, pdf []byte) error {
+func (s server) sendMail(to, replyTo string, cc, bcc []mail.Address, subject, text, filename string, pdf []byte) error {
 	if s.config.SMTPHost == "" || s.config.SMTPFrom == "" {
 		return errors.New("SMTP_HOST and SMTP_FROM are required")
 	}
@@ -717,21 +776,31 @@ func (s server) sendMail(to, subject, text, filename string, pdf []byte) error {
 	if err != nil {
 		return fmt.Errorf("invalid SMTP_FROM: %w", err)
 	}
+	if strings.TrimSpace(s.config.SMTPName) != "" {
+		from.Name = strings.TrimSpace(s.config.SMTPName)
+	}
 	toAddr, err := mail.ParseAddress(to)
 	if err != nil {
 		return fmt.Errorf("invalid recipient: %w", err)
 	}
 
-	message, err := buildEmail(from.String(), toAddr.String(), subject, text, filename, pdf)
+	message, err := buildEmail(from.String(), toAddr.String(), strings.TrimSpace(replyTo), cc, subject, text, filename, pdf)
 	if err != nil {
 		return err
 	}
 
 	addr := netJoinHostPort(s.config.SMTPHost, s.config.SMTPPort)
-	return sendSMTP(addr, s.config, []string{toAddr.Address}, message)
+	recipients := []string{toAddr.Address}
+	for _, address := range cc {
+		recipients = append(recipients, address.Address)
+	}
+	for _, address := range bcc {
+		recipients = append(recipients, address.Address)
+	}
+	return sendSMTP(addr, s.config, recipients, message)
 }
 
-func buildEmail(from, to, subject, text, filename string, pdf []byte) ([]byte, error) {
+func buildEmail(from, to, replyTo string, cc []mail.Address, subject, text, filename string, pdf []byte) ([]byte, error) {
 	var body bytes.Buffer
 	boundary := randomBoundary()
 
@@ -742,6 +811,12 @@ func buildEmail(from, to, subject, text, filename string, pdf []byte) ([]byte, e
 		"MIME-Version": "1.0",
 		"Content-Type": `multipart/mixed; boundary="` + boundary + `"`,
 		"Date":         time.Now().Format(time.RFC1123Z),
+	}
+	if replyTo != "" {
+		headers["Reply-To"] = replyTo
+	}
+	if len(cc) > 0 {
+		headers["Cc"] = formatAddressList(cc)
 	}
 
 	for key, value := range headers {
@@ -785,6 +860,14 @@ func buildEmail(from, to, subject, text, filename string, pdf []byte) ([]byte, e
 	}
 
 	return body.Bytes(), nil
+}
+
+func formatAddressList(addresses []mail.Address) string {
+	values := make([]string, 0, len(addresses))
+	for _, address := range addresses {
+		values = append(values, address.String())
+	}
+	return strings.Join(values, ", ")
 }
 
 func sendSMTP(addr string, cfg config, recipients []string, message []byte) error {

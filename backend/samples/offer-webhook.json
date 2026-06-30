@@ -1,7 +1,8 @@
 {
   "to": "customer@example.com",
-  "subject": "Oferta Dampol",
-  "text": "Dzień dobry,\n\nW załączniku przesyłamy ofertę.\n\nPozdrawiamy,\nDampol Investment",
+  "replyTo": "karolina@example.com",
+  "cc": [],
+  "bcc": [],
   "payload": {
     "event": "offer.items.create",
     "key": "bf372199-a99c-4e1a-b4dc-a60e9f849b6d",
