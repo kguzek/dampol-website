@@ -4,7 +4,7 @@
 
 #let check-item(item) = [
   #grid(columns: (14pt, 1fr), gutter: 3pt)[#text(fill: rgb("15803d"), weight: "bold")[✓]][#item]
-  #v(3pt)
+  #v(1pt)
 ]
 
 #let arrow-item(item) = [
@@ -78,12 +78,12 @@
 #v(12pt)
 #if offer.language == "pl" [
   #text(size: 8.5pt, fill: rgb("777777"))[Jesteśmy uczestnikiem Programu]\
-  #text(fill: red, weight: "bold")[RZETELNA] #text(weight: "bold")[Firma]\
+  #text(size: 12.5pt, fill: red, weight: "bold")[RZETELNA] #text(size: 12.5pt, weight: "bold")[Firma]\
   #text(size: 8.5pt, fill: rgb("777777"))[Sprawdź naszą rzetelność na]\
-  https://wizytowka.rzetelnafirma.pl/8P8S45HO
+  #link("https://wizytowka.rzetelnafirma.pl/8P8S45HO")[#text(fill: blue)[#underline[https://wizytowka.rzetelnafirma.pl/8P8S45HO]]]
 ] else [
   #text(size: 8.5pt, fill: rgb("777777"))[We are a member of Reliable Company Programme]\
-  #text(fill: red, weight: "bold")[RZETELNA] #text(weight: "bold")[Firma]\
+  #text(size: 12.5pt, fill: red, weight: "bold")[RZETELNA] #text(size: 12.5pt, weight: "bold")[Firma]\
   #text(size: 8.5pt, fill: rgb("777777"))[Verify our company here:]\
-  https://wizytowka.rzetelnafirma.pl/8P8S45HO
+  #link("https://wizytowka.rzetelnafirma.pl/8P8S45HO")[#text(fill: blue)[#underline[https://wizytowka.rzetelnafirma.pl/8P8S45HO]]]
 ]

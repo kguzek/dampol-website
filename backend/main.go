@@ -632,7 +632,8 @@ func optionalExtras(lang string, payload offerPayload) []string {
 func localizedTaxNotice(lang string) []string {
 	if lang == "en" {
 		return []string{
-			"*Net price is for companies with a valid and active EU tax number (BE002...) For private customers, 21% tax applies.",
+			"*Net price is for companies with a valid and active EU tax number (BE002...)",
+			"For private customers, 21% tax applies.",
 		}
 	}
 	return []string{"Wszystkie ceny netto - należy doliczyć 23% podatku VAT"}
@@ -642,14 +643,14 @@ func localizedSections(lang string, payload offerPayload) []contentSection {
 	if lang == "en" {
 		return []contentSection{
 			{Title: "PAYMENT", Paragraphs: []string{"15% deposit by bank transfer to our account (downpayment)", "The remaining amount due on the day of delivery at the latest, before the container is unloaded - by bank transfer to our account. Cash upon delivery is also possible."}},
-			{Title: "DELIVERY DATE", Paragraphs: []string{deliveryDateText("en", payload), "The exact delivery date is to be arranged. Approximately 10-12 weeks from the receipt of deposit."}},
+			{Title: "DELIVERY DATE", Paragraphs: []string{"The exact delivery date is to be arranged. Approximately " + deliveryDateValue(payload, "10-12 weeks") + " from the receipt of deposit."}},
 			{Title: "DELIVERY AND UNLOADING", Paragraphs: []string{"The buyer is responsible for ensuring that there is enough space to drive in with a truck and set up the crane supports. Minimum width required: 3.50 m.", "Unloading with our auto-crane is only possible if there is a paved access road for a 28 tonne vehicle. Exceptions only after written agreement. Additionally, the direct access road must be free of trees, branches and wires in order not to damage the container. The height of the cabin with the container is 4 m. The container can be unloaded from the vehicle only from the right and left side. It is impossible to unload the container in front / or behind the vehicle. Hydraulic arm reach: " + craneReach(payload, "3.0") + " m.", "In the work area of the auto crane no wires/ trees/ branches can be present"}},
 			{Title: "FOUNDATION PREPARATION", Paragraphs: []string{"Customer is responsible for preparation of the foundation, where container is to be placed. The substrate must be prepared according to the specifications attached to the offer.", "Particular attention should be paid to the fact that the subsurface must be hardened, stable and, above all, even. The container can be placed on paving/concrete slabs, block paving, asphalt or concrete blocks."}},
 			{Title: "ATTENTION !", Paragraphs: []string{"The offer and price do not include any types of permits or approvals, as well as structural or engineering designs. The container is not intended for multi-storey buildings or the use of photovoltaic systems.", "Please read the 'Terms and Conditions of sale' and in particular the information contained therein about the guarantee and the use of the container. Payment of deposit is equivalent to understanding and full acceptance of the offer and its Terms and Conditions."}},
 		}
 	}
 	return []contentSection{
-		{Title: "DATA DOSTAWY", Paragraphs: []string{deliveryDateText("pl", payload), "Termin dostawy do uzgodnienia. Około 8-10 tygodni od daty wpływu zaliczki."}},
+		{Title: "DATA DOSTAWY", Paragraphs: []string{"Termin dostawy do uzgodnienia. Około " + deliveryDateValue(payload, "8-10 tygodni") + " od daty wpływu zaliczki."}},
 		{Title: "PŁATNOŚĆ", Paragraphs: []string{"30% zaliczka przelewem. Pozostała kwota jest płatna najpóźniej w dniu dostawy pawilonu."}},
 		{Title: "DOSTAWA", Paragraphs: []string{"Kupujący jest odpowiedzialny za zapewnienie wystarczającej ilości miejsca do wjazdu 28-tonową ciężarówką i ustawienia podpór dźwigu. Droga dojazdowa: Minimalna wymagana szerokość dojazdu: 3.50 m.", "Dodatkowo droga dojazdowa musi być wolna od drzew, gałęzi i drutów, aby nie uszkodzić pawilonu. Wysokość kabiny z kontenerem to 4.0 m. Rozładunek: tylko na prawą lub lewą stronę samochodu. Maksymalny wysięg HDS to " + craneReach(payload, "1.00") + " m."}},
 		{Title: "PRZYGOTOWANIE PODŁOŻA", Paragraphs: []string{"Klient jest odpowiedzialny za przygotowanie podłoża, na którym ma stanąć kontener. Podłoże należy przygotować zgodnie ze specyfikacją załączoną do oferty.", "Szczególną uwagę należy zwrócić na to, aby podłoże było utwardzone, stabilne, a przede wszystkim wypoziomowane. Pawilon można ustawić na kostce brukowej, płytach betonowych, asfalcie lub bloczkach betonowych."}},
@@ -664,17 +665,11 @@ func craneReach(payload offerPayload, fallback string) string {
 	return fmt.Sprintf("%d.0", payload.CraneReach)
 }
 
-func deliveryDateText(lang string, payload offerPayload) string {
+func deliveryDateValue(payload offerPayload, fallback string) string {
 	if payload.DeliveryDate == "" {
-		if lang == "en" {
-			return "Delivery date: to be arranged."
-		}
-		return "Termin dostawy: do uzgodnienia."
+		return fallback
 	}
-	if lang == "en" {
-		return "Delivery date: " + payload.DeliveryDate + "."
-	}
-	return "Termin dostawy: " + payload.DeliveryDate + "."
+	return payload.DeliveryDate
 }
 
 func (s server) renderPDF(data templateData) ([]byte, error) {
