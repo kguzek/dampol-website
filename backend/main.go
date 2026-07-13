@@ -584,7 +584,7 @@ func baseFeatures(lang string, payload offerPayload) []string {
 		return []string{
 			"internal height 260 cm lowered to 250 cm",
 			"dimension tolerance 1.5%",
-			"WALLS made of sandwich panels with a " + walls + " core. The thermal transmittance is 0.22 W/m²K.",
+			"WALLS made of sandwich panels with a " + walls + " core. The thermal transmittance is " + panelUValue(payload.Walls) + " W/m²K.",
 			"Exterior colour: graphite RAL 7016",
 			"ROOF made of sandwich panels with a " + roof + " core.",
 			"FLOOR made of sandwich panels with a " + floor + " core + OSB board 12 mm + PVC vinyl flooring.",
@@ -595,8 +595,8 @@ func baseFeatures(lang string, payload offerPayload) []string {
 		"Wysokość wewnętrzna 262 cm -> 252 cm (dach jednospadowy)",
 		"Tolerancja wymiarów 1.5%",
 		structureFeature(lang, payload.Structure),
-		"Podłoga wykonana z płyty warstwowej z rdzeniem " + floor + " + płyta OSB 12 mm + wykładzina PCV obiektowa. Przenikalność cieplna dla płyty wynosi 0.22 W/m²K",
-		"Ściany wykonane z płyty warstwowej z rdzeniem " + walls + ". Przenikalność cieplna wynosi 0.22 W/m²K. Kolor zewnętrzny: grafit RAL 7016",
+		"Podłoga wykonana z płyty warstwowej z rdzeniem " + floor + " + płyta OSB 12 mm + wykładzina PCV obiektowa. Przenikalność cieplna dla płyty wynosi " + panelUValue(payload.Floor) + " W/m²K",
+		"Ściany wykonane z płyty warstwowej z rdzeniem " + walls + ". Przenikalność cieplna dla płyty wynosi " + panelUValue(payload.Walls) + " W/m²K. Kolor zewnętrzny: grafit RAL 7016",
 		"Dach wykonany z płyty warstwowej z rdzeniem " + roof + ".",
 	}
 }
@@ -607,9 +607,9 @@ func structureFeature(lang, structure string) string {
 		profile = "50 cm x 50 cm"
 	}
 	if lang == "en" {
-		return "Steel structure - made of steel profile " + profile + " with truss, welded, including crane hooks on top of structure for transport and unloading."
+		return "Steel structure - made of steel angle bar " + profile + " with truss, welded, including crane hooks on top of structure for transport and unloading."
 	}
-	return "Konstrukcja stalowa spawana, wykonana z profili zamkniętych " + profile + " z kratownicą wraz z zaczepami HDS do przewozu oraz rozładunku."
+	return "Konstrukcja stalowa spawana, wykonana z kątownika " + profile + " z kratownicą wraz z zaczepami HDS do przewozu oraz rozładunku."
 }
 
 func formatStructureProfile(structure string) string {
@@ -621,6 +621,14 @@ func formatStructureProfile(structure string) string {
 		return ""
 	}
 	return base + " cm x " + base + " cm"
+}
+
+func panelUValue(panelValue string) string {
+	parts := strings.Split(strings.TrimSpace(panelValue), "-")
+	if len(parts) >= 1 && strings.EqualFold(parts[0], "eps") {
+		return "0.38"
+	}
+	return "0.22"
 }
 
 func translatePanelValue(value string) string {
@@ -1178,7 +1186,7 @@ var featureFormats = map[string]map[string]string{
 
 var boolExtras = map[string][]optionalExtra{
 	"pl": {
-		{text: "Klimatyzacja Sinclair 3.4 kW z funkcją grzania, chłodzenia i jonizacji powietrza 3600 zł", enabled: func(p offerPayload) bool { return p.Aircon }},
+		{text: "Klimatyzacja Sinclair 3.4 kW z funkcją grzania, chłodzenia i jonizacji powietrza 3999 zł", enabled: func(p offerPayload) bool { return p.Aircon }},
 		{text: "Rolety elektryczne od 1400 zł/ szt (do 1m szerokości)", enabled: func(p offerPayload) bool { return p.Shutters }},
 		{text: "Toaleta", enabled: func(p offerPayload) bool { return p.Toilet }},
 		{text: "Łazienka", enabled: func(p offerPayload) bool { return p.Bathroom }},
@@ -1205,17 +1213,14 @@ var boolExtras = map[string][]optionalExtra{
 
 var defaultExtras = map[string][]string{
 	"pl": {
-		"Klimatyzacja Sinclair 3.4 kW z funkcją grzania, chłodzenia i jonizacji powietrza 3600 zł",
 		"Dodatkowe Okno Rozwierno-uchylne 100x100 cm 1000 zł",
 		"Dodatkowe Okno Rozwierno-uchylne 100x210 cm 1800 zł",
 		"Dodatkowe gniazdo 230V: 250 zł",
-		"Rolety elektryczne od 1400 zł/ szt (do 1m szerokości)",
 		"Aneks kuchenny standard 120 cm ze zlewem i baterią 2400 zł",
 		"Aneks kuchenny premium 153 cm wraz z lodówką i płytą indukcyjną 7200 zł",
 	},
 	"en": {
 		"Additional window 100x210 cm with tilt and turn function €500",
-		"External roller shutters €400 each",
 		"Kitchen annexe: top cabinets, bottom cabinets, worktop 120 cm, sink, tap €800",
 		"Static structure - steel construction made of closed steel profile 100x100 mm, welded and sealed with anti-corrosion paint, including four crane hooks for transport/unloading €1800",
 		"External décor from €200 per linear meter",
