@@ -520,8 +520,17 @@ func buildFeatures(lang string, payload offerPayload, t dictionary) []string {
 	if len(payload.Doors) > 0 {
 		features = append(features, featureText(lang, "doors", strings.Join(translateList(t.doors, payload.Doors), ", ")))
 	}
+	if payload.DoorPump {
+		features = append(features, featureText(lang, "door_pump"))
+	}
+	if payload.SteelHandle {
+		features = append(features, featureText(lang, "steel_handle"))
+	}
 	for _, window := range payload.Windows {
 		features = append(features, featureText(lang, "window", translate(t.windowMaterials, window.Material), formatSize(window.Size)))
+	}
+	if payload.TintedGlass {
+		features = append(features, featureText(lang, "tinted_glass"))
 	}
 	if payload.Electricity != "" {
 		features = append(features, featureText(lang, "electricity", translate(t.electricity, payload.Electricity)))
@@ -543,15 +552,6 @@ func buildFeatures(lang string, payload offerPayload, t dictionary) []string {
 	}
 	if payload.PartitionWall {
 		features = append(features, featureText(lang, "partition_wall"))
-	}
-	if payload.DoorPump {
-		features = append(features, featureText(lang, "door_pump"))
-	}
-	if payload.SteelHandle {
-		features = append(features, featureText(lang, "steel_handle"))
-	}
-	if payload.TintedGlass {
-		features = append(features, featureText(lang, "tinted_glass"))
 	}
 	if payload.Shutters {
 		features = append(features, featureText(lang, "shutters"))
@@ -630,6 +630,9 @@ func formatStructureProfile(structure string) string {
 
 func panelUValue(panelValue string) string {
 	parts := strings.Split(strings.TrimSpace(panelValue), "-")
+	if len(parts) >= 2 && strings.EqualFold(parts[0], "pir") && parts[1] == "120" {
+		return "0.18"
+	}
 	if len(parts) >= 1 && strings.EqualFold(parts[0], "eps") {
 		return "0.38"
 	}
