@@ -98,6 +98,7 @@ type offerPayload struct {
 	PartitionWall bool            `json:"partition_wall"`
 	ExternalDecor string          `json:"external_decor"`
 	DeliveryDate  string          `json:"delivery_date"`
+	DeliveryTo    string          `json:"delivery_to"`
 	Price         string          `json:"price"`
 	Extra         json.RawMessage `json:"-"`
 }
@@ -570,7 +571,11 @@ func buildFeatures(lang string, payload offerPayload, t dictionary) []string {
 	if strings.TrimSpace(payload.Other) != "" {
 		features = append(features, featureText(lang, "other", payload.Other))
 	}
-	features = append(features, featureText(lang, "transport"))
+	if payload.DeliveryTo != "" {
+		features = append(features, featureText(lang, "delivery_to", payload.DeliveryTo))
+	} else {
+		features = append(features, featureText(lang, "transport"))
+	}
 	features = append(features, featureText(lang, "unloading"))
 	features = append(features, featureText(lang, "warranty"))
 	return features
@@ -1154,6 +1159,7 @@ var featureFormats = map[string]map[string]string{
 		"window_notes":        "Uwagi do stolarki: %s",
 		"other":               "Pozostałe uwagi: %s",
 		"transport":           "Transport wliczony w cenę końcową",
+		"delivery_to":         "Transport do %s wliczony w cenę końcową",
 		"unloading":           "Rozładunek HDS",
 		"warranty":            "Gwarancja 12 miesięcy",
 	},
@@ -1179,6 +1185,7 @@ var featureFormats = map[string]map[string]string{
 		"window_notes":        "Window notes: %s",
 		"other":               "Other notes: %s",
 		"transport":           "TRANSPORT included in the final price",
+		"delivery_to":         "TRANSPORT to %s included in the final price",
 		"unloading":           "Unloading with our auto-crane",
 		"warranty":            "12 MONTH WARRANTY",
 	},
