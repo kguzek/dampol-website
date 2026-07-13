@@ -501,9 +501,9 @@ func addBoolOption(data *templateData, enabled bool, key string) {
 
 func formatHeaderDate(lang string, value time.Time) string {
 	if lang == "en" {
-		return value.Format("01/02/2006")
+		return value.Format("02/01/2006")
 	}
-	return "dn. " + value.Format("01.02.2006") + " r."
+	return "dn. " + value.Format("02.01.2006") + " r."
 }
 
 func buildFeatures(lang string, payload offerPayload, t dictionary) []string {
