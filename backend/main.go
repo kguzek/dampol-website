@@ -607,25 +607,39 @@ func baseFeatures(lang string, payload offerPayload) []string {
 }
 
 func structureFeature(lang, structure string) string {
+	structure = strings.TrimSpace(structure)
+	if structure == "only-truss" {
+		if lang == "en" {
+			return "Steel structure - only truss, including crane hooks on top of structure for transport and unloading."
+		}
+		return "Konstrukcja stalowa spawana, sama kratownica, z zaczepami HDS do przewozu oraz rozładunku."
+	}
+
 	profile := formatStructureProfile(structure)
 	if profile == "" {
 		profile = "50 mm x 50 mm"
 	}
 	if lang == "en" {
+		if structure == "50-with" {
+			return "Steel structure - made of welded steel " + profile + " angle bar with truss including crane hooks on top of structure for transport and unloading."
+		}
 		return "Steel structure - made of welded steel " + profile + " angle bar including crane hooks on top of structure for transport and unloading."
+	}
+	if structure == "50-with" {
+		profile += " z kratownicą"
 	}
 	return "Konstrukcja stalowa spawana, wykonana z kątownika " + profile + " z zaczepami HDS do przewozu oraz rozładunku."
 }
 
 func formatStructureProfile(structure string) string {
-	base, _, ok := strings.Cut(strings.TrimSpace(structure), "-")
-	if !ok || base == "" {
+	switch strings.TrimSpace(structure) {
+	case "100":
+		return "100 mm x 100 mm"
+	case "50", "50-with":
+		return "50 mm x 50 mm"
+	default:
 		return ""
 	}
-	if _, err := strconv.Atoi(base); err != nil {
-		return ""
-	}
-	return base + " mm x " + base + " mm"
 }
 
 func panelUValue(panelValue string) string {
