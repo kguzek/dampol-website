@@ -29,7 +29,7 @@
     "@angular/ssr": "^22.1.8",
     "@ng-web-apis/common": "^4.14.1",
     "@ng-web-apis/geolocation": "^4.14.1",
-    "express": "^4.22.2",
+    "express": "^4.22.3",
     "flag-icons": "^6.15.0",
     "intl-tel-input": "^18.5.3",
     "ngx-cookie-service": "^22.0.0",
