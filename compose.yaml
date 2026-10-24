@@ -1,9 +1,10 @@
 services:
   database:
-    image: postgis/postgis:13-master
+    image: docker.io/postgis/postgis:13-master
     restart: always
+    container_name: dampol_postgres
     volumes:
-      - ${VOLUME_PATH_PREFIX}/database:/var/lib/postgresql/data
+      - ${VOLUME_PATH_PREFIX}/database:/var/lib/postgresql/data:Z
     environment:
       POSTGRES_USER: "directus"
       POSTGRES_PASSWORD: "directus"
@@ -17,8 +18,9 @@ services:
       start_period: 30s
 
   cache:
-    image: redis:6
+    image: docker.io/redis:6
     restart: always
+    container_name: dampol_redis
     healthcheck:
       test: ["CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]"]
       interval: 10s
@@ -28,14 +30,15 @@ services:
       start_period: 30s
 
   directus:
-    image: directus/directus:latest
+    image: docker.io/directus/directus:latest
     restart: always
+    container_name: dampol_directus
     ports:
       - 8055:8055
     volumes:
-      - ${VOLUME_PATH_PREFIX}/uploads:/directus/uploads
-      - ${VOLUME_PATH_PREFIX}/extensions:/directus/extensions
-      - ./templates:/directus/templates
+      - ${VOLUME_PATH_PREFIX}/uploads:/directus/uploads:Z
+      - ${VOLUME_PATH_PREFIX}/extensions:/directus/extensions:Z
+      - ${VOLUME_PATH_PREFIX}/templates:/directus/templates:Z
     depends_on:
       database:
         condition: service_healthy
@@ -62,8 +65,11 @@ services:
       EMAIL_TRANSPORT: "smtp"
 
   offer-mailer:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: ./Containerfile
     restart: always
+    container_name: offer_mailer
     env_file: ".env"
     environment:
       APP_ENV: "production"
